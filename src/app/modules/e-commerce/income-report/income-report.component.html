@@ -1,0 +1,99 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+      <div class="card-title">
+          <h3 class="card-label">INCOME REPORTS </h3>
+      </div>
+
+  </div>
+
+  
+ 
+<div class="form form-label-right">
+  <div class="form-group row">
+    <div class="form-group row" [formGroup]="searchGroup">
+    <div class="col-lg-3">
+       
+       <label class="col-lg-8 col-form-label" style="margin-left: 25px;"><b>Lot No:</b></label>
+       <div class="col-lg-10">
+          <select class="form-control" name="lot_no"  formControlName="lot_no"  style="margin-left: 22px;" >
+            <option> Please Select</option>  
+            <option  *ngFor="let product of productsService.items$ | async; let i = index" 
+            [value]="product.lot_no">{{product.lot_no }}</option>  
+         </select>
+     </div>
+     
+   </div>
+
+    <div class="col-lg-3">
+        <label class="col-lg-12 col-form-label"><b>From Date:</b></label>
+        <div class="col-lg-10">
+          <div class="input-group input-group-solid ">
+            <input
+              type="text"
+              name="fromdate"
+              class="form-control form-control-lg form-control-solid"
+              autocomplete="off"
+              placeholder="dd/mm/yyyy"
+              ngbDatepicker
+              #fr="ngbDatepicker"
+              formControlName="fromdate"
+              readonly="true"
+            />
+            <div class="input-group-append" (click)="fr.toggle()">
+              <span class="input-group-text">
+                <i class="text-dark-50 flaticon-calendar"></i>
+              </span>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        
+        <label class="col-lg-6 col-form-label"><b>To Date:</b></label>
+        <div class="col-lg-10">
+          <div class="input-group input-group-solid ">
+            <input
+              type="text"
+              name="todate"
+              class="form-control form-control-lg form-control-solid"
+              autocomplete="off"
+              placeholder="dd/mm/yyyy"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              formControlName="todate"
+              readonly="true"
+            />
+            <div class="input-group-append" (click)="d.toggle()">
+              <span class="input-group-text">
+                <i class="text-dark-50 flaticon-calendar"></i>
+              </span>
+            </div>
+          </div> 
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <button
+      type="submit"
+      class="btn btn-primary btn-elevate sho"
+      (click)="save()"
+      >
+      Show
+     </button>
+    </div>
+  </div>
+
+  <table class="lottable" id="lotTable" style="width: 100%;margin-left: 42px;">
+           
+  </table>
+  
+  </div>
+
+
+
+</div>
+
+
+</div>  
