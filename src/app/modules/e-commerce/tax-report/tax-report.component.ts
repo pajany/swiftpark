@@ -193,9 +193,11 @@ export class TaxReportComponent implements OnInit{
  
       if(data.success =='No Result found'){
        
+        $HTMLData+=' <table class="table"><body>';
         $HTMLData +='<tr>';
-        $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+        $HTMLData +='<td > <span class="nodata" style="text-align: center;color: #5dab14;"><h5> No Record Found! </h5> </span> </td>';
         $HTMLData +='</tr>';
+        $HTMLData+='</body></table>';
       }
 
     if (data.success !='No Result found'){

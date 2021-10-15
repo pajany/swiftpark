@@ -162,8 +162,8 @@ export class IncomeReportComponent implements OnInit{
       $HTMLData +='</table>';
       if(data.success =='No Result found'){
        
-        $HTMLData +='<tr style="text-align:center;">';
-        $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+        $HTMLData +='<tr>';
+        $HTMLData +='<td > <span class="nodata" style="text-align: center;color: #5dab14;"><h5> No Record Found! </h5> </span> </td>';
         $HTMLData +='</tr>';
       }
 

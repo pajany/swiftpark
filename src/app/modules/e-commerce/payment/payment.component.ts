@@ -101,9 +101,13 @@ export class PaymentComponent implements OnInit{
         $HTMLData+='<body>';
 
         if(data.success =='No Result found'){
-          $HTMLData +='<tr style="text-align:center;">';
-          $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+          $HTMLData +='<table class="table" style="margin-top: 60px;">';
+          $HTMLData +='<tbody>';
+          $HTMLData +='<tr>';
+          $HTMLData +='<td > <span class="nodata" style="text-align: center;color: #5dab14;"><h5> No Record Found! </h5> </span> </td>';
           $HTMLData +='</tr>';
+          $HTMLData +='</tbody>';
+          $HTMLData +='</table>';
         }
 
     if(data.success  !='No Result found') {
@@ -160,7 +164,7 @@ export class PaymentComponent implements OnInit{
 
       if(data.success =='No Result found'){
         $HTMLData +='<tr style="text-align:center;">';
-        $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+        $HTMLData +='<td > <span class="nodata" style="text-align: center;color: #5dab14;"><h5> No Record Found! </h5> </span> </td>';
         $HTMLData +='</tr>';
       }
 
