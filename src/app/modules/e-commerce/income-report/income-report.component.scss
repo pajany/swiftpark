@@ -21,8 +21,22 @@ button.calendar, button.calendar:active {
   background-position: center;
 }
 .sho{
-  margin-left: 132px;
+  //margin-left: 132px;
   margin-top: 47px;
   max-height: 35px;
   position: relative;
 }
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #5dab14 !important;
+  border-color: #5dab14 !important;
+}
+
+.addr{
+  margin-top: 58px !important;
+  margin-left: -170px !important;
+}
+.titl{
+  margin-top: 30px !important;
+}
+ 

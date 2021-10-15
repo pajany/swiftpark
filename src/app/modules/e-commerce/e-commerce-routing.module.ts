@@ -11,6 +11,7 @@ import { AccountSummaryComponent } from './account-summary/account-summary.compo
 import { ViewPermitsComponent } from './view-permits/view-permits.component'; 
 import { IncomeReportComponent } from './income-report/income-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
       {
         path: 'taxeport',
         component: TaxReportComponent,
+      },
+      {
+        path: 'payment',
+        component: PaymentComponent,
       },
       {
         path: 'products',

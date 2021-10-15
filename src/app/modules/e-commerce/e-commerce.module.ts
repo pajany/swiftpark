@@ -39,6 +39,7 @@ import { AccountSummaryComponent } from './account-summary/account-summary.compo
 import { ViewPermitsComponent } from './view-permits/view-permits.component';
 import { IncomeReportComponent } from './income-report/income-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
+import { PaymentComponent } from './payment/payment.component';
    //import { EditSpecModalComponent } from './products/product-edit/specifications/edit-spec-modal/edit-spec-modal.component';
 
 @NgModule({
@@ -75,7 +76,8 @@ import { TaxReportComponent } from './tax-report/tax-report.component';
     AccountSummaryComponent,
     ViewPermitsComponent,
     IncomeReportComponent,
-    TaxReportComponent,  
+    TaxReportComponent,
+    PaymentComponent,  
     //EditSpecModalComponent,
   ],
   imports: [

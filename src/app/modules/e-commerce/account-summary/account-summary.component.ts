@@ -8,7 +8,7 @@ import { ProductsService } from '../_services';
 import { CustomAdapter , CustomDateParserFormatter, getDateFromString} from 'src/app/_metronic/core';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-summary',
@@ -22,12 +22,11 @@ import * as $ from 'jquery';
 
 export class AccountSummaryComponent implements OnInit{
   
+  API_URL = `${environment.apiUrl}/`;
   isLoading: boolean;
   filterGroup: FormGroup;
   searchGroup: FormGroup;
-  
   private subscriptions: Subscription[] = []; 
-
   lot_no:'';
   fromdate:undefined;
   todate:undefined;
@@ -95,29 +94,34 @@ export class AccountSummaryComponent implements OnInit{
   }
 
   save() {
-
   const formData = this.searchGroup.value;
-  console.log("fromdate", formData.fromdate);
-  console.log("todate", formData.todate);
-  console.log("lot_no", formData.lot_no);
-
   const fromdate = formData.fromdate;
   const todate = formData.todate;
   const lotno = formData.lot_no;
-
   var $HTMLData='';
   if (lotno != "") {
-    this.http.get('http://127.0.0.1:8000/api/accountsummary?lotno='+lotno+'&fromdate='+fromdate+'&todate='+todate).subscribe((data: any) => {
+    this.http.get(this.API_URL+'accountsummary?lotno='+lotno+'&fromdate='+fromdate+'&todate='+todate).subscribe((data: any) => {
 
       $("#lotTable").empty();
       $HTMLData ='<html>';
       $HTMLData+='<body>';
 
-      $HTMLData+='<div class="d-flex flex-column-fluid"><div class="container"> <div class="card card-custom overflow-hidden">';
-      $HTMLData+='<div class="card-body p-0"> <div class="row justify-content-center py-8 px-8 py-md-27 px-md-0"> <div class="col-md-9">';
+      if(data.success =='No Result found'){
+        $HTMLData+=' <table class="table"><body>';
+        $HTMLData +='<tr>';
+        $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+        $HTMLData +='</tr>';
+        $HTMLData+='</body></table>';
+
+      }
+
+    if (data.success !='No Result found'){
+
+      $HTMLData+='<div class="d-flex flex-column-fluid"><div class="container"> <div class=" overflow-hidden">';
+      $HTMLData+='<div class="card-body p-0"> <div class="row  py-8 px-8 py-md-27 px-md-0"> <div class="col-md-10">';
       $HTMLData+='<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row"><h1 class="display-4 font-weight-boldest mb-10">INVOICE</h1>';
-      $HTMLData+='<div class="d-flex flex-column align-items-md-end px-0">   <h3 class="display-4 font-weight-boldest mb-10">SwiftPark</h3>';
-      $HTMLData+='<span class="d-flex flex-column align-items-md-end opacity-70">';
+      $HTMLData+='<div class="d-flex flex-column align-items-md-start px-0">   <h3 class="display-4 font-weight-boldest mb-10">SwiftPark</h3>';
+      $HTMLData+='<span class="d-flex flex-column align-items-md-start opacity-70">';
       $HTMLData+='<span>'+data.address+','+data.state+'</span>';
       $HTMLData+='<span>Tel‎: '+data.tel+'</span>';
       $HTMLData+='<span>Fax: ‎'+data.fax+'</span>';
@@ -125,78 +129,84 @@ export class AccountSummaryComponent implements OnInit{
       
       $HTMLData+='</span>';
       $HTMLData+='</div>  </div>';
+
       $HTMLData+='<div class="border-bottom w-100"></div>';
-    
       $HTMLData+=' <div class="d-flex justify-content-between pt-6"><div class="d-flex flex-column flex-root">';
       $HTMLData+=' <span class="font-weight-bolder mb-2">DATE</span>';
       $HTMLData+='<span class="opacity-70">'+data.created +'</span></div>';
       $HTMLData+=' <div class="d-flex flex-column flex-root">';
       $HTMLData+=' <span class="font-weight-bolder mb-2">LOT NO.</span> <span class="opacity-70">'+data.lot_no+'</span> </div>';
       $HTMLData+='  <div class="d-flex flex-column flex-root">';
-      $HTMLData+=' <span class="font-weight-bolder mb-2">BILL TO.</span> <span class="opacity-70">Nemesis Security Services Inc. <br />123 SWIFTPARK AVENUE</span>';
-      $HTMLData+=' </div> </div> </div> </div>';
+      $HTMLData+=' <span class="font-weight-bolder mb-2">INVOICE NO</span> <span class="opacity-70"> 4321</span>';
+      $HTMLData+=' </div> </div> ';
       
-     
-      $HTMLData+='  <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0"><div class="col-md-9"><div class="table-responsive">';
+      $HTMLData+=' <div class="d-flex justify-content-between pt-6"><div class="d-flex flex-column flex-root">';
+      $HTMLData+=' <span class="font-weight-bolder mb-2">INVOICE DATE</span>';
+      $HTMLData+='<span class="opacity-70">'+data.invoice_date +'</span></div>';
+      $HTMLData+=' <div class="d-flex flex-column flex-root">';
+      $HTMLData+=' <span class="font-weight-bolder mb-2">BILLING PERIOD</span> <span class="opacity-70">'+data.search_period_from+' to '+data.search_period_to+'</span> </div>';
+      $HTMLData+='  <div class="d-flex flex-column flex-root">';
+      $HTMLData+=' <span class="font-weight-bolder mb-2">BILL TO.</span> <span class="opacity-70">Nemesis Security Services Inc. <br />123 SWIFTPARK AVENUE</span>';
+      $HTMLData+=' </div> </div> ';
+   
+      $HTMLData+=' </div> </div>';
+      $HTMLData+='  <div class="row   py-8 px-8 py-md-10 px-md-0"><div class="col-md-11"><div class="table-responsive">';
       $HTMLData+='  <table class="table"><thead><tr>';
       $HTMLData+='<th class="pl-0 font-weight-bold text-muted text-uppercase">Description</th>';
-      $HTMLData+='<th class="text-right font-weight-bold text-muted text-uppercase">No of ‎Transactions‎</th> ';
-      $HTMLData+='<th class="text-right font-weight-bold text-muted text-uppercase">Qty </th>';
-      $HTMLData+='<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Rate‎</th>';
-      $HTMLData+='<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Amount</th>';
-      $HTMLData+='<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Tax‎</th>';
-      $HTMLData+='<th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Total‎</th>';
+      $HTMLData+='<th class="text-center font-weight-bold text-muted text-uppercase">No of ‎Transactions‎</th> ';
+      $HTMLData+='<th class="text-center font-weight-bold text-muted text-uppercase">Qty </th>';
+      $HTMLData+='<th class="text-center pr-0 font-weight-bold text-muted text-uppercase">Rate‎</th>';
+      $HTMLData+='<th class="text-center pr-0 font-weight-bold text-muted text-uppercase">Amount</th>';
+      $HTMLData+='<th class="text-center pr-0 font-weight-bold text-muted text-uppercase">Tax‎</th>';
+      $HTMLData+='<th class="text-center pr-0 font-weight-bold text-muted text-uppercase">Total‎</th>';
       $HTMLData+=' </tr> </thead> <tbody> <tr class="font-weight-boldest">';
       $HTMLData+='<td class="pl-0 pt-7">SwiftPark Courtesy Card Transactions</td> ';
-      $HTMLData+='<td class="text-right pt-7">80</td>';
-      $HTMLData+=' <td class="text-right pt-7">$40.00</td>';
-      $HTMLData+='<td class="text-danger pr-0 pt-7 text-right">$3200.00</td> ';
-      $HTMLData+='<td class="text-danger pr-0 pt-7 text-right">$3200.00</td> ';
-      $HTMLData+='<td class="text-danger pr-0 pt-7 text-right">$3200.00</td> ';
-      $HTMLData+='<td class="text-danger pr-0 pt-7 text-right">$3200.00</td> </tr> ';
+      $HTMLData+='<td class="text-center pt-7">80</td>';
+      $HTMLData+=' <td class="text-center pt-7">$40.00</td>';
+      $HTMLData+='<td class="text-center pr-0 pt-7 text-center">$3200.00</td> ';
+      $HTMLData+='<td class="text-center pr-0 pt-7 text-center">$3200.00</td> ';
+      $HTMLData+='<td class="text-center pr-0 pt-7 text-center">$3200.00</td> ';
+      $HTMLData+='<td class="text-center pr-0 pt-7 text-center">$3200.00</td> </tr> ';
 
 
       $HTMLData+='  <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Credit Card Transactions</td>';
-      $HTMLData+=' <td class="border-top-0 text-right py-4">120</td>';
-      $HTMLData+='<td class="border-top-0 text-right py-4">$40.00</td>';
-      $HTMLData+=' <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td> ';
-      $HTMLData+=' <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td> ';
-      $HTMLData+=' <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td> ';
-      $HTMLData+=' <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td> </tr>';
+      $HTMLData+=' <td class="border-top-0 text-center py-4">120</td>';
+      $HTMLData+='<td class="border-top-0 text-center py-4">$40.00</td>';
+      $HTMLData+=' <td class="text-center border-top-0 pr-0 py-4 text-center">$4800.00</td> ';
+      $HTMLData+=' <td class="text-center border-top-0 pr-0 py-4 text-center">$4800.00</td> ';
+      $HTMLData+=' <td class="text-center border-top-0 pr-0 py-4 text-center">$4800.00</td> ';
+      $HTMLData+=' <td class="text-center border-top-0 pr-0 py-4 text-center">$4800.00</td> </tr>';
      
       $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">SwiftPark share of Permit sales </td>';
-      $HTMLData+='<td class="border-top-0 text-right py-4">210</td> <td class="border-top-0 text-right py-4">$60.00</td>';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> </tr>';
+      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
 
       $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Sub Totals  </td>';
-      $HTMLData+='<td class="border-top-0 text-right py-4">210</td> <td class="border-top-0 text-right py-4">$60.00</td>';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> </tr>';
+      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
       
       $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Client share of Permit sales </td>';
-      $HTMLData+='<td class="border-top-0 text-right py-4">210</td> <td class="border-top-0 text-right py-4">$60.00</td>';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> ';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td> </tr>';
-
+      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
+      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
+    
       $HTMLData+='</tbody> </table></div></div></div>';
 
 
-      $HTMLData+=' <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0"> <div class="col-md-9">';
-      $HTMLData+=' <div class="table-responsive"> <table class="table"> <thead><tr>';
-      $HTMLData+='<th class="font-weight-bold text-muted text-uppercase">INVOICE DATE</th> <th class="font-weight-bold text-muted text-uppercase">Billing period</th>';
-      $HTMLData+='<th class="font-weight-bold text-muted text-uppercase">DUE DATE</th><th class="font-weight-bold text-muted text-uppercase">TOTAL AMOUNT</th>';
-      $HTMLData+=' </tr></thead><tbody><tr class="font-weight-bolder">';
-      $HTMLData+='<td>'+data.invoice_date+'</td><td>'+data.search_period_from+' - '+data.search_period_to+'</td><td>Jan 07, 2018</td>';
-      $HTMLData+='<td class="text-danger font-size-h3 font-weight-boldest">20,600.00</td></tr> </tbody></table>';
+      $HTMLData+=' <div class="row  py-8 px-8 py-md-10 px-md-0"> <div class="col-md-11">';
+      $HTMLData+=' <div class="table-responsive"> ';
+      $HTMLData+='<h3>AMOUNT PAYABLE TO Client</h3>';
+ 
       $HTMLData+='</div></div></div>';
-
+  }
  
       $HTMLData+=' </div> </div> </div> </div>';
       $HTMLData+='</body>';

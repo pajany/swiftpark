@@ -6,14 +6,14 @@
 
   </div>
 
-<div class="form form-label-right">
+<div class="form form-label-right defaul">
   <div class="form-group row">
     <div class="form-group row" [formGroup]="searchGroup">
     <div class="col-lg-3">
        
-       <label class="col-lg-8 col-form-label" style="margin-left: 25px;"><b>Lot No:</b></label>
+       <label class="col-lg-8 col-form-label" style="margin-left: 48px;"><b>Lot No:</b></label>
        <div class="col-lg-10">
-          <select class="form-control" name="lot_no"  formControlName="lot_no"  style="margin-left: 22px;" >
+          <select class="form-control" name="lot_no"  formControlName="lot_no"  style="margin-left: 48px;" >
             <option> Please Select</option>  
             <option  *ngFor="let product of productsService.items$ | async; let i = index" 
             [value]="product.lot_no">{{product.lot_no }}</option>  
@@ -45,7 +45,8 @@
           </div>
 
         </div>
-    </div>
+    </div> 	 
+
 
     <div class="col-lg-3">
         

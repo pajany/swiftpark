@@ -7,7 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsService } from '../_services';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
- 
+import { environment } from 'src/environments/environment';
+
+
 @Component({
   selector: 'app-lot-details',
   templateUrl: './lot-details.component.html',
@@ -16,6 +18,8 @@ import * as $ from 'jquery';
 
 export class LotDetailsComponent implements OnInit{
   
+  API_URL = `${environment.apiUrl}/`;
+
   isLoading: boolean;
   filterGroup: FormGroup;
   searchGroup: FormGroup;
@@ -96,11 +100,18 @@ export class LotDetailsComponent implements OnInit{
     const lotno = event.target.value;
     var $HTMLData='';
     if (lotno != "") {
-      this.http.get('http://swiftpark.sdiphp.com/api/lotnodata?lotno=' + lotno).subscribe((data: any) => {
+      this.http.get(this.API_URL+'lotnodata?lotno=' + lotno).subscribe((data: any) => {
 
         $("#lotTable").empty();
         $HTMLData ='<html>';
         $HTMLData+='<body>';
+
+        if(data.success =='No Result found'){
+          $HTMLData +='<tr style="text-align:center;">';
+          $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+          $HTMLData +='</tr>';
+        }
+        if (data.success  !='No Result found') {
 
         $HTMLData+='<div class="form-group row">';
         $HTMLData+='  <label class="col-lg-2 "> Lot NO: </label>';
@@ -123,21 +134,6 @@ export class LotDetailsComponent implements OnInit{
         $HTMLData+='</div>';
         $HTMLData+=' </div>';
        
-        // $HTMLData +='<table border="1" style="width:70%;">';
-        // $HTMLData +='<tr style="padding: 15px;">';
-        // $HTMLData +=' <th style="background-color:#9FE2BF"><b>'+'Permit Type‎'+'</b></th>';
-        // $HTMLData +=' <th style="background-color:#9FE2BF">'+'Amount‎'+'</th>';
-        // $HTMLData +=' <th style="background-color:#9FE2BF">'+'Tax‎'+'</th>';
-        // $HTMLData +=' <th style="background-color:#9FE2BF">'+'Duration‎'+'</th>';
-        // $HTMLData +='</tr>';
-      
-        // $HTMLData +='<tr>';
-        // $HTMLData +=' <td>'+data[0].twentyfourhour+'</td>';
-        // $HTMLData +=' <td>'+data[0].day_permit+'</td>';
-        // $HTMLData +=' <td>'+data[0].tax_amount+'</td>';
-        // $HTMLData +=' <td>'+data[0].twentyfourhour+'</td>';
-        // $HTMLData +='</tr>';
-        // $HTMLData +='</table>';
 
         $HTMLData +='<table class="table" style="width:70%;">';
         $HTMLData +='<thead class="thead-light">';
@@ -223,7 +219,7 @@ if(data.overnight !="false"){
         $HTMLData+=''+data.email +'';
         $HTMLData+='</div>';
         $HTMLData+=' </div>';
-
+        }
         $HTMLData+='</body>';
         $HTMLData+='</html>';
 

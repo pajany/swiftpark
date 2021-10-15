@@ -3,6 +3,8 @@
   <!--begin::Logo-->
   <a routerLink="/" class="brand-logo">
     <!-- <img alt="Logo" [attr.src]="headerLogo" /> -->
+
+    
   </a>
   <!--end::Logo-->
 
@@ -69,11 +71,9 @@
         routerLink="/ecommerce/customers"
         routerLinkActive="active"
       >
-      <span
-      [inlineSVG]="'./assets/media/svg/icons/General/User.svg'"
-      cacheSVG="true"
-      class="svg-icon menu-icon"
-    ></span>
+      <i class="fas fa-user-friends madmin svg-icon menu-icon"></i>
+     
+
         <span class="menu-text">Manage Admin</span>
       </a>
     </li>
@@ -93,11 +93,13 @@
       >
 
       
-      <span
+      <!-- <span
       [inlineSVG]="'./assets/media/svg/icons/General/User.svg'"
       cacheSVG="true"
       class="svg-icon menu-icon"
-    ></span>
+    ></span> -->
+    <i class="fas fa-users madmin  svg-icon menu-icon"></i>
+    
         <span class="menu-text">Manage Customer</span>
       </a>
     </li>
@@ -112,11 +114,13 @@
      <a class="menu-link" 
       routerLink="/ecommerce/courtesycard"
       routerLinkActive="active">
-       <span
+       <!-- <span
          [inlineSVG]="'./assets/media/svg/icons/Home/Library.svg'"
          cacheSVG="true"
          class="svg-icon menu-icon"
-       ></span>
+       ></span> -->
+       <i class="fas fa-credit-cardfas fa-credit-card madmin  svg-icon menu-icon"></i>
+       
        <span class="menu-text">Courtesy Card</span>
      </a>
    </li>
@@ -128,14 +132,19 @@
       <li
       class="menu-item"
       aria-haspopup="true"
-      routerLinkActive=" "
+      routerLinkActive="menu-item-active"
+      data-menu-toggle="hover"
       >
-      <a class="menu-link" routerLink="" routerLinkActive="active">
-        <span
+      <a class="menu-link" 
+      routerLink="/ecommerce/payment"
+      routerLinkActive="active">
+        <!-- <span
           [inlineSVG]="'./assets/media/svg/icons/Home/Chair2.svg'"
           cacheSVG="true"
           class="svg-icon menu-icon"
-        ></span>
+        ></span> -->
+        <i class="fab fa-cc-paypal madmin  svg-icon menu-icon"></i>
+        
         <span class="menu-text">Payment</span>
       </a>
       </li>
@@ -154,11 +163,13 @@
        href="/user-management"
      >
      
-       <span
+       <!-- <span
          [inlineSVG]="'./assets/media/svg/icons/General/Folder.svg'"
          cacheSVG="true"
          class="svg-icon menu-icon"
-       ></span>
+       ></span> -->
+       <i class="fas fa-file-invoice madmin  svg-icon menu-icon"></i>
+
        <span class="menu-text">Reports</span>
        <i class="menu-arrow"></i>
      </a>

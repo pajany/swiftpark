@@ -1,14 +1,14 @@
 // tslint:disable:no-string-literal
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal,NgbDate,NgbModule,NgbCalendar, NgbDateAdapter, NgbDateParserFormatter,NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ProductsService } from '../_services';
 import { CustomAdapter , CustomDateParserFormatter, getDateFromString} from 'src/app/_metronic/core';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tax-report',
@@ -22,20 +22,34 @@ import * as $ from 'jquery';
 
 export class TaxReportComponent implements OnInit{
   
+  API_URL = `${environment.apiUrl}/`;
+
+  hoveredDate: NgbDate | null = null;
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+
   isLoading: boolean;
   filterGroup: FormGroup;
   searchGroup: FormGroup;
   
   private subscriptions: Subscription[] = []; 
-   lot_no:'';
+  lot_no:'';
   fromdate:undefined;
   todate:undefined;
-
+ 
   constructor(
     private fb: FormBuilder,
      public productsService: ProductsService,
      private http: HttpClient,
-  ) { }
+     private calendar: NgbCalendar,
+     public formatter: NgbDateParserFormatter,
+     private config: NgbDatepickerConfig
+  ) { 
+
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+
+  }
 
   // angular lifecircle hooks
   ngOnInit(): void {
@@ -49,11 +63,39 @@ export class TaxReportComponent implements OnInit{
    
   }
 
-
   ngOnDestroy() {
     this.subscriptions.forEach((sb) => sb.unsubscribe());
   }
 
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  
   // filtration
   filterForm() {
     this.filterGroup = this.fb.group({
@@ -96,9 +138,14 @@ export class TaxReportComponent implements OnInit{
 
   save() {
     const formData = this.searchGroup.value;
+
+    console.log("All Res", formData);
     console.log("fromdate", formData.fromdate);
     console.log("todate", formData.todate);
     console.log("lot_no", formData.lot_no);
+
+    console.log("this FFF", this.fromDate);
+    console.log("this Tooo", this.toDate);
 
   const fromdate = formData.fromdate;
   const todate = formData.todate;
@@ -106,55 +153,62 @@ export class TaxReportComponent implements OnInit{
 
   var $HTMLData='';
   if (lotno != "") {
-    this.http.get('http://127.0.0.1:8000/api/accountsummary?lotno='+lotno+'&fromdate='+fromdate+'&todate='+todate).subscribe((data: any) => {
+    this.http.get(this.API_URL+'accountsummary?lotno='+lotno+'&fromdate='+fromdate+'&todate='+todate).subscribe((data: any) => {
 
+      console.log("All data", data);
       $("#lotTable").empty();
       $HTMLData ='<html>';
       $HTMLData+='<body>';
 
-      $HTMLData+='<div class="form-group row">';
-      $HTMLData+='  <label class="col-lg-2 " style="margin-top: 12px;"> Lot NO: </label>';
-      $HTMLData+=' <div class="col-lg-6" style="margin-left: -102px;margin-top: 12px;">';
-      $HTMLData+=''+data.lot_no +'';
-      $HTMLData+='</div>';
-      $HTMLData+=' </div>';
-    
-      $HTMLData+='<div class="form-group row">';
-      $HTMLData+='  <label class="col-lg-2" style="margin-top: -20px;">  Address‎:  </label>';
-      $HTMLData+=' <div class="col-lg-6" style="margin-top:-20px;margin-left: -105px;">';
-      $HTMLData+=''+data.address +'';
-      $HTMLData+='</div>';
-      $HTMLData+=' </div>';
+      if (data.success  !='No Result found') {
 
-      $HTMLData+='<div class="form-group row">';
-      $HTMLData+='  <label class="col-lg-2 " style="margin-top: -30px;"> Phone No‎:‎  </label>';
-      $HTMLData+=' <div class="col-lg-7" style="margin-top: -27px;margin-left: -106px;">';
-      $HTMLData+=''+data.phone +'';
-      $HTMLData+='</div>';
-      $HTMLData+='</div></br>';
-     
-      $HTMLData +='<table class="table" style="width:70%;">';
+      $HTMLData+='<div style="margin-top: 40px;">   <h5 >SwiftPark</h5>';
+      $HTMLData+='<span class="d-flex flex-column  addr opacity-70">';
+      $HTMLData+='<span>'+data.address+','+data.state+'</span>';
+      $HTMLData+='<span>Tel‎: '+data.tel+'</span>';
+      $HTMLData+='<span>Fax: ‎'+data.fax+'</span>';
+      $HTMLData+='<span>Email: '+data.email+'</span>';
+      $HTMLData+='</span>';
+      $HTMLData+='  </div>';
+
+      $HTMLData+=' <hr style="width:95%;text-align:left;margin-left:-10px">';
+      $HTMLData+='  <div class="row">'; 
+      $HTMLData+='  <label class="col-lg-6 d-flex flex-column "> Today‎Date‎ :'+ data.search_period_from+'</label>' ;
+      $HTMLData+='  <label class="col-lg-6 "> Report Period‎ :'+data.search_period_from+' to '+data.search_period_to+'</label>' ;
+      $HTMLData+='  </div>';
+
+      }
+      $HTMLData +='<table class="table" style="width:90%; margin-top: 40px;">';
       $HTMLData +='<thead class="thead-light">';
       $HTMLData +='<tr>';
-      $HTMLData +='<th scope="col">Permit No‎ </th>';
-      $HTMLData +='<th scope="col">Permit Type</th>';
-      $HTMLData +='<th scope="col">Payment Type‎</th>';
-      $HTMLData +='<th scope="col">Plate No‎</th>';
-      $HTMLData +='<th scope="col">Transaction Date ‎‎</th>';
-      $HTMLData +='<th scope="col">Expiry Date ‎& ‎Time‎‎</th>';
+      $HTMLData +='<th scope="col">Date‎</th>';
+      $HTMLData +='<th scope="col">Invoice ‎#‎ </th>';
+      $HTMLData +='<th scope="col">Lot ‎#‎‎</th>';
+      $HTMLData +='<th scope="col">Tax Collected‎‎</th>';
+      $HTMLData +='<th scope="col">Tax Payed Out‎ ‎‎</th>';
+      $HTMLData +='<th scope="col">Tax Payable‎‎‎</th>';
       $HTMLData +='</tr>';
       $HTMLData +='</thead>';
       $HTMLData +='<tbody>';
-for(var i=0;i<4;i++){
+ 
+      if(data.success =='No Result found'){
+       
+        $HTMLData +='<tr>';
+        $HTMLData +='<td style="white-space:nowrap !important; text-align: center !important; vertical-align: middle !important;"> <span class="nodata"><h3> No Record Found! </h3> </span> </td>';
+        $HTMLData +='</tr>';
+      }
+
+    if (data.success !='No Result found'){
+
       $HTMLData +='<tr>';
-      $HTMLData +='<td>'+data.thirtyday+'</td>';
-      $HTMLData +='<td>'+data.month_permit+'</td>';
-      $HTMLData +='<td>'+data.tax_amount+'</td>';
-      $HTMLData +='<td>'+data.thirtyday+'</td>';
-      $HTMLData +='<td>'+data.tax_amount+'</td>';
-      $HTMLData +='<td>'+data.thirtyday+'</td>';
+      $HTMLData +='<td>'+data.created+'</td>';
+      $HTMLData +='<td>'+1251 +'</td>';
+      $HTMLData +='<td>'+data.lot_no+'</td>';
+      $HTMLData +='<td>$0.00</td>';
+      $HTMLData +='<td>$0.00</td>';
+      $HTMLData +='<td>$0.00</td>';
       $HTMLData +='</tr>';
-}
+    }
       $HTMLData +='</tbody>';
       $HTMLData +='</table>';
       $HTMLData+='</body>';

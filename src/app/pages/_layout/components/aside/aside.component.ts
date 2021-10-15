@@ -44,9 +44,9 @@ export class AsideComponent implements OnInit {
 
   private getLogo() {
     if (this.brandSkin === 'light') {
-      return './assets/media/logos/logo-dark.png';
+      return 'https://swift-park.com/CrystalImageHandler.aspx?dynamicimage=cr_tmp_image_54e1e478-4044-4ea2-a40e-ce1201e837cd.png';
     } else {
-      return './assets/media/logos/logo-light.png';
+      return 'https://swift-park.com/CrystalImageHandler.aspx?dynamicimage=cr_tmp_image_54e1e478-4044-4ea2-a40e-ce1201e837cd.png';
     }
   }
 }
