@@ -1,7 +1,7 @@
 // tslint:disable:no-string-literal
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal,NgbDate,NgbModule,NgbCalendar, NgbDateAdapter, NgbDateParserFormatter,NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ProductsService } from '../_services';
@@ -23,6 +23,10 @@ import { environment } from 'src/environments/environment';
 export class AccountSummaryComponent implements OnInit{
   
   API_URL = `${environment.apiUrl}/`;
+  hoveredDate: NgbDate | null = null;
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+
   isLoading: boolean;
   filterGroup: FormGroup;
   searchGroup: FormGroup;
@@ -31,11 +35,20 @@ export class AccountSummaryComponent implements OnInit{
   fromdate:undefined;
   todate:undefined;
 
+
   constructor(
     private fb: FormBuilder,
      public productsService: ProductsService,
      private http: HttpClient,
-  ) { }
+     private calendar: NgbCalendar,
+     public formatter: NgbDateParserFormatter,
+     private config: NgbDatepickerConfig
+  ) { 
+
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+
+  }
 
   // angular lifecircle hooks
   ngOnInit(): void {
@@ -63,6 +76,34 @@ export class AccountSummaryComponent implements OnInit{
     });
     
   
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
    
@@ -132,8 +173,8 @@ export class AccountSummaryComponent implements OnInit{
 
       $HTMLData+='<div class="border-bottom w-100"></div>';
       $HTMLData+=' <div class="d-flex justify-content-between pt-6"><div class="d-flex flex-column flex-root">';
-      $HTMLData+=' <span class="font-weight-bolder mb-2">DATE</span>';
-      $HTMLData+='<span class="opacity-70">'+data.created +'</span></div>';
+      $HTMLData+=' <span class="font-weight-bolder mb-2">Permit  Sales  before  taxes‎</span>';
+      $HTMLData+='<span class="opacity-70">$ 0</span></div>';
       $HTMLData+=' <div class="d-flex flex-column flex-root">';
       $HTMLData+=' <span class="font-weight-bolder mb-2">LOT NO.</span> <span class="opacity-70">'+data.lot_no+'</span> </div>';
       $HTMLData+='  <div class="d-flex flex-column flex-root">';
@@ -178,22 +219,22 @@ export class AccountSummaryComponent implements OnInit{
       $HTMLData+=' <td class="text-center border-top-0 pr-0 py-4 text-center">$4800.00</td> </tr>';
      
       $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">SwiftPark share of Permit sales </td>';
-      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
-      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="border-top-0 text-center py-4"> </td> <td class="border-top-0 text-center py-4"> </td>';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center"></td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
 
       $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Sub Totals  </td>';
-      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
-      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+='<td class="border-top-0 text-center py-4"> </td> <td class="border-top-0 text-center py-4"> </td>';
+      $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center"></td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-center border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
       
-      $HTMLData+=' <tr class="font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Client share of Permit sales </td>';
-      $HTMLData+='<td class="border-top-0 text-center py-4">210</td> <td class="border-top-0 text-center py-4">$60.00</td>';
-      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
+      $HTMLData+=' <tr class=" text-danger font-weight-boldest border-bottom-0"><td class="border-top-0 pl-0 py-4">Client share of Permit sales </td>';
+      $HTMLData+='<td class="border-top-0 text-center py-4"> </td> <td class="border-top-0 text-center py-4"> </td>';
+      $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center"></td> ';
       $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> ';
       $HTMLData+='<td class="text-danger border-top-0 pr-0 py-4 text-center">$12600.00</td> </tr>';
@@ -204,7 +245,7 @@ export class AccountSummaryComponent implements OnInit{
       $HTMLData+=' <div class="row  py-8 px-8 py-md-10 px-md-0"> <div class="col-md-11">';
       $HTMLData+=' <div class="table-responsive"> ';
       $HTMLData+='<h3>AMOUNT PAYABLE TO Client</h3>';
- 
+      $HTMLData+='<h4> $0.00 DUE  UPON  RECEIPT</h4>';
       $HTMLData+='</div></div></div>';
   }
  
