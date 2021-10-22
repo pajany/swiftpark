@@ -13,6 +13,9 @@ import { IncomeReportComponent } from './income-report/income-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
 import { PaymentComponent } from './payment/payment.component';
 
+import { ManagepagesComponent } from './managepages/managepages.component';
+import { ManagepageEditComponent } from './managepages/managepage-edit/managepage-edit.component';
+ 
 const routes: Routes = [
   {
     path: '',
@@ -50,6 +53,24 @@ const routes: Routes = [
         path: 'payment',
         component: PaymentComponent,
       },
+     
+      {
+        path: 'managepage',
+        component: ManagepagesComponent,
+      },
+      {
+        path: 'managepage/add',
+        component: ManagepageEditComponent
+      },
+      {
+        path: 'managepage/edit',
+        component: ManagepageEditComponent
+      },
+      {
+        path: 'managepage/edit/:id',
+        component: ManagepageEditComponent
+      },
+     
       {
         path: 'products',
         component: ProductsComponent,

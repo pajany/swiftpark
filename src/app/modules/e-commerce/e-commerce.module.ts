@@ -40,6 +40,13 @@ import { ViewPermitsComponent } from './view-permits/view-permits.component';
 import { IncomeReportComponent } from './income-report/income-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
 import { PaymentComponent } from './payment/payment.component';
+import { ManagepagesComponent } from './managepages/managepages.component';
+import { ManagepageEditComponent } from './managepages/managepage-edit/managepage-edit.component';
+import { DeleteManagepageModalComponent } from './managepages/components/delete-managepage-modal/delete-managepage-modal.component';
+import { DeleteManagepagesModalComponent } from './managepages/components/delete-managepages-modal/delete-managepages-modal.component';
+import { FetchManagepagesModalComponent } from './managepages/components/fetch-managepages-modal/fetch-managepages-modal.component';
+import { UpdateManagepagesStatusModalComponent } from './managepages/components/update-managepages-status-modal/update-managepages-status-modal.component';
+
    //import { EditSpecModalComponent } from './products/product-edit/specifications/edit-spec-modal/edit-spec-modal.component';
 
 @NgModule({
@@ -77,7 +84,13 @@ import { PaymentComponent } from './payment/payment.component';
     ViewPermitsComponent,
     IncomeReportComponent,
     TaxReportComponent,
-    PaymentComponent,  
+    PaymentComponent,
+    ManagepagesComponent,
+    ManagepageEditComponent,
+    DeleteManagepageModalComponent,
+    DeleteManagepagesModalComponent,
+    FetchManagepagesModalComponent,
+    UpdateManagepagesStatusModalComponent,
     //EditSpecModalComponent,
   ],
   imports: [

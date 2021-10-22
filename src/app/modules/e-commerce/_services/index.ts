@@ -9,5 +9,4 @@ export { RemarksService } from './fake/remarks.service'; // You have to comment 
 // export { SpecificationsService } from './specifications.service'; // You have to uncomment this, when your real back-end is done
 // export { RemarksService } from './remarks.service'; // You have to uncomment this, when your real back-end is done
 export { CourtesyCardService } from './courtesycard.service';
-export { ManagefaqService } from './Managefaq.service'
- 
+export { ManagePageService } from './managepage.service';

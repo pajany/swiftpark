@@ -17,9 +17,10 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 // #fake-end#
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormsModule } from '@angular/forms';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
- 
- 
+
  function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -34,13 +35,15 @@ import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CKEditorModule,
+    FormsModule,
     RxReactiveFormsModule,
     SplashScreenModule,
     TranslateModule.forRoot(),
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
-    // #fake-start#
+     // #fake-start#
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
         passThruUnknownUrl: true,
@@ -53,6 +56,9 @@ import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
     NgbModule,
     
   ],
+  exports: [
+    CKEditorModule,  
+],
   providers: [
     {
       provide: APP_INITIALIZER,
