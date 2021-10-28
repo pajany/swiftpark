@@ -12,6 +12,7 @@ const API_USERS_URL = `${environment.apiUrl}/signin`;
 
 // Customer URL
 const API_CUSTOMER_URL = `${environment.apiUrl}/customersignin`;
+const API_CUST_LOT_URL = `${environment.apiUrl}/signlotno`;
 
 @Injectable({
   providedIn: 'root',
@@ -89,6 +90,37 @@ export class AuthHTTPService {
     );
   }
 
+
+  lotNumberCheck(lot_number: string): Observable<any> {
+    const notFoundError = new Error('Not Found');
+    if (!lot_number) {
+      return of(notFoundError);
+    }
+    return this.getCustomerlotDetails(lot_number).pipe(
+      map((result: any) => {
+        if (result.length <= 0) {
+          return notFoundError;
+        }
+        const user = result.find((u) => {
+          return (
+            u.lot_number === lot_number
+          );
+        });
+        if (!user) {
+          return notFoundError;
+        }
+        console.log("user data", user);
+
+        this.getuserdata.push(user);
+        const auth = new AuthModel();
+        auth.authToken = user.authToken;
+        auth.refreshToken = user.refreshToken;
+        auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+        return auth;
+      })
+    );
+  }
+
   createUser(user: UserModel): Observable<any> {
     user.roles = [2]; // Manager
     user.authToken = 'auth-token-' + Math.random();
@@ -132,6 +164,11 @@ export class AuthHTTPService {
   getLoginCustomer(email: string, password: string): Observable<any> {
     return this.http.post<AuthModel>(`${API_CUSTOMER_URL}`, { email, password });
   }
+  // Customer Lot Details
+  getCustomerlotDetails(lot_number: string) {
+    return this.http.post<AuthModel>(`${API_CUST_LOT_URL}`, { lot_number });
+  }
+
 
   // public methods
   // login(email: string, password: string): Observable<any> {

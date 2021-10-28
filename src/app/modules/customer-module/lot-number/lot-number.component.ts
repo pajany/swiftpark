@@ -55,17 +55,18 @@ export class LotNumberComponent implements OnInit {
   submit() {
     this.hasError = false;
     debugger;
-    // const loginSubscr = this.authService.login(this.f.email.value, this.f.password.value).pipe(first())
-    //   .subscribe((user: UserModel) => {
-    //     if (user) {
-    //       this.router.navigate([this.returnUrl]);
-    //     } else {
-    //       this.hasError = true;
-    //     }
-    //   });
-    // this.unsubscribe.push(loginSubscr); 
-    this.router.navigate([this.returnUrl]);
-    this.globleService.isAdminLoggedIn = false;
+    const loginSubscr = this.authService.customerLotCheck(this.f.lot_number.value).pipe(first())
+      .subscribe((response: any) => {
+        if (response) {
+          this.router.navigate([this.returnUrl]);
+          this.globleService.isAdminLoggedIn = false;
+        } else {
+          this.hasError = true;
+        }
+      });
+    this.unsubscribe.push(loginSubscr); 
+    // this.router.navigate([this.returnUrl]);
+    // this.globleService.isAdminLoggedIn = false;
   }
   cancelLot() {
     this.router.navigate(['/auth/customerlogin']);

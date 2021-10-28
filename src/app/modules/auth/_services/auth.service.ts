@@ -84,6 +84,22 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  customerLotCheck(lot_number: string): Observable<UserModel> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.lotNumberCheck(lot_number).pipe(
+      map((auth: AuthModel) => {
+        const result = this.setAuthFromLocalStorage(auth);
+        return result;
+      }),
+      switchMap(() => this.getUserByToken()),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
   getUserByToken(): Observable<UserModel> {
     const auth = this.getAuthFromLocalStorage();
     if (!auth || !auth.authToken) {
