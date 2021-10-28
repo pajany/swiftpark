@@ -1,26 +1,17 @@
-// tslint:disable:no-string-literal
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbActiveModal, NgbDate, NgbModule, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ProductsService } from '../_services';
-import { CustomAdapter, CustomDateParserFormatter, getDateFromString } from 'src/app/_metronic/core';
 import { HttpClient } from '@angular/common/http';
-import * as $ from 'jquery';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ProductsService } from '../../e-commerce/_services';
 
 @Component({
-  selector: 'app-account-summary',
-  templateUrl: './account-summary.component.html',
-  styleUrls: ['./account-summary.component.scss'],
-  providers: [
-    { provide: NgbDateAdapter, useClass: CustomAdapter },
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
-  ]
+  selector: 'app-accountsummary',
+  templateUrl: './accountsummary.component.html',
+  styleUrls: ['./accountsummary.component.scss']
 })
-
-export class AccountSummaryComponent implements OnInit {
+export class AccountsummaryComponent implements OnInit {
 
   API_URL = `${environment.apiUrl}/`;
   hoveredDate: NgbDate | null = null;
@@ -58,8 +49,6 @@ export class AccountSummaryComponent implements OnInit {
     const sb = this.productsService.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);
     this.productsService.fetch();
-
-
   }
 
 
@@ -265,5 +254,5 @@ export class AccountSummaryComponent implements OnInit {
   }
 
 
-}
 
+}

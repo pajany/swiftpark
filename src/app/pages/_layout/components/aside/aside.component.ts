@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/modules/auth/_services/GlobalService';
 import { LayoutService } from '../../../../_metronic/core';
 
 @Component({
@@ -19,11 +20,13 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
+  isAdminMenu = false;
 
-  constructor(private layout: LayoutService, private loc: Location) { }
+  constructor(private layout: LayoutService, private loc: Location, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     // load view settings
+    this.isAdminMenu = this.globalService.isAdminLoggedIn;
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');

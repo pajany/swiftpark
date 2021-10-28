@@ -2,38 +2,40 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { UsersTable } from 'src/app/_fake/fake-db/users.table'; 
+import { UsersTable } from 'src/app/_fake/fake-db/users.table';
 import { environment } from 'src/environments/environment';
 import { AuthModel } from '../../_models/auth.model';
 import { UserModel } from '../../_models/user.model';
 
+// Super Admin URL
 const API_USERS_URL = `${environment.apiUrl}/signin`;
+
+// Customer URL
+const API_CUSTOMER_URL = `${environment.apiUrl}/customersignin`;
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthHTTPService {
   constructor(private http: HttpClient) { }
-getuserdata:any[ ]=[];
+  getuserdata: any[] = [];
 
-// login(email: string, password: string): Observable<any> {
-//      return this.http.post<AuthModel>(`${API_USERS_URL}`, { email, password });
-//    }
+  // login(email: string, password: string): Observable<any> {
+  //      return this.http.post<AuthModel>(`${API_USERS_URL}`, { email, password });
+  //    }
 
-   // public methods
+  // public methods for Super Admin login
   login(email: string, password: string): Observable<any> {
     const notFoundError = new Error('Not Found');
     if (!email || !password) {
       return of(notFoundError);
     }
 
-    return this.getLoginUsers(email,password).pipe(
+    return this.getLoginUsers(email, password).pipe(
       map((result: UserModel[]) => {
         if (result.length <= 0) {
           return notFoundError;
         }
-
-         
         const user = result.find((u) => {
           return (
             u.email.toLowerCase() === email.toLowerCase() &&
@@ -43,10 +45,42 @@ getuserdata:any[ ]=[];
         if (!user) {
           return notFoundError;
         }
-        console.log("user data",user);
+        console.log("user data", user);
 
         this.getuserdata.push(user);
-         const auth = new AuthModel();
+        const auth = new AuthModel();
+        auth.authToken = user.authToken;
+        auth.refreshToken = user.refreshToken;
+        auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+        return auth;
+      })
+    );
+  }
+
+  // public methods for Customer login
+  customerlogin(email: string, password: string): Observable<any> {
+    const notFoundError = new Error('Not Found');
+    if (!email || !password) {
+      return of(notFoundError);
+    }
+    return this.getLoginCustomer(email, password).pipe(
+      map((result: UserModel[]) => {
+        if (result.length <= 0) {
+          return notFoundError;
+        }
+        const user = result.find((u) => {
+          return (
+            u.email.toLowerCase() === email.toLowerCase() &&
+            u.password === password
+          );
+        });
+        if (!user) {
+          return notFoundError;
+        }
+        console.log("user data", user);
+
+        this.getuserdata.push(user);
+        const auth = new AuthModel();
         auth.authToken = user.authToken;
         auth.refreshToken = user.refreshToken;
         auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
@@ -60,7 +94,7 @@ getuserdata:any[ ]=[];
     user.authToken = 'auth-token-' + Math.random();
     user.refreshToken = 'auth-token-' + Math.random();
     user.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
- 
+
     return this.http.post<UserModel>(API_USERS_URL, user);
   }
 
@@ -80,30 +114,10 @@ getuserdata:any[ ]=[];
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-      return this.http.get<UserModel>(`${API_USERS_URL}`, {
-        headers: httpHeaders,
-      });
+    return this.http.get<UserModel>(`${API_USERS_URL}`, {
+      headers: httpHeaders,
+    });
   }
-
-  // getUserByToken(token): Observable<UserModel> {
-
-  //   console.log("-------getUserByToken--------",this.getuserdata);
-  //   if(this.getuserdata){ 
-  //      const user = this.getuserdata.find((u) => {
-  //         return u.authToken === token;
-  //       });
-    
-  //       if (!user) {
-  //         return of(undefined);
-  //       }
-    
-  //       return of(user);
-        
-  //     }else{
-  //       return of(undefined);
-  //     }
-       
-  // } 
 
 
   getAllUsers(): Observable<UserModel[]> {
@@ -112,6 +126,11 @@ getuserdata:any[ ]=[];
 
   getLoginUsers(email: string, password: string): Observable<any> {
     return this.http.post<AuthModel>(`${API_USERS_URL}`, { email, password });
+  }
+  
+  // Customer Login
+  getLoginCustomer(email: string, password: string): Observable<any> {
+    return this.http.post<AuthModel>(`${API_CUSTOMER_URL}`, { email, password });
   }
 
   // public methods

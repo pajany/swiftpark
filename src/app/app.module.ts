@@ -20,6 +20,7 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
 import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
+import { GlobalService } from './modules/auth/_services/GlobalService';
 
  function appInitializer(authService: AuthService) {
   return () => {
@@ -78,6 +79,7 @@ import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
         },
       },
     },
+    GlobalService
   ],
   bootstrap: [AppComponent],
 })

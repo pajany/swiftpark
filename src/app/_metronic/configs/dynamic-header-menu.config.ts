@@ -312,6 +312,18 @@ export const DynamicHeaderMenuConfig = {
               page: '/ecommerce/products'
             },
           ]
+        },{
+          title: 'customer',
+          bullet: 'dot',
+          icon: 'flaticon-business',
+          permission: 'accessToCustomerModule',
+          page: '/customer',
+          submenu: [
+            {
+              title: 'customer',
+              page: '/customer/accountsummary'
+            },
+          ]
         },
         {
           title: 'User Management',

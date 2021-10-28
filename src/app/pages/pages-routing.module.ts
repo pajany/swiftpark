@@ -18,10 +18,17 @@ const routes: Routes = [
           import('./builder/builder.module').then((m) => m.BuilderModule),
       },
       {
-        path: 'ecommerce',
+        path: 'superadmin',
         loadChildren: () =>
           import('../modules/e-commerce/e-commerce.module').then(
             (m) => m.ECommerceModule
+          ),
+      },
+      {
+        path: 'customer',
+        loadChildren: () =>
+          import('../modules/customer-module/customer.module').then(
+            (m) => m.CustomerModule
           ),
       },
       {
@@ -61,7 +68,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/auth/superadminlogin',
         pathMatch: 'full',
       },
       {
