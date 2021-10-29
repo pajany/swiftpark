@@ -39,8 +39,7 @@ export class AuthHTTPService {
         }
         const user = result.find((u) => {
           return (
-            u.email.toLowerCase() === email.toLowerCase() &&
-            u.password === password
+            u.email.toLowerCase() === email.toLowerCase()  
           );
         });
         if (!user) {
@@ -66,13 +65,13 @@ export class AuthHTTPService {
     }
     return this.getLoginCustomer(email, password).pipe(
       map((result: UserModel[]) => {
+        
         if (result.length <= 0) {
           return notFoundError;
         }
         const user = result.find((u) => {
           return (
-            u.email.toLowerCase() === email.toLowerCase() &&
-            u.password === password
+            u.email.toLowerCase() === email.toLowerCase()  
           );
         });
         if (!user) {

@@ -240,7 +240,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
    edit() {
     const sbUpdate = this.productsService.update(this.product).pipe(
-      tap(() => this.router.navigate(['/ecommerce/products'])),
+      tap(() => this.router.navigate(['/superadmin/products'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.product);
@@ -254,7 +254,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   create() {
     
     const sbCreate = this.productsService.create(this.product).pipe(
-      tap(() => this.router.navigate(['/ecommerce/products'])),
+      tap(() => this.router.navigate(['/superadmin/products'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.product);

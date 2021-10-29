@@ -53,7 +53,7 @@ export class FaqAddComponent implements OnInit {
 
       this.http.post(this.API_URL, this.productForm.value.quantities).subscribe((data: any) => {
   
-        this.router.navigate(['/ecommerce/managefaq']);
+        this.router.navigate(['/superadmin/managefaq']);
       });
     }
 

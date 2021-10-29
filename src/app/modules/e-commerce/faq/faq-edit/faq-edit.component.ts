@@ -123,7 +123,7 @@ export class FaqEditComponent implements OnInit {
 
    edit() {
     const sbUpdate = this.managefaqService.update(this.managefaq).pipe(
-      tap(() => this.router.navigate(['/ecommerce/managefaq'])),
+      tap(() => this.router.navigate(['/superadmin/managefaq'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.managefaq);
@@ -137,7 +137,7 @@ export class FaqEditComponent implements OnInit {
   create() {
     
     const sbCreate = this.managefaqService.create(this.managefaq).pipe(
-      tap(() => this.router.navigate(['/ecommerce/managefaq'])),
+      tap(() => this.router.navigate(['/superadmin/managefaq'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.managefaq);

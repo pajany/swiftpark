@@ -53,9 +53,10 @@ export class CustomerLoginComponent implements OnInit {
 
   submitCustomerLogin() {
     this.hasError = false;
-    debugger;
-    const loginSubscr = this.authService.login(this.f.email.value, this.f.password.value).pipe(first())
+   
+    const loginSubscr = this.authService.customerLogin(this.f.email.value, this.f.password.value).pipe(first())
       .subscribe((user: UserModel) => {
+        console.log("customerlogin",user);
         if (user) {
           this.router.navigate([this.returnUrl]);
         } else {

@@ -170,7 +170,7 @@ extratHtmlTags(content) {
    edit() {
      
     const sbUpdate = this.managepageservice.update(this.managepage).pipe(
-      tap(() => this.router.navigate(['/ecommerce/managepage'])),
+      tap(() => this.router.navigate(['/superadmin/managepage'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.managepage);
@@ -184,7 +184,7 @@ extratHtmlTags(content) {
   create() {
     
     const sbCreate = this.managepageservice.create(this.managepage).pipe(
-      tap(() => this.router.navigate(['/ecommerce/managepage'])),
+      tap(() => this.router.navigate(['/superadmin/managepage'])),
       catchError((errorMessage) => {
         console.error('UPDATE ERROR', errorMessage);
         return of(this.managepage);
