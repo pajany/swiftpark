@@ -46,6 +46,9 @@ import { DeleteManagepageModalComponent } from './managepages/components/delete-
 import { DeleteManagepagesModalComponent } from './managepages/components/delete-managepages-modal/delete-managepages-modal.component';
 import { FetchManagepagesModalComponent } from './managepages/components/fetch-managepages-modal/fetch-managepages-modal.component';
 import { UpdateManagepagesStatusModalComponent } from './managepages/components/update-managepages-status-modal/update-managepages-status-modal.component';
+import { FaqComponent } from './faq/faq.component';
+import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
+import { FaqAddComponent } from './faq/faq-add/faq-add.component';
 
    //import { EditSpecModalComponent } from './products/product-edit/specifications/edit-spec-modal/edit-spec-modal.component';
 
@@ -91,6 +94,9 @@ import { UpdateManagepagesStatusModalComponent } from './managepages/components/
     DeleteManagepagesModalComponent,
     FetchManagepagesModalComponent,
     UpdateManagepagesStatusModalComponent,
+    FaqComponent,
+    FaqEditComponent,
+    FaqAddComponent,
     //EditSpecModalComponent,
   ],
   imports: [

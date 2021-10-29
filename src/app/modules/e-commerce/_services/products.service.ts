@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ProductsService extends TableService<Product> implements OnDestroy {
-  API_URL = `${environment.apiUrl}/customer`;
+  API_URL = `${environment.apiUrl}/admin`;
    
   constructor(@Inject(HttpClient) http) {
     super(http);

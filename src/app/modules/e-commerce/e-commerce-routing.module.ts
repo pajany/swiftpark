@@ -15,7 +15,10 @@ import { PaymentComponent } from './payment/payment.component';
 
 import { ManagepagesComponent } from './managepages/managepages.component';
 import { ManagepageEditComponent } from './managepages/managepage-edit/managepage-edit.component';
- 
+import { FaqComponent } from './faq/faq.component';
+import { FaqEditComponent } from './faq/faq-edit/faq-edit.component';
+import { FaqAddComponent } from './faq/faq-add/faq-add.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -53,7 +56,23 @@ const routes: Routes = [
         path: 'payment',
         component: PaymentComponent,
       },
-     
+      {
+        path: 'managefaq',
+        component: FaqComponent,
+      },
+      {
+        path: 'managefaq/add',
+        component: FaqAddComponent
+      },
+      {
+        path: 'managefaq/edit',
+        component: FaqEditComponent
+      },
+      {
+        path: 'managefaq/edit/:id',
+        component: FaqEditComponent
+      },
+
       {
         path: 'managepage',
         component: ManagepagesComponent,

@@ -11,7 +11,7 @@ import { baseFilter } from 'src/app/_fake/fake-helpers/http-extenstions';
 })
 export class ManagefaqService extends TableService<Managefaq> implements OnDestroy {
   //API_URL = `${environment.apiUrl}/products`;
-  API_URL = `${environment.apiUrl}/customer`;
+  API_URL = `${environment.apiUrl}/managefaq`;
    constructor(@Inject(HttpClient) http) {
     super(http);
   }
@@ -32,31 +32,6 @@ export class ManagefaqService extends TableService<Managefaq> implements OnDestr
     );
   }
 
-  deleteItems(ids: number[] = []): Observable<any> {
-    const tasks$ = [];
-    ids.forEach(id => {
-      tasks$.push(this.delete(id));
-    });
-    return forkJoin(tasks$);
-  }
-
-  updateStatusForItems(ids: number[], status: number): Observable<any> {
-    return this.http.get<Managefaq[]>(this.API_URL).pipe(
-      map((managefaq: Managefaq[]) => {
-        return managefaq.filter(c => ids.indexOf(c.id) > -1).map(c => {
-          //c.status = status;
-          return c;
-        });
-      }),
-      exhaustMap((managefaqs: Managefaq[]) => {
-        const tasks$ = [];
-        managefaqs.forEach(managefaq => {
-          tasks$.push(this.update(managefaq));
-        });
-        return forkJoin(tasks$);
-      })
-    );
-  }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());
