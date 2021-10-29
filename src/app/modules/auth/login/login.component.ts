@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GlobalService } from '../_services/GlobalService';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private globleService: GlobalService,
     private router: Router
   ) {
     this.isLoading$ = this.authService.isLoading$;
@@ -46,8 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initForm();
     // get return url from route parameters or default to '/'
     this.returnUrl =
-        this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-    }
+      this.route.snapshot.queryParams['returnUrl'.toString()] || '/dashboard';
+  }
 
   // convenience getter for easy access to form fields
   get f() {
@@ -78,12 +80,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const loginSubscr = this.authService
-      .login(this.f.email.value, this.f.password.value)
-      .pipe(first())
+    debugger;
+    const loginSubscr = this.authService.login(this.f.email.value, this.f.password.value).pipe(first())
       .subscribe((user: UserModel) => {
         if (user) {
-          this.router.navigate([this.  returnUrl]);
+          this.router.navigate([this.returnUrl]);
+          this.globleService.isAdminLoggedIn = true;
         } else {
           this.hasError = true;
         }

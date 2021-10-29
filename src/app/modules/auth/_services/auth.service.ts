@@ -62,9 +62,42 @@ export class AuthService implements OnDestroy {
 
   logout() {
     localStorage.removeItem(this.authLocalStorageToken);
-    this.router.navigate(['/auth/login'], {
+    this.router.navigate(['/auth/superadminlogin'], {
       queryParams: {},
     });
+  }
+
+  // public methods
+  customerLogin(email: string, password: string): Observable<UserModel> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.customerlogin(email, password).pipe(
+      map((auth: AuthModel) => {
+        const result = this.setAuthFromLocalStorage(auth);
+        return result;
+      }),
+      switchMap(() => this.getUserByToken()),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  customerLotCheck(lot_number: string): Observable<UserModel> {
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.lotNumberCheck(lot_number).pipe(
+      map((auth: AuthModel) => {
+        const result = this.setAuthFromLocalStorage(auth);
+        return result;
+      }),
+      switchMap(() => this.getUserByToken()),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 
   getUserByToken(): Observable<UserModel> {
