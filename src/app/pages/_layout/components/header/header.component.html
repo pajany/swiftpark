@@ -4,7 +4,7 @@
     <ngb-progressbar class="loading-bar" height="3px" [value]="_loader"></ngb-progressbar>
   </ng-container>
 
-  <ng-container *ngIf="headerMenuSelfDisplay">
+  <ng-container *ngIf="headerMenuSelfDisplay && isAdminMenu">
     <!--begin::Header Menu Wrapper-->
     <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
       <ng-container *ngIf="!asideSelfDisplay">

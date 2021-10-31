@@ -1,18 +1,8 @@
-<div class="card card-custom gutter-b">
+<!-- <div class="card card-custom gutter-b">
     <div class="card-header">
         <div class="card-title row wth">
             <h3 class="card-label col-lg-4">Account Summary: </h3>
             <div class="form-group row col-lg-8" [formGroup]="searchGroup">
-                <!-- <div class="col-lg-3">
-                    <label class="col-lg-8 col-form-label" style="margin-left: 48px;"><b>Lot No:</b></label>
-                    <div class="col-lg-10">
-                        <select class="form-control" name="lot_no" formControlName="lot_no" style="margin-left: 48px;">
-                            <option> Please Select</option>
-                            <option *ngFor="let product of productsService.items$ | async; let i = index"
-                                [value]="product.lot_no">{{product.lot_no }}</option>
-                        </select>
-                    </div>
-                </div> -->
 
                 <div class="form-group hidden">
                     <div class="input-group">
@@ -22,8 +12,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4" style="margin-right:40px">
-                    <!-- <div class="col-lg-10"> -->
+                <div class="col-lg-4" style="margin-right:40px"> 
                     <div class="input-group input-group-solid ">
                         <label class="col-form-label" style="margin-left: -47px;"><b>From:</b></label>
                         <input #fromdate class="form-control" placeholder="dd/mm/yyyy" name="fromdate"
@@ -33,11 +22,9 @@
                         <div class="input-group-append">
                             <button class="btn  calendar" (click)="datepicker.toggle()" type="button"></button>
                         </div>
-                    </div>
-                    <!-- </div> -->
+                    </div> 
                 </div>
-                <div class="col-lg-4">
-                    <!-- <div class="col-lg-10"> -->
+                <div class="col-lg-4"> 
                     <div class="input-group input-group-solid ">
                         <label class="col-form-label" style="margin-left: -26px;"><b>To:</b></label>
                         <input #todate class="form-control" placeholder="dd/mm/yyyy" name="todate" ngbDatepicker
@@ -46,8 +33,7 @@
                         <div class="input-group-append">
                             <button class="btn calendar" (click)="d.toggle()" type="button"></button>
                         </div>
-                    </div>
-                    <!-- </div> -->
+                    </div> 
                 </div>
                 <div class="col-lg-2" style="text-align: center;">
                     <button type="submit" class="btn btn-primary btn-elevate sho" (click)="save()">
@@ -64,4 +50,142 @@
             </table>
         </div>
     </div>
+</div> -->
+
+<div class="content-area" style="background-color: white;">
+    <div class="row">
+        <div class="col-md-6 col-6 text-left">
+            <h2 class="inner-hd">Account Summary</h2>
+        </div>
+        <div class="col-md-6 col-6 text-right">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <label>From</label>
+                        <input type="text" class="form-control inline-frm" placeholder="MM/DD/YYYY">
+                    </div>
+                    <div class="col-auto">
+                        <label>To</label>
+                        <input type="text" class="form-control inline-frm" placeholder="MM/DD/YYYY">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-default">Show</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr class="brdr-btm">
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="inner-subhd">LOT DETAILS</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">LOT NO.</th>
+                            <th scope="col">Permit Sales ‎
+                                Using Credit Card</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">TOTAL</th>
+                            <th scope="col">CREDIT CARD
+                                TRANSACTION</th>
+                            <th scope="col">SWIFTPARK CARD
+                                TRANSACTION</th>
+                            <th scope="col">TOTAL AMOUNT COLLECTED
+                                FROM THE USER</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10200</td>
+                            <td>258.00</td>
+                            <td>33.54</td>
+                            <td>291.54</td>
+                            <td>43</td>
+                            <td>94</td>
+                            <td>291.51</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="inner-subhd">SwiftPark Charges‎</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Credit Card‎
+                                Permit Charge</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">TOTAL</th>
+                            <th scope="col">Credit Card ‎
+                                Transaction</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">Swift Park Card ‎
+                                Transaction</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">SwiftPark ‎
+                                Amount‎</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>51.60</td>
+                            <td>6.71</td>
+                            <td>58.31</td>
+                            <td>53.75</td>
+                            <td>6.99</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>119.05</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="inner-subhd">Client Portion‎</h4>
+            <div class="table-responsive">
+                <table class="table">
+                    <colgroup width="20%"></colgroup>
+                    <colgroup width="60%"></colgroup>
+                    <colgroup width="20%"></colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">PERMIT SALES</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">TOTAL</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>206.40</td>
+                            <td>26.83</td>
+                            <td>233.23</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col text-center">
+            <h4 class="amt-txt">Amount Payable to Client: <span>c$114.18</span></h4>
+        </div>
+    </div>
+
 </div>

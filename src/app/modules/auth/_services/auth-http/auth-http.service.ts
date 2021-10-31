@@ -6,6 +6,7 @@ import { UsersTable } from 'src/app/_fake/fake-db/users.table';
 import { environment } from 'src/environments/environment';
 import { AuthModel } from '../../_models/auth.model';
 import { UserModel } from '../../_models/user.model';
+import { CustomerModel } from '../../_models/customer.model';
 
 // Super Admin URL
 const API_USERS_URL = `${environment.apiUrl}/signin`;
@@ -39,7 +40,7 @@ export class AuthHTTPService {
         }
         const user = result.find((u) => {
           return (
-            u.email.toLowerCase() === email.toLowerCase()  
+            u.email.toLowerCase() === email.toLowerCase()
           );
         });
         if (!user) {
@@ -64,16 +65,17 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
     return this.getLoginCustomer(email, password).pipe(
-      map((result: UserModel[]) => {
-        
-        if (result.length <= 0) {
-          return notFoundError;
-        }
-        const user = result.find((u) => {
-          return (
-            u.email.toLowerCase() === email.toLowerCase()  
-          );
-        });
+      map((result: CustomerModel) => {
+        debugger;
+        // if (result.length <= 0) {
+        //   return notFoundError;
+        // }
+        const user = result;
+        // const user = result.find((u) => {
+        //   return (
+        //     u.email.toLowerCase() === email.toLowerCase()  
+        //   );
+        // });
         if (!user) {
           return notFoundError;
         }
@@ -81,8 +83,8 @@ export class AuthHTTPService {
 
         this.getuserdata.push(user);
         const auth = new AuthModel();
-        auth.authToken = user.authToken;
-        auth.refreshToken = user.refreshToken;
+        // auth.authToken = user.authToken;
+        // auth.refreshToken = user.refreshToken;
         auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
         return auth;
       })
@@ -96,15 +98,17 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
     return this.getCustomerlotDetails(lot_number).pipe(
-      map((result: any) => {
-        if (result.length <= 0) {
-          return notFoundError;
-        }
-        const user = result.find((u) => {
-          return (
-            u.lot_number === lot_number
-          );
-        });
+      map((result: CustomerModel) => {
+        debugger;
+        // if (result.length <= 0) {
+        //   return notFoundError;
+        // }
+        const user = result;
+        // const user = result.find((u) => {
+        //   return (
+        //     u.email.toLowerCase() === email.toLowerCase()  
+        //   );
+        // });
         if (!user) {
           return notFoundError;
         }
@@ -112,8 +116,8 @@ export class AuthHTTPService {
 
         this.getuserdata.push(user);
         const auth = new AuthModel();
-        auth.authToken = user.authToken;
-        auth.refreshToken = user.refreshToken;
+        // auth.authToken = user.authToken;
+        // auth.refreshToken = user.refreshToken;
         auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
         return auth;
       })
@@ -150,6 +154,15 @@ export class AuthHTTPService {
     });
   }
 
+  getCustomerByToken(token): Observable<CustomerModel> {
+
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<CustomerModel>(`${API_USERS_URL}`, {
+      headers: httpHeaders,
+    });
+  }
 
   getAllUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(API_USERS_URL);
@@ -158,7 +171,7 @@ export class AuthHTTPService {
   getLoginUsers(email: string, password: string): Observable<any> {
     return this.http.post<AuthModel>(`${API_USERS_URL}`, { email, password });
   }
-  
+
   // Customer Login
   getLoginCustomer(email: string, password: string): Observable<any> {
     return this.http.post<AuthModel>(`${API_CUSTOMER_URL}`, { email, password });

@@ -1,16 +1,13 @@
 <!--begin::Topbar-->
 
-<ng-container *ngIf="extrasUserDisplay">
+<ng-container *ngIf="extrasUserDisplay && isAdminMenu">
   <ng-container *ngIf="extrasUserLayout === 'offcanvas'">
-    <ng-container *ngIf="user$ | async as _user">
-      <!--begin::User-->
+    <ng-container *ngIf="user$ | async as _user"> 
       <a class="btn btn-sm btn-primary font-weight-bolder py-2 px-5 cursor-pointer" style="margin-top: 18px;
       margin-bottom: 14px; margin-right: 20px;"  (click)="logout()">Sign
       Out</a>
-      
     </ng-container>
   </ng-container>
-
  
 </ng-container>
 

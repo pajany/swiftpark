@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../../auth';
+import { CustomerModel } from '../../auth/_models/customer.model';
 import { UserModel } from '../../auth/_models/user.model';
 
 @Component({
@@ -53,9 +54,9 @@ export class CustomerLoginComponent implements OnInit {
 
   submitCustomerLogin() {
     this.hasError = false;
-   
+    debugger;
     const loginSubscr = this.authService.customerLogin(this.f.email.value, this.f.password.value).pipe(first())
-      .subscribe((user: UserModel) => {
+      .subscribe((user: CustomerModel) => {
         console.log("customerlogin",user);
         if (user) {
           this.router.navigate([this.returnUrl]);

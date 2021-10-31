@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AuthService, UserModel } from '../../auth';
+import { CustomerModel } from '../../auth/_models/customer.model';
 import { GlobalService } from '../../auth/_services/GlobalService';
 
 @Component({
@@ -13,7 +14,7 @@ import { GlobalService } from '../../auth/_services/GlobalService';
 })
 export class LotNumberComponent implements OnInit {
 
-  defaultAuth = { lot_number: ''};
+  defaultAuth = { lot_number: '' };
   lotNumberForm: FormGroup;
   hasError: boolean;
   returnUrl: string;
@@ -48,7 +49,7 @@ export class LotNumberComponent implements OnInit {
 
   initForm() {
     this.lotNumberForm = this.fb.group({
-      lot_number: [this.defaultAuth.lot_number, Validators.compose([Validators.required, Validators.maxLength(20),])] 
+      lot_number: [this.defaultAuth.lot_number, Validators.compose([Validators.required, Validators.maxLength(20),])]
     });
   }
 
@@ -56,7 +57,8 @@ export class LotNumberComponent implements OnInit {
     this.hasError = false;
     debugger;
     const loginSubscr = this.authService.customerLotCheck(this.f.lot_number.value).pipe(first())
-      .subscribe((response: any) => {
+      .subscribe((response: CustomerModel) => {
+        console.log("customer Lot Check", response);
         if (response) {
           this.router.navigate([this.returnUrl]);
           this.globleService.isAdminLoggedIn = false;
@@ -64,7 +66,7 @@ export class LotNumberComponent implements OnInit {
           this.hasError = true;
         }
       });
-    this.unsubscribe.push(loginSubscr); 
+    this.unsubscribe.push(loginSubscr);
     // this.router.navigate([this.returnUrl]);
     // this.globleService.isAdminLoggedIn = false;
   }

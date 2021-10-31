@@ -112,7 +112,7 @@ export abstract class TableService<T> {
   // UPDATE
   update(item: BaseModel): Observable<any> {
     const url = `${this.API_URL}/${item.id}`;
-    
+
     this._isLoading$.next(true);
     this._errorMessage.next('');
     return this.http.put(url, item).pipe(

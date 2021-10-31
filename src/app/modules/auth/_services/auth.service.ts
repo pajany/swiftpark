@@ -6,6 +6,8 @@ import { AuthModel } from '../_models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { CustomerModel } from '../_models/customer.model';
+import { CustomerModule } from '../../customer-module/customer.module';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,7 @@ export class AuthService implements OnDestroy {
   currentUser$: Observable<UserModel>;
   isLoading$: Observable<boolean>;
   currentUserSubject: BehaviorSubject<UserModel>;
+  currentCustomerSubject: BehaviorSubject<CustomerModule>;
   isLoadingSubject: BehaviorSubject<boolean>;
 
 
@@ -36,6 +39,7 @@ export class AuthService implements OnDestroy {
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
+    this.currentCustomerSubject = new BehaviorSubject<CustomerModel>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
     const subscr = this.getUserByToken().subscribe();
@@ -69,7 +73,7 @@ export class AuthService implements OnDestroy {
 
   
   // public methods
-  customerLogin(email: string, password: string): Observable<UserModel> {
+  customerLogin(email: string, password: string): Observable<CustomerModel> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.customerlogin(email, password).pipe(
       map((auth: AuthModel) => {
@@ -85,14 +89,14 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  customerLotCheck(lot_number: string): Observable<UserModel> {
+  customerLotCheck(lot_number: string): Observable<CustomerModel> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.lotNumberCheck(lot_number).pipe(
       map((auth: AuthModel) => {
         const result = this.setAuthFromLocalStorage(auth);
         return result;
       }),
-      switchMap(() => this.getUserByToken()),
+      switchMap(() => this.getCustomerUserByToken()),
       catchError((err) => {
         console.error('err', err);
         return of(undefined);
@@ -112,6 +116,26 @@ export class AuthService implements OnDestroy {
       map((user: UserModel) => {
         if (user) {
           this.currentUserSubject = new BehaviorSubject<UserModel>(user);
+        } else {
+          this.logout();
+        }
+        return user;
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  getCustomerUserByToken(): Observable<CustomerModule> {
+    const auth = this.getAuthFromLocalStorage();
+    if (!auth || !auth.authToken) {
+      return of(undefined);
+    }
+
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.getCustomerByToken(auth.authToken).pipe(
+      map((user: CustomerModule) => {
+        if (user) {
+          this.currentCustomerSubject = new BehaviorSubject<CustomerModule>(user);
         } else {
           this.logout();
         }
