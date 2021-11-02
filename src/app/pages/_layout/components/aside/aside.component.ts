@@ -27,6 +27,7 @@ export class AsideComponent implements OnInit {
   ngOnInit(): void {
     // load view settings
     this.isAdminMenu = this.globalService.isAdminLoggedIn;
+    console.log("=====",this.isAdminMenu);
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');

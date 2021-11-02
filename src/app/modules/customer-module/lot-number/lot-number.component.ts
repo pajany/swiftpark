@@ -55,10 +55,10 @@ export class LotNumberComponent implements OnInit {
 
   submit() {
     this.hasError = false;
-    debugger;
+     
     const loginSubscr = this.authService.customerLotCheck(this.f.lot_number.value).pipe(first())
       .subscribe((response: CustomerModel) => {
-        console.log("customer Lot Check", response);
+        console.log("customer response Lot Check", response);
         if (response) {
           this.router.navigate([this.returnUrl]);
           this.globleService.isAdminLoggedIn = false;

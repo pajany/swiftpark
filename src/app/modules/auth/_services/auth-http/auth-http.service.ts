@@ -66,7 +66,7 @@ export class AuthHTTPService {
     }
     return this.getLoginCustomer(email, password).pipe(
       map((result: CustomerModel) => {
-        debugger;
+       
         // if (result.length <= 0) {
         //   return notFoundError;
         // }
@@ -83,8 +83,8 @@ export class AuthHTTPService {
 
         this.getuserdata.push(user);
         const auth = new AuthModel();
-        // auth.authToken = user.authToken;
-        // auth.refreshToken = user.refreshToken;
+         auth.authToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
+         auth.refreshToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
         auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
         return auth;
       })
@@ -99,25 +99,15 @@ export class AuthHTTPService {
     }
     return this.getCustomerlotDetails(lot_number).pipe(
       map((result: CustomerModel) => {
-        debugger;
-        // if (result.length <= 0) {
-        //   return notFoundError;
-        // }
         const user = result;
-        // const user = result.find((u) => {
-        //   return (
-        //     u.email.toLowerCase() === email.toLowerCase()  
-        //   );
-        // });
         if (!user) {
           return notFoundError;
         }
-        console.log("user data", user);
-
+ 
         this.getuserdata.push(user);
         const auth = new AuthModel();
-        // auth.authToken = user.authToken;
-        // auth.refreshToken = user.refreshToken;
+        auth.authToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
+        auth.refreshToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
         auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
         return auth;
       })
