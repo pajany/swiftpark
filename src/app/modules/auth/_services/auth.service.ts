@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { CustomerModel } from '../_models/customer.model';
 import { CustomerModule } from '../../customer-module/customer.module';
+import { StorageConfiguration } from '../storage-setting/storage-configuration';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class AuthService implements OnDestroy {
 
   // public fields
   currentUser$: Observable<UserModel>;
+  currentCustomer$: Observable<CustomerModule>;
   isLoading$: Observable<boolean>;
   currentUserSubject: BehaviorSubject<UserModel>;
   currentCustomerSubject: BehaviorSubject<CustomerModule>;
@@ -33,18 +35,28 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject.next(user);
   }
 
+  get currentCustomerValue(): CustomerModule {
+    return this.currentCustomerSubject.value;
+  }
+
+  set currentCustomerValue(user: CustomerModule) {
+    this.currentCustomerSubject.next(user);
+  }
+
   constructor(
     private authHttpService: AuthHTTPService,
-    private router: Router
+    private router: Router,
+    private storageConfiguration: StorageConfiguration
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
     this.currentCustomerSubject = new BehaviorSubject<CustomerModel>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
+    this.currentCustomer$ = this.currentCustomerSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
     const subscr = this.getUserByToken().subscribe();
     this.unsubscribe.push(subscr);
-    console.log("current user===",this.currentUser$);
+    console.log("current user===", this.currentUser$);
   }
 
   // public methods
@@ -66,20 +78,28 @@ export class AuthService implements OnDestroy {
 
   logout() {
     localStorage.removeItem(this.authLocalStorageToken);
+    this.storageConfiguration.sessionRemoveItem(this.storageConfiguration.menushow);
     this.router.navigate(['/auth/superadminlogin'], {
       queryParams: {},
     });
   }
 
-  
+
   // public methods
   customerLogin(email: string, password: string): Observable<CustomerModel> {
     this.isLoadingSubject.next(true);
+    debugger;
     return this.authHttpService.customerlogin(email, password).pipe(
       map((auth: AuthModel) => {
-         const result = this.setAuthFromLocalStorage(auth);
-      
-        return result;
+        debugger;
+        if (auth && auth.authToken) {
+          const result = this.setAuthFromLocalStorage(auth);
+          return result;
+        } else {
+          localStorage.removeItem(this.authLocalStorageToken);
+          this.storageConfiguration.sessionRemoveItem(this.storageConfiguration.menushow);
+          return of(undefined);
+        }
       }),
       switchMap(() => this.getCustomerUserByToken()),
       catchError((err) => {
@@ -94,8 +114,15 @@ export class AuthService implements OnDestroy {
     this.isLoadingSubject.next(true);
     return this.authHttpService.lotNumberCheck(lot_number).pipe(
       map((auth: AuthModel) => {
-        const result = this.setAuthFromLocalStorage(auth);
-        return result;
+        debugger;
+        if (auth && auth.authToken) {
+          const result = this.setAuthFromLocalStorage(auth);
+          return result;
+        } else {
+          localStorage.removeItem(this.authLocalStorageToken);
+          this.storageConfiguration.sessionRemoveItem(this.storageConfiguration.menushow);
+          return of(undefined);
+        }
       }),
       switchMap(() => this.getCustomerUserByToken()),
       catchError((err) => {
@@ -131,7 +158,6 @@ export class AuthService implements OnDestroy {
     if (!auth || !auth.authToken) {
       return of(undefined);
     }
-
     this.isLoadingSubject.next(true);
     return this.authHttpService.getCustomerByToken(auth.authToken).pipe(
       map((user: CustomerModule) => {

@@ -8,8 +8,8 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   //apiUrl: 'https://your-domain.com/api'
-   apiUrl:'http://127.0.0.1:8000/api'
-  //apiUrl: 'http://swiftpark.sdiphp.com/api'
+  //  apiUrl:'http://127.0.0.1:8000/api'
+  apiUrl: 'http://swiftpark.sdiphp.com/api'
 
 };
 

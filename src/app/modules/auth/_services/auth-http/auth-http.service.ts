@@ -13,6 +13,7 @@ const API_USERS_URL = `${environment.apiUrl}/signin`;
 
 // Customer URL
 const API_CUSTOMER_URL = `${environment.apiUrl}/customersignin`;
+const API_CUST_LIST_URL = `${environment.apiUrl}/customerlist`;
 const API_CUST_LOT_URL = `${environment.apiUrl}/signlotno`;
 
 @Injectable({
@@ -65,28 +66,23 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
     return this.getLoginCustomer(email, password).pipe(
-      map((result: CustomerModel) => {
-       
-        // if (result.length <= 0) {
-        //   return notFoundError;
-        // }
-        const user = result;
-        // const user = result.find((u) => {
-        //   return (
-        //     u.email.toLowerCase() === email.toLowerCase()  
-        //   );
-        // });
-        if (!user) {
+      map((result: any) => {
+        debugger;
+        if (result.data.msg === 'Login Success') {
+          const user = result.data;
+          if (!user) {
+            return notFoundError;
+          }
+          console.log("user data", user);
+          this.getuserdata.push(user);
+          const auth = new AuthModel();
+          auth.authToken = user.authToken;
+          auth.refreshToken = user.refreshToken;
+          auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+          return auth;
+        } else {
           return notFoundError;
         }
-        console.log("user data", user);
-
-        this.getuserdata.push(user);
-        const auth = new AuthModel();
-         auth.authToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
-         auth.refreshToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
-        auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-        return auth;
       })
     );
   }
@@ -98,18 +94,21 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
     return this.getCustomerlotDetails(lot_number).pipe(
-      map((result: CustomerModel) => {
-        const user = result;
-        if (!user) {
+      map((result: any) => {
+        if (result.data.msg === 'Login Success') {
+          const user = result.data;
+          if (!user) {
+            return notFoundError;
+          }
+          this.getuserdata.push(user);
+          const auth = new AuthModel();
+          auth.authToken = user.authToken;
+          auth.refreshToken = user.refreshToken;
+          auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+          return auth;
+        } else {
           return notFoundError;
         }
- 
-        this.getuserdata.push(user);
-        const auth = new AuthModel();
-        auth.authToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
-        auth.refreshToken = 'auth-token-49c2b7c1fa5b8c16f8bfd57825f7b2e6';
-        auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-        return auth;
       })
     );
   }
@@ -145,11 +144,10 @@ export class AuthHTTPService {
   }
 
   getCustomerByToken(token): Observable<CustomerModel> {
-
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<CustomerModel>(`${API_USERS_URL}`, {
+    return this.http.get<CustomerModel>(`${API_CUST_LIST_URL}`, {
       headers: httpHeaders,
     });
   }

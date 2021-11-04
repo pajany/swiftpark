@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AuthService, UserModel } from '../../auth';
+import { StorageConfiguration } from '../../auth/storage-setting/storage-configuration';
+import { AuthModel } from '../../auth/_models/auth.model';
 import { CustomerModel } from '../../auth/_models/customer.model';
 import { GlobalService } from '../../auth/_services/GlobalService';
 
@@ -28,13 +30,10 @@ export class LotNumberComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private globleService: GlobalService,
-    private router: Router
+    private router: Router,
+    private storageConfiguration: StorageConfiguration
   ) {
     this.isLoading$ = this.authService.isLoading$;
-    // // redirect to home if already logged in
-    // if (this.authService.currentUserValue) {
-    //   this.router.navigate(['/auth/customerlogin']);
-    // }
   }
 
   ngOnInit(): void {
@@ -55,13 +54,23 @@ export class LotNumberComponent implements OnInit {
 
   submit() {
     this.hasError = false;
-     
+
     const loginSubscr = this.authService.customerLotCheck(this.f.lot_number.value).pipe(first())
-      .subscribe((response: CustomerModel) => {
+      .subscribe((response: any) => {
         console.log("customer response Lot Check", response);
         if (response) {
+          const auth = new AuthModel();
+          response.forEach(element => {
+            if (element.lot_no === this.f.lot_number.value.toString()) {
+              auth.authToken = element.authToken;
+              auth.refreshToken = element.refreshToken;
+              auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+            }
+          });
+          this.storageConfiguration.sessionSetItem(this.storageConfiguration.menushow, false);
+          this.storageConfiguration.setAuthFromLocalStorage(auth)
           this.router.navigate([this.returnUrl]);
-          this.globleService.isAdminLoggedIn = false;
+          // this.globleService.isAdminLoggedIn = false;
         } else {
           this.hasError = true;
         }

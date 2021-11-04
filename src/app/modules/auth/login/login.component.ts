@@ -6,6 +6,7 @@ import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from '../_services/GlobalService';
+import { StorageConfiguration } from '../storage-setting/storage-configuration';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private route: ActivatedRoute,
     private globleService: GlobalService,
-    private router: Router
+    private router: Router,
+    private storageConfiguration: StorageConfiguration,
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -85,7 +87,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe((user: UserModel) => {
         if (user) {
           this.router.navigate([this.returnUrl]);
-          this.globleService.isAdminLoggedIn = true;
+          // this.globleService.isAdminLoggedIn = true;
+          this.storageConfiguration.sessionSetItem(this.storageConfiguration.menushow, true);
         } else {
           this.hasError = true;
         }

@@ -4,6 +4,7 @@ import { AccountsummaryComponent } from './accountsummary/accountsummary.compone
 import { CourtesyCardsComponent } from './courtesy-cards/courtesy-cards.component';
 import { CustomerModuleComponent } from './customer-module.component';
 import { LotNumberComponent } from './lot-number/lot-number.component';
+import { ViewpermitsComponent } from './viewpermits/viewpermits.component';
 
 const routes: Routes = [
     {
@@ -12,7 +13,7 @@ const routes: Routes = [
             // { path: 'lotnumber', component: LotNumberComponent },
             { path: 'accountsummary', component: AccountsummaryComponent },
             { path: 'courtesycards', component: CourtesyCardsComponent },
-            { path: 'viewpermits', component: AccountsummaryComponent },
+            { path: 'viewpermits', component: ViewpermitsComponent },
 
             { path: '', redirectTo: 'customer', pathMatch: 'full' },
             { path: '**', redirectTo: 'customer', pathMatch: 'full' },

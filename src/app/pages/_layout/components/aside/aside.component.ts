@@ -1,6 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageConfiguration } from 'src/app/modules/auth/storage-setting/storage-configuration';
 import { GlobalService } from 'src/app/modules/auth/_services/GlobalService';
+import { environment } from 'src/environments/environment';
 import { LayoutService } from '../../../../_metronic/core';
 
 @Component({
@@ -9,6 +12,7 @@ import { LayoutService } from '../../../../_metronic/core';
   styleUrls: ['./aside.component.scss'],
 })
 export class AsideComponent implements OnInit {
+  private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
   disableAsideSelfDisplay: boolean;
   headerLogo: string;
   brandSkin: string;
@@ -22,12 +26,25 @@ export class AsideComponent implements OnInit {
   asideSelfMinimizeToggle = false;
   isAdminMenu = false;
 
-  constructor(private layout: LayoutService, private loc: Location, private globalService: GlobalService) { }
+  constructor(
+    private layout: LayoutService,
+    private loc: Location,
+    private globalService: GlobalService,
+    private router: Router,
+    private storageConfiguration: StorageConfiguration
+  ) { }
 
   ngOnInit(): void {
     // load view settings
-    this.isAdminMenu = this.globalService.isAdminLoggedIn;
-    console.log("=====",this.isAdminMenu);
+    debugger;
+    // this.isAdminMenu = this.globalService.isAdminLoggedIn;
+    let isloggedIn = this.storageConfiguration.sessionGetItem(this.storageConfiguration.menushow);
+    if (isloggedIn === 'true') {
+      this.isAdminMenu = true;
+    } else {
+      this.isAdminMenu = false;
+    }
+    console.log('Is Admin Login', this.isAdminMenu);
     this.disableAsideSelfDisplay =
       this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
@@ -53,7 +70,14 @@ export class AsideComponent implements OnInit {
       return './assets/media/logos/home-logo.png';
     }
   }
+  signOutCustomer() {
+    localStorage.removeItem(this.authLocalStorageToken);
+    this.storageConfiguration.sessionRemoveItem(this.storageConfiguration.menushow);
+    this.router.navigate(['/auth/customerlogin'], {
+      queryParams: {},
+    });
+  }
 
-  
+
 
 }
