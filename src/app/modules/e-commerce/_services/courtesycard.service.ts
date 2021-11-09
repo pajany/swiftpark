@@ -24,6 +24,7 @@ const DEFAULT_STATE: ITableState = {
 export class CourtesyCardService extends TableService<CourtesyCard> implements OnDestroy {
   
   API_URL = `${environment.apiUrl}/courtesycard`;
+  CUST_API_URL = `${environment.apiUrl}/customercourtesycard`;
 
    constructor(@Inject(HttpClient) http) {
     super(http);
@@ -68,6 +69,26 @@ export class CourtesyCardService extends TableService<CourtesyCard> implements O
       })
     );
   }
+
+// Customer 
+customerFind(tableState: ITableState): Observable<TableResponseModel<CourtesyCard>> {
+  return this.http.get<CourtesyCard[]>(this.CUST_API_URL).pipe(
+    map((response: CourtesyCard[]) => {
+      
+      const filteredResult = baseFilter(response, tableState);
+      const result: TableResponseModel<CourtesyCard> = {
+        items: filteredResult.items,
+        total: filteredResult.total
+      };
+      return result;
+    })
+  );
+}
+
+
+
+
+
 
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());

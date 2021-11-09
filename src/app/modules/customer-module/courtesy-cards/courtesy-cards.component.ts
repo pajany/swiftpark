@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { async } from '@rxweb/reactive-form-validators';
 import { Subscription } from 'rxjs';
-import { GroupingState, PaginatorState, SortState } from 'src/app/_metronic/shared/crud-table';
-import { CourtesyCardService } from '../../e-commerce/_services';
+import { GroupingState, ITableState, PaginatorState, SortState } from 'src/app/_metronic/shared/crud-table';
+import { EditCourtesycardModalComponent } from '../../e-commerce/courtesy-card/components/edit-courtesycard-modal/edit-courtesycard-modal.component';
+import { CourtesyCardService } from '../../e-commerce/_services/courtesycard.service';
 
-@Component({
+const DEFAULT_STATE: ITableState = {
+  filter: {},
+  paginator: new PaginatorState(),
+  sorting: new SortState(),
+  searchTerm: '',
+  grouping: new GroupingState(),
+  entityId: undefined
+};
+
+@Component({ 
   selector: 'app-courtesy-cards',
   templateUrl: './courtesy-cards.component.html',
   styleUrls: ['./courtesy-cards.component.scss']
@@ -33,6 +44,9 @@ export class CourtesyCardsComponent implements OnInit {
     this.sorting = this.courtesycardService.sorting;
     const sb = this.courtesycardService.isLoading$.subscribe(res => this.isLoading = res);
     this.subscriptions.push(sb);
+    console.log('courtesycardService', this.courtesycardService.items$);
+
+    
   }
 
   ngOnDestroy() {
@@ -54,6 +68,15 @@ export class CourtesyCardsComponent implements OnInit {
   // pagination
   paginate(paginator: PaginatorState) {
     this.courtesycardService.patchState({ paginator });
+  }
+  
+  edit(id: number) {
+    const modalRef = this.modalService.open(EditCourtesycardModalComponent, { size: 'xl' });
+    modalRef.componentInstance.id = id;
+    modalRef.result.then(() =>
+      this.courtesycardService.fetch(),
+      () => { }
+    );
   }
 
 }

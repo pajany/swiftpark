@@ -27,9 +27,7 @@ export class HeaderMenuDynamicComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.ulCSSClasses = this.layout.getStringCSSClasses('header_menu_nav');
     this.rootArrowEnabled = this.layout.getProp('header.menu.self.rootArrow');
-    this.headerMenuDesktopToggle = this.layout.getProp(
-      'header.menu.desktop.toggle'
-    );
+    this.headerMenuDesktopToggle = this.layout.getProp('header.menu.desktop.toggle');
 
     // router subscription
     this.currentUrl = this.router.url.split(/[?#]/)[0];

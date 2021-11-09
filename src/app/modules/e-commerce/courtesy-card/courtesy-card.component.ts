@@ -49,6 +49,7 @@ export class CourtesyCardComponent
   IGroupingView,
   ISearchView,
   IFilterView {
+    
   paginator: PaginatorState;
   sorting: SortState;
   grouping: GroupingState;

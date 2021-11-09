@@ -51,6 +51,7 @@
                 </th>
                 <th>ACTIONS</th>
             </thead>
+            <!-- {{courtesycardService.items$ | async}} -->
             <tbody>
                 <tr *ngFor="let courtesycard of courtesycardService.items$ | async">
                     <td>{{ courtesycard.card_no }}</td>
@@ -59,7 +60,8 @@
                     <td> 5 </td>
                     <td>{{ courtesycard.card_type }}</td>
                     <td>
-                        <a title="Edit courtesycard" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
+                        <a title="Edit courtesycard" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                            (click)="edit(courtesycard.id)">
                             <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
                                 class="svg-icon svg-icon-md svg-icon-primary">
                             </span>
