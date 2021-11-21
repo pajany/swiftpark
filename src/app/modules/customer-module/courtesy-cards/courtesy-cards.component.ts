@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { GroupingState, ITableState, PaginatorState, SortState } from 'src/app/_metronic/shared/crud-table';
 import { EditCourtesycardModalComponent } from '../../e-commerce/courtesy-card/components/edit-courtesycard-modal/edit-courtesycard-modal.component';
 import { CourtesyCardService } from '../../e-commerce/_services/courtesycard.service';
+import { CourtesyDialogComponent } from './courtesy-dialog/courtesy-dialog.component';
 
 const DEFAULT_STATE: ITableState = {
   filter: {},
@@ -71,7 +72,7 @@ export class CourtesyCardsComponent implements OnInit {
   }
   
   edit(id: number) {
-    const modalRef = this.modalService.open(EditCourtesycardModalComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(CourtesyDialogComponent, { size: 'xl' });
     modalRef.componentInstance.id = id;
     modalRef.result.then(() =>
       this.courtesycardService.fetch(),

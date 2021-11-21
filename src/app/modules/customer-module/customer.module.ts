@@ -15,6 +15,7 @@ import { LotNumberComponent } from './lot-number/lot-number.component';
 import { CourtesyCardsComponent } from './courtesy-cards/courtesy-cards.component';
 import { AccountsummaryComponent } from './accountsummary/accountsummary.component';
 import { ViewpermitsComponent } from './viewpermits/viewpermits.component';
+import { CourtesyDialogComponent } from './courtesy-cards/courtesy-dialog/courtesy-dialog.component';
 // import { ViewPermitsComponent } from './view-permits/view-permits.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ViewpermitsComponent } from './viewpermits/viewpermits.component';
         LotNumberComponent, 
         CourtesyCardsComponent,
         AccountsummaryComponent,
-        ViewpermitsComponent, 
+        ViewpermitsComponent,
+        CourtesyDialogComponent, 
     ],
     imports: [
         CommonModule,
