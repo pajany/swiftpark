@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>Revenue Calculator</h1>
+<div mat-dialog-content class="mat-typography">
+
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            <ng-container *ngFor="let data of revenueList; let i = index">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">
+                            <label class="mt-2">{{data.title}}</label>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text input-group-text-bg"
+                                        id="inputGroup-sizing-default">$</span>
+                                </div>
+                                <input type="number" [(ngModel)]="data.amount"
+                                    (ngModelChange)="onCellValueChanged(data)" class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default" />
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="mt-2">{{data.permits}}</label>
+                        </div>
+                        <div class="col-1 p-0">
+                            <input type="number" class="form-control" aria-label="Default"
+                                [(ngModel)]="data.permitNumber" (ngModelChange)="onCellValueChanged(data)"
+                                aria-describedby="inputGroup-sizing-default" />
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-secondary">=</button>
+                        </div>
+                        <div class="col-2 p-0 text-center">
+                            <label class="mt-2">{{data.totalAmount }}</label>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div [ngClass]="{'text-white': i == revenueList.length - 1}" class="text-center">
+                        AND/OR
+                    </div>
+                </li>
+            </ng-container>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-8 text-end">
+                        <div>
+                            <label class="mt-2">*Swiftpark Charges and tax Excluded</label>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center" style="padding-left: 2px !important">
+                        <button type="button" class="btn btn-outline-secondary">
+                            Calculate Total
+                        </button>
+                    </div>
+                    <div class="col-2 p-0 text-center">
+                        <label class="mt-2">{{totalAmount | currency}}</label>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>

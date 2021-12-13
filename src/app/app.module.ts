@@ -1,86 +1,78 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+//import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { ClipboardModule } from 'ngx-clipboard';
-import { TranslateModule } from '@ngx-translate/core';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthService } from './modules/auth/_services/auth.service';
-import { environment } from 'src/environments/environment';
-// Highlight JS
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/splash-screen.module';
-// #fake-start#
-import { FakeAPIService } from './_fake/fake-api.service';
-// #fake-end#
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FormsModule } from '@angular/forms';
-import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
-import { GlobalService } from './modules/auth/_services/GlobalService';
-
- function appInitializer(authService: AuthService) {
-  return () => {
-    return new Promise((resolve) => {
-      authService.getUserByToken().subscribe().add(resolve);
-    });
-  };
-}
-
-
+import { ApplicationFormComponent } from './component/application-form/application-form.component';
+import { CollegeUniversityComponent } from './component/college-university/college-university.component';
+import { ContactUsComponent } from './component/contact-us/contact-us.component';
+import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
+import { EventsPartyComponent } from './component/events-party/events-party.component';
+import { FaqComponent } from './component/faq/faq.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { GenerateIncomeComponent } from './component/generate-income/generate-income.component';
+import { GetStartedComponent } from './component/get-started/get-started.component';
+import { HeaderComponent } from './component/header/header.component';
+import { HomeHeaderComponent } from './component/home-header/home-header.component';
+import { HomeComponent } from './component/home/home.component';
+import { HotelMotelComponent } from './component/hotel-motel/hotel-motel.component';
+import { LearnMoreComponent } from './component/learn-more/learn-more.component';
+import { PayLotComponent } from './component/pay-lot/pay-lot.component';
+import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component';
+import { ResidentialAptComponent } from './component/residential-apt/residential-apt.component';
+import { RevenueCalculatorComponent } from './component/revenue-calculator/revenue-calculator.component';
+import { SignsComponent } from './component/signs/signs.component';
+import { TermsComponent } from './component/terms/terms.component';
+import { TruckComponent } from './component/truck/truck.component';
+import { WelcomeComponent } from './component/welcome/welcome.component';
+import { ContactFormComponent } from './component/contact-form/contact-form.component';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    FooterComponent,
+    HeaderComponent,
+    WelcomeComponent,
+    HomeHeaderComponent,
+    ResidentialAptComponent,
+    HotelMotelComponent,
+    CollegeUniversityComponent,
+    EventsPartyComponent,
+    PayLotComponent,
+    TruckComponent,
+    FaqComponent,
+    ContactUsComponent,
+    TermsComponent,
+    PrivacyPolicyComponent,
+    LearnMoreComponent,
+    GenerateIncomeComponent,
+    GetStartedComponent,
+    ApplicationFormComponent,
+    SignsComponent,
+    CourtesyCardComponent,
+    RevenueCalculatorComponent,
+    ContactFormComponent
+  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    CKEditorModule,
-    FormsModule,
-    RxReactiveFormsModule,
-    SplashScreenModule,
-    TranslateModule.forRoot(),
-    HttpClientModule,
-    HighlightModule,
-    ClipboardModule,
-     // #fake-start#
-    environment.isMockEnabled
-      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
-        passThruUnknownUrl: true,
-        dataEncapsulation: false,
-      })
-      : [],
-    // #fake-end#
     AppRoutingModule,
-    InlineSVGModule.forRoot(),
-    NgbModule,
-    
+    HttpClientModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
+    InputNumberModule,
+    FormsModule,
+    AngularEditorModule,
+    ReactiveFormsModule,
+    NgxIntlTelInputModule
   ],
-  exports: [
-    CKEditorModule,  
-],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-      multi: true,
-      deps: [AuthService],
-    },
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        coreLibraryLoader: () => import('highlight.js/lib/core'),
-        languages: {
-          xml: () => import('highlight.js/lib/languages/xml'),
-          typescript: () => import('highlight.js/lib/languages/typescript'),
-          scss: () => import('highlight.js/lib/languages/scss'),
-          json: () => import('highlight.js/lib/languages/json')
-        },
-      },
-    },
-    GlobalService
-  ],
-  bootstrap: [AppComponent],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

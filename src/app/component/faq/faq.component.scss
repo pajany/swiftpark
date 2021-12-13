@@ -1,0 +1,81 @@
+.accordion h5 a.nav-link.collapsed::before {
+    background: #000;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  .accordion h5 a{
+    position: relative;
+    padding-left: 28px;
+    line-height: 1.7rem;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+  }
+  .accordion h5 a::after, .accordion h5 a::before {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    content: '';
+    height: 2px;
+    right: 0;
+    position: absolute;
+    top: 1.3rem;
+    width: 12px;
+    -webkit-transition: -webkit-transform 250ms ease;
+    transition: -webkit-transform 250ms ease;
+    transition: transform 250ms ease;
+    transition: transform 250ms ease,-webkit-transform 250ms ease;
+    z-index: -1;
+  }
+  .accordion h5 a.nav-link.collapsed::after {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    background: #000;
+  }
+  
+  .accordion h5 a:after, .accordion h5 a::before {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 1.3rem;
+    width: 12px;
+    -webkit-transition: -webkit-transform 250ms ease;
+    transition: -webkit-transform 250ms ease;
+    transition: transform 250ms ease;
+    transition: transform 250ms ease,-webkit-transform 250ms ease;
+    z-index: -1;
+  }
+  .faq-whitebg{
+      margin-top:50px;
+  }
+  .accordion h5 a.nav-link{
+    color: #5fa814 !important;
+  }
+  .accordion h5 a.nav-link.collapsed{
+      color:#000 !important;
+  }
+  .card-body p {
+    font-size: 18px;
+    margin: 0 0 10px;
+}
+  .border-bottom2{
+    border-bottom: 1px solid #dadcd9 !important;
+    padding: 1rem 0;
+  }
+  .card-body {
+    margin: 0 !important;
+    min-height: auto !important;
+    padding: 0 1.7rem;
+}
+  .accordion h5 a.nav-link::before {
+    background: #5fa814;
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  .accordion h5 a.nav-link::after {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+    background: #5fa814;
+  }

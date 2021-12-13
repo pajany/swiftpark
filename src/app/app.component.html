@@ -1,2 +1,6 @@
-<app-splash-screen></app-splash-screen>
-<router-outlet></router-outlet>
+<app-home-header *ngIf="hasRouteActivate('home')"> </app-home-header>
+<app-header *ngIf="!hasRoute('welcome','home')"></app-header>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>

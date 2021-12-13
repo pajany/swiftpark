@@ -1,29 +1,49 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './modules/auth/_services/auth.guard';
-
-export const routes: Routes = [
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
-    path: 'error',
-    loadChildren: () =>
-      import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
-  },
-  {
-    path: '',
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./pages/layout.module').then((m) => m.LayoutModule),
-  },
-  { path: '**', redirectTo: 'error/404' },
+import { RouterModule, Routes } from '@angular/router';
+import { ApplicationFormComponent } from './component/application-form/application-form.component';
+import { CollegeUniversityComponent } from './component/college-university/college-university.component';
+import { ContactFormComponent } from './component/contact-form/contact-form.component';
+import { ContactUsComponent } from './component/contact-us/contact-us.component';
+import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
+import { EventsPartyComponent } from './component/events-party/events-party.component';
+import { FaqComponent } from './component/faq/faq.component';
+import { GenerateIncomeComponent } from './component/generate-income/generate-income.component';
+import { GetStartedComponent } from './component/get-started/get-started.component';
+import { HomeComponent } from './component/home/home.component';
+import { HotelMotelComponent } from './component/hotel-motel/hotel-motel.component';
+import { LearnMoreComponent } from './component/learn-more/learn-more.component';
+import { PayLotComponent } from './component/pay-lot/pay-lot.component';
+import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component';
+import { ResidentialAptComponent } from './component/residential-apt/residential-apt.component';
+import { SignsComponent } from './component/signs/signs.component';
+import { TermsComponent } from './component/terms/terms.component';
+import { TruckComponent } from './component/truck/truck.component';
+import { WelcomeComponent } from './component/welcome/welcome.component';
+const routes: Routes = [
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: 'welcome', component: WelcomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'residential-apt', component: ResidentialAptComponent },
+  { path: 'hotel-motel', component: HotelMotelComponent },
+  { path: 'college-university', component: CollegeUniversityComponent },
+  { path: 'events-party', component: EventsPartyComponent },
+  { path: 'pay-lot', component: PayLotComponent },
+  { path: 'truck', component: TruckComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: 'contact-us', component: ContactUsComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'learn-more', component: LearnMoreComponent },
+  { path: 'generate-income', component: GenerateIncomeComponent },
+  { path: 'get-started', component: GetStartedComponent },
+  { path: 'application-form', component: ApplicationFormComponent },
+  { path: 'signs', component: SignsComponent },
+  { path: 'courtesy-card', component: CourtesyCardComponent },
+  { path: 'contact', component: ContactFormComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

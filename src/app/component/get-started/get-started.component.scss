@@ -1,0 +1,25 @@
+span.f-itxt, span.lg-clr {
+    display: inline;
+}
+.hme-grnbox.p-get span {
+    margin-top: 30px;
+}
+.p-get p {
+    font-size: 20px;
+    line-height: 40px;
+    margin-top: 20px;
+}
+.p-get p a,.p-get p a:hover{
+    color: #50a226;
+    position: relative;
+    text-decoration: none;
+}
+.p-get p a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: #50a226;
+    bottom: 0px;
+    left: 0;
+}

@@ -1,0 +1,195 @@
+<section class="inner-bg cnt-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Contact Us</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a> Contact Us </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="cnt-part">
+                    <li><span><span class="icon-cnt"></span>Our Location</span>PO Box 29, Ruthven, Ontario N0P-2G0
+                        <address>
+                            Branch Office<br>
+                            1919 Lawrence Avenue East. Toronto,<br>
+                            Ontario M1R2Y6
+                        </address>
+                    </li>
+                    <li><span><span class="icon-cnt"></span>Email us to</span>
+                        <a href="mailto:info@swift-park.com">info@swift-park.com</a>
+                    </li>
+                    <li><span><span class="icon-cnt"></span>Call us on</span>
+                        <a href="tel:1-877-943-8727">1-877-943-8727</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8 text-center">
+                <div class="cr-part">
+                    <p>Anyone can use <span style="font-style: italic; font-weight: 500;">Swift<span
+                                class="lg-clr">Park</span></span>..... it’s quick, it’s simple, it’s convenient!</p>
+                    <a class="lrn-mre2"><span></span>Get started
+                        for free</a>
+                    <a class="lrn-mre2"><span></span>Careers with SwiftPark</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Contact-Us</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Client's Name</label>
+                                <input type="text" formControlName="clientName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.clientName.errors }" />
+                                <div *ngIf="submitted && f.clientName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.clientName.errors.required">Client's Name is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Company Name</label>
+                                <input type="text" formControlName="companyName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+                                <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Address Line1</label>
+                                <input type="text" formControlName="address1" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.address1.errors }" />
+                                <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
+                                    <div *ngIf="f.address1.errors.required">Address1 is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Address Line2</label>
+                                <input type="text" formControlName="address2" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>City</label>
+                                <input type="text" formControlName="cityName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.cityName.errors }" />
+                                <div *ngIf="submitted && f.cityName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.cityName.errors.required">city is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Province</label>
+                                <select formControlName="province" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.province.errors }">
+                                    <option value="">Choose your city</option>
+                                    <option *ngFor="let city of city" [ngValue]="city">{{city}}</option>
+                                </select>
+                                <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+                                    <div *ngIf="f.province.errors.required">city is required</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Postal Code</label>
+                                <input type="text" formControlName="postCode" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.postCode.errors }" />
+                                <div *ngIf="submitted && f.postCode.errors" class="invalid-feedback">
+                                    <div *ngIf="f.postCode.errors.required">Postal Code is required</div>
+                                    <div *ngIf="f.postCode.errors.pattern">Postal Code must be a valid </div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Time Zone</label>
+                                <select formControlName="timeZone" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.timeZone.errors }">
+                                    <option value="">Choose your city</option>
+                                    <option *ngFor="let city of city" [ngValue]="city">{{city}}</option>
+                                </select>
+                                <div *ngIf="submitted && f.timeZone.errors" class="invalid-feedback">
+                                    <div *ngIf="f.timeZone.errors.required">city is required</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Email</label>
+                                <input type="text" formControlName="email" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">Email is required</div>
+                                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Mobile Number</label>
+                                <input type="text" formControlName="mobileNumber" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" />
+                                <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="f.mobileNumber.errors.required">Mobile Number is required</div>
+                                    <div *ngIf="f.mobileNumber.errors.pattern">
+                                        Mobile Number is not valid.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Phone number</label>
+                                <input formControlName="phoneNumber" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+                                <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="f.phoneNumber.errors.pattern">
+                                        Phone Number is not valid.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Fax Number</label>
+                                <input formControlName="faxNumber" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.faxNumber.errors }" />
+                                <div *ngIf="submitted && f.faxNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="f.faxNumber.errors.required">Fax Number is required</div>
+                                    <div *ngIf="f.faxNumber.errors.pattern">
+                                        Fax Number is not valid.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-primary mr-1">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,48 @@
+<section class="inner-bg f-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Frequently Asked Questions</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a> Frequently Asked Questions </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="faq-whitebg">
+    <div class="container">
+        <div id="accordion" class="accordion">
+            <ng-container *ngFor="let data of faqList">
+                <div class="accordion-one border-bottom2">
+                    <div [id]="'heading'+data.id">
+                        <h5 class="mb-0">
+                            <a class="nav-link collapsed" role="button" data-toggle="collapse"
+                                [attr.data-target]="'#' +'collapse'+data.id" aria-expanded="true"
+                                [attr.aria-controls]="'collapse'+data.id">
+                                {{data.faq_question}}
+                            </a>
+                        </h5>
+                    </div>
+                    <div [id]="'collapse'+data.id" class="collapse" data-parent="#accordion"
+                        [attr.aria-labelledby]="'heading'+data.id">
+                        <div class="card-body">
+                            {{data.faq_answer}}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</section>
+<app-revenue-calculator></app-revenue-calculator>
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -1,0 +1,134 @@
+<section class="w-bg">
+    <div class="container">
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Client's Name</label>
+                        <input type="text" formControlName="clientName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.clientName.errors }" />
+                        <div *ngIf="submitted && f.clientName.errors" class="invalid-feedback">
+                            <div *ngIf="f.clientName.errors.required">Client's Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Company Name</label>
+                        <input type="text" formControlName="companyName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+                        <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                            <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Address Line1</label>
+                        <input type="text" formControlName="address1" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.address1.errors }" />
+                        <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
+                            <div *ngIf="f.address1.errors.required">Address1 is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Address Line2</label>
+                        <input type="text" formControlName="address2" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>City</label>
+                        <input type="text" formControlName="cityName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.cityName.errors }" />
+                        <div *ngIf="submitted && f.cityName.errors" class="invalid-feedback">
+                            <div *ngIf="f.cityName.errors.required">city is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Province</label>
+                        <select formControlName="province" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.province.errors }">
+                            <option value="">Choose your city</option>
+                            <option *ngFor="let city of city" [ngValue]="city">{{city}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+                            <div *ngIf="f.province.errors.required">city is required</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Postal Code</label>
+                        <input type="text" formControlName="postCode" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.postCode.errors }" />
+                        <div *ngIf="submitted && f.postCode.errors" class="invalid-feedback">
+                            <div *ngIf="f.postCode.errors.required">Postal Code is required</div>
+                            <div *ngIf="f.postCode.errors.pattern">Postal Code must be a valid </div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Time Zone</label>
+                        <select formControlName="timeZone" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.timeZone.errors }">
+                            <option value="">Choose your city</option>
+                            <option *ngFor="let city of city" [ngValue]="city">{{city}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.timeZone.errors" class="invalid-feedback">
+                            <div *ngIf="f.timeZone.errors.required">city is required</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Mobile Number</label>
+                        <input type="text" formControlName="mobileNumber" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" />
+                        <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+                            <div *ngIf="f.mobileNumber.errors.required">Mobile Number is required</div>
+                            <div *ngIf="f.mobileNumber.errors.pattern">
+                                Mobile Number is not valid.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Phone number</label>
+                        <input formControlName="phoneNumber" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+                        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                            <div *ngIf="f.phoneNumber.errors.pattern">
+                                Phone Number is not valid.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label>Fax Number</label>
+                        <input formControlName="faxNumber" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.faxNumber.errors }" />
+                        <div *ngIf="submitted && f.faxNumber.errors" class="invalid-feedback">
+                            <div *ngIf="f.faxNumber.errors.required">Fax Number is required</div>
+                            <div *ngIf="f.faxNumber.errors.pattern">
+                                Fax Number is not valid.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary mr-1">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

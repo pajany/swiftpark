@@ -4,15 +4,8 @@
 
 export const environment = {
   production: false,
-  appVersion: 'v726demo1',
-  USERDATA_KEY: 'authf649fc9a5f55',
-  isMockEnabled: true,
-  //apiUrl: 'https://your-domain.com/api'
-  //  apiUrl:'http://127.0.0.1:8000/api'
   apiUrl: 'http://swiftpark.sdiphp.com/api'
-
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
