@@ -1,0 +1,190 @@
+<section class="inner-bg payment-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Payment</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a>Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg padtbtm">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-4">
+                <h3 class="lt-txt">Lot No 10100 is at 123 SWIFTPARK AVENUE</h3>
+            </div>
+            <div class="col-4 text-right">
+                <a class="g-btn"> View Transactions </a> <a class="g-btn"> Change Pin </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Amount ($)</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Select</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData; let i = index ">
+                        <td>{{item.type}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.description}}</td>
+                        <td>
+                            <input type="radio" id="test{{i}}" name="radio-group" (change)="onCheckboxChange($event)">
+                            <label for="test{{i}}"></label>
+                        </td>
+                        <td>
+
+                            <div class="form-check-inline">
+                                <span class="minus" (click)="minus(item)"></span>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="text" class="form-control2" [(ngModel)]="item.quantity">
+                            </div>
+                            <div class="form-check-inline">
+                                <span class="plus" (click)="plus(item)"></span>
+                            </div>
+
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="payment-frm">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Permit Expires</label>
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Amount ($) - (CAD)</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Tax ($) - (CAD)</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Total ($) - (CAD)</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row" *ngIf="visibleDiv">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Vehicle License</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Payment Type</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="radio" id="p1" name="radio-group" (change)="onRadioChange(1)">
+                                <label for="p1">Courtesy Card</label>
+                            </div>
+                            <div class="col">
+                                <input type="radio" id="p2" name="radio-group" (change)="onRadioChange(2)">
+                                <label for="p2">Credit Card</label>
+                            </div>
+                            <div class="col">
+                                <input type="radio" id="p3" name="radio-group" (change)="onRadioChange(3)">
+                                <label for="p3">Debit Card</label>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>SwiftPark Card Number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>PIN</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6 col-12">
+                                <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <div class="modal-body">
+            <h3 class="lt-txt text-left">Please fill the details below</h3>
+            <div class="payment-frm">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label>Credit Card Number</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                </div>
+                <a class="btn btn-primary">Submit</a>
+            </div>
+
+
+        </div>
+     
+      </div>
+    </div>
+  </div>

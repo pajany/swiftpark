@@ -1,0 +1,76 @@
+<section class="inner-bg dispute-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>File a Dispute</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a>File a Dispute</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg pad-btm30">
+    <div class="container">
+        <h3 class="app-txt">Please fill out the form below to file a dispute</h3>
+
+        <div class="frm-app">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Plate Number</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Ticket Number</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Issued Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="Issued">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Address Issued</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Permit Number</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Date & Time Permit Obtained</label>
+                        <input type="datetime-local" class="form-control" id="Permit">
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="btn btn-primary">Submit</a>
+        </div>
+
+    </div>
+</section>

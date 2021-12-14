@@ -14,7 +14,7 @@ export class FaqComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.faqService.getUserName().subscribe((data: any) => {
+    this.faqService.getFaqList().subscribe((data: any) => {
       this.faqList = data;
       this.spinner.hide();
     });
