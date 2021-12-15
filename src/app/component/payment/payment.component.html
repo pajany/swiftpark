@@ -36,11 +36,13 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of tableData; let i = index ">
-                        <td>{{item.type}}</td>
-                        <td>{{item.amount}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.amt}}</td>
                         <td>{{item.description}}</td>
                         <td>
-                            <input type="radio" id="test{{i}}" name="radio-group" (change)="onCheckboxChange($event)">
+                            <input type="radio" id="test{{i}}" name="radio-group"
+                                (change)="onCheckboxChange($event,item)" [(ngModel)]="item.selected"
+                                [value]="item.selected">
                             <label for="test{{i}}"></label>
                         </td>
                         <td>
@@ -49,9 +51,11 @@
                                 <span class="minus" (click)="minus(item)"></span>
                             </div>
                             <div class="form-check-inline">
-                                <input type="text" class="form-control2" [(ngModel)]="item.quantity">
+                                <input type="number" class="form-control2" min="0" max="10000000"
+                                    [(ngModel)]="item.quantity" (ngModelChange)="amountCalculation(item)"
+                                    (keydown)="handleKeydown($event)">
                             </div>
-                            <div class="form-check-inline">
+                            <div class=" form-check-inline">
                                 <span class="plus" (click)="plus(item)"></span>
                             </div>
 
@@ -64,97 +68,100 @@
         </div>
 
         <div class="payment-frm">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Permit Expires</label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Amount ($) - (CAD)</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Tax ($) - (CAD)</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Total ($) - (CAD)</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row" *ngIf="visibleDiv">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Vehicle License</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Payment Type</label>
-                        <div class="row">
-                            <div class="col">
-                                <input type="radio" id="p1" name="radio-group" (change)="onRadioChange(1)">
-                                <label for="p1">Courtesy Card</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="p2" name="radio-group" (change)="onRadioChange(2)">
-                                <label for="p2">Credit Card</label>
-                            </div>
-                            <div class="col">
-                                <input type="radio" id="p3" name="radio-group" (change)="onRadioChange(3)">
-                                <label for="p3">Debit Card</label>
-                            </div>
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Permit Expires</label>
+                            <input type="text" class="form-control" disabled>
                         </div>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>SwiftPark Card Number</label>
-                                    <input type="text" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Amount ($) - (CAD)</label>
+                            <input [ngModel]="amount | currency" (ngModelChange)="amount=$event" name="amount"
+                                type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Tax ($) - (CAD)</label>
+                            <input [ngModel]="taxAmount | currency" (ngModelChange)="taxAmount=$event" name="taxAmount"
+                                type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Total ($) - (CAD)</label>
+                            <input [ngModel]="totalAmount | currency" (ngModelChange)="totalAmount=$event"
+                                name="totalAmount" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Vehicle License</label>
+                            <input class="form-control" type="text" name="license" [(ngModel)]="model.license"
+                                #license="ngModel" [ngClass]="{ 'is-invalid': f.submitted && license.invalid }"
+                                required />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Payment Type</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="radio" id="p1" name="radio-group" name="cardSelect"
+                                        (change)="onRadioChange(1)" checked>
+                                    <label for="p1">Courtesy Card</label>
+                                </div>
+                                <div class="col">
+                                    <input type="radio" id="p2" name="radio-group" name="cardSelect"
+                                        (change)="onRadioChange(2)">
+                                    <label for="p2">Credit Card</label>
+                                </div>
+                                <div class="col">
+                                    <input type="radio" id="p3" name="radio-group" name="cardSelect"
+                                        (change)="onRadioChange(3)">
+                                    <label for="p3">Debit Card</label>
                                 </div>
                             </div>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>SwiftPark Card Number</label>
+                                        <input class="form-control" type="text" name="pin"
+                                            [(ngModel)]="model.courtesyCard" #courtesyCard="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && courtesyCard.invalid }"
+                                            required />
 
-                            <div class="col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>PIN</label>
-                                    <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>PIN</label>
+                                        <input class="form-control" type="text" name="pin" [(ngModel)]="model.pin"
+                                            #pin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pin.invalid }"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-12">
+                                    <button class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
-
-
-                            <div class="col-md-6 col-sm-6 col-12">
-                                <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</a>
-                            </div>
                         </div>
-
-
                     </div>
                 </div>
-
-            </div>
-
-
+            </form>
         </div>
     </div>
 </section>
@@ -164,27 +171,32 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        <div class="modal-body">
-            <h3 class="lt-txt text-left">Please fill the details below</h3>
-            <div class="payment-frm">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-12">
-                    <div class="form-group">
-                        <label>Credit Card Number</label>
-                        <input type="text" class="form-control">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h3 class="lt-txt text-left">Please fill the details below</h3>
+                <div class="payment-frm">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label>Credit Card Number</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
                     </div>
+                    <button class="btn btn-primary">Submit</button>
                 </div>
-                </div>
-                <a class="btn btn-primary">Submit</a>
             </div>
 
-
         </div>
-     
-      </div>
     </div>
-  </div>
+</div>
+
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

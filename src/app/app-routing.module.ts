@@ -26,27 +26,27 @@ const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'residential-apt', component: ResidentialAptComponent },
-  { path: 'hotel-motel', component: HotelMotelComponent},
-  { path: 'college-university', component: CollegeUniversityComponent},
-  { path: 'events-party', component: EventsPartyComponent},
-  { path: 'pay-lot', component: PayLotComponent},
-  { path: 'truck', component: TruckComponent},
-  { path: 'faq', component: FaqComponent},
-  { path: 'contact-us', component: ContactUsComponent},
-  { path: 'terms', component: TermsComponent},
-  { path: 'privacy-policy', component: PrivacyPolicyComponent},
-  { path: 'learn-more', component: LearnMoreComponent},
-  { path: 'generate-income', component: GenerateIncomeComponent},
-  { path: 'get-started', component: GetStartedComponent},
-  { path: 'application-form', component: ApplicationFormComponent},
-  { path: 'signs', component: SignsComponent},
-  { path: 'courtesy-card', component: CourtesyCardComponent},
-  { path: 'file-a-dispute', component: FileADisputeComponent},
-  { path: 'payment', component: PaymentComponent},
+  { path: 'hotel-motel', component: HotelMotelComponent },
+  { path: 'college-university', component: CollegeUniversityComponent },
+  { path: 'events-party', component: EventsPartyComponent },
+  { path: 'pay-lot', component: PayLotComponent },
+  { path: 'truck', component: TruckComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: 'contact-us', component: ContactUsComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'learn-more', component: LearnMoreComponent },
+  { path: 'generate-income', component: GenerateIncomeComponent },
+  { path: 'get-started', component: GetStartedComponent },
+  { path: 'application-form', component: ApplicationFormComponent },
+  { path: 'signs', component: SignsComponent },
+  { path: 'courtesy-card', component: CourtesyCardComponent },
+  { path: 'file-a-dispute', component: FileADisputeComponent },
+  { path: 'payment/:lotNumber', component: PaymentComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

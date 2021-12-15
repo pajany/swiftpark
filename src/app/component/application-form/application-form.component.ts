@@ -71,12 +71,8 @@ export class ApplicationFormComponent implements OnInit {
           this.registerForm.reset();
         },
         error => {
-          console.log(error);
+          console.error(error);
           this.spinner.hide();
-        },
-        () => {
-          // 'onCompleted' callback.
-          // No errors, route to new page here
         }
       );
     } else {
