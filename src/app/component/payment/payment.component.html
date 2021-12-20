@@ -41,24 +41,27 @@
                         <td>{{item.description}}</td>
                         <td>
                             <input type="radio" id="test{{i}}" name="radio-group"
-                                (change)="onCheckboxChange($event,item)" [(ngModel)]="item.selected"
-                                [value]="item.selected">
+                                (change)="onCheckboxChange($event,item)">
                             <label for="test{{i}}"></label>
                         </td>
-                        <td>
+                        <td *ngIf="item.name !== '30 Days Pass'">
 
                             <div class="form-check-inline">
-                                <span class="minus" (click)="minus(item)"></span>
+                                <span *ngIf="item.selected" class="minus" (click)="minus(item)"></span>
+                                <span *ngIf="!item.selected" class="minus" style="cursor: default;"></span>
                             </div>
                             <div class="form-check-inline">
                                 <input type="number" class="form-control2" min="0" max="10000000"
-                                    [(ngModel)]="item.quantity" (ngModelChange)="amountCalculation(item)"
-                                    (keydown)="handleKeydown($event)">
+                                    [(ngModel)]="item.quantity" [disabled]="!item.selected"
+                                    (ngModelChange)="amountCalculation(item)" (keydown)="handleKeydown($event)">
                             </div>
                             <div class=" form-check-inline">
-                                <span class="plus" (click)="plus(item)"></span>
+                                <span *ngIf="item.selected" class="plus" (click)="plus(item)"></span>
+                                <span *ngIf="!item.selected" class="plus" style="cursor: default;"></span>
                             </div>
 
+                        </td>
+                        <td *ngIf="item.name === '30 Days Pass'">
                         </td>
                     </tr>
 
@@ -73,13 +76,17 @@
                     <div class="col-md-6 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Permit Expires</label>
-                            <input type="text" class="form-control" disabled>
+                            <input *ngIf="totalAmount === 0" type="text" class="form-control" disabled>
+                            <input *ngIf="totalAmount !== 0" [ngModel]="expiryDate | date:'medium':'GMT-5'"
+                                (ngModelChange)="expiryDate=$event" name="expiryDate" type="text" class="form-control"
+                                disabled>
+
                         </div>
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-12">
                         <div class="form-group">
-                            <label>Amount ($) - (CAD)</label>
+                            <label>Amount ($) - (CAD) </label>
                             <input [ngModel]="amount | currency" (ngModelChange)="amount=$event" name="amount"
                                 type="text" class="form-control" disabled>
                         </div>
@@ -139,7 +146,7 @@
                                 <div class="col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label>SwiftPark Card Number</label>
-                                        <input class="form-control" type="text" name="pin"
+                                        <input class="form-control" type="text" name="cardnumber"
                                             [(ngModel)]="model.courtesyCard" #courtesyCard="ngModel"
                                             [ngClass]="{ 'is-invalid': f.submitted && courtesyCard.invalid }"
                                             required />
@@ -155,7 +162,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-12">
-                                    <button class="btn btn-primary">Submit</button>
+                                    <button [disabled]="totalAmount === 0" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
