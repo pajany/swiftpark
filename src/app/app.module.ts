@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -35,7 +36,7 @@ import { SignsComponent } from './component/signs/signs.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { SuccessPageComponent } from './component/success-page/success-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
     CourtesyCardComponent,
     FileADisputeComponent,
     PaymentComponent,
-    RevenueCalculatorComponent
+    RevenueCalculatorComponent,
+    SuccessPageComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
     NgxIntlTelInputModule,
     MatDialogModule,
     OverlayModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

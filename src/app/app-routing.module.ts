@@ -17,6 +17,7 @@ import { PaymentComponent } from './component/payment/payment.component';
 import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component';
 import { ResidentialAptComponent } from './component/residential-apt/residential-apt.component';
 import { SignsComponent } from './component/signs/signs.component';
+import { SuccessPageComponent } from './component/success-page/success-page.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: 'signs', component: SignsComponent },
   { path: 'courtesy-card', component: CourtesyCardComponent },
   { path: 'file-a-dispute', component: FileADisputeComponent },
-  { path: 'payment/:lotNumber', component: PaymentComponent }
+  { path: 'payment/:lotNumber', component: PaymentComponent },
+  { path: 'success', component: SuccessPageComponent }
 ];
 
 @NgModule({
