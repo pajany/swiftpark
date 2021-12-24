@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { homeService } from '../home-header/home-header.service';
@@ -18,21 +19,28 @@ export class PaymentComponent implements OnInit {
   taxAmount: number = 0;
   totalAmount: number | undefined = 0;
   model: any = {};
-  message: any;
+  message: string = '';
   show: boolean = false;
   // date: number = Date.now();
   expiryDate: any = null;
-  iscourtesycard: boolean = true;
-
+  iscourtesycard: boolean = false;
+  submitted: boolean;
+  formProcess: boolean;
+  customStripeForm: FormGroup;
+  token: string;
+  isStripeCard: boolean = true;
+  errorMessage: any = '';
   constructor(
     public homeService: homeService,
     private spinner: NgxSpinnerService,
     public router: ActivatedRoute,
     public route: Router,
-    public PaymentService: PaymentService
+    public PaymentService: PaymentService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.loadStripe();
     this.spinner.show();
     this.router.params.subscribe((data: any) => {
       this.lotNumber = parseInt(data.lotNumber);
@@ -58,11 +66,85 @@ export class PaymentComponent implements OnInit {
         }
       );
     });
+    this.customStripeForm = this.formBuilder.group({
+      cardNumber: ['', Validators.required],
+      expMonth: ['', Validators.required],
+      expYear: ['', Validators.required],
+      cvv: ['', Validators.required]
+    });
+
+    this.cardTypeChange();
   }
+  get g() {
+    return this.customStripeForm.controls;
+  }
+
+  loadStripe() {
+    if (!window.document.getElementById('stripe-custom-form-script')) {
+      var s = window.document.createElement('script');
+      s.id = 'stripe-custom-form-script';
+      s.type = 'text/javascript';
+      s.src = 'https://js.stripe.com/v2/';
+      window.document.body.appendChild(s);
+    }
+  }
+
+  pay(form) {
+    if (!this.iscourtesycard) {
+      this.spinner.show();
+      if (!window['Stripe']) {
+        alert('Oops! Stripe did not initialize properly.');
+        return;
+      }
+      this.submitted = true;
+      console.log(this.customStripeForm);
+      if (this.customStripeForm.invalid) {
+        this.spinner.hide();
+        return;
+      }
+      this.formProcess = true;
+      console.log('form');
+      console.log(form);
+      if (!window['Stripe']) {
+        this.spinner.hide();
+        alert('Oops! Stripe did not initialize properly.');
+        return;
+      }
+      (<any>window).Stripe.card.createToken(
+        {
+          number: form.cardNumber,
+          exp_month: form.expMonth,
+          exp_year: form.expYear,
+          cvc: 123
+        },
+        (status: number, response: any) => {
+          this.submitted = false;
+          this.formProcess = false;
+          if (status === 200) {
+            this.spinner.hide();
+            this.token = response.id;
+            this.isStripeCard = true;
+            this.onSubmit();
+          } else {
+            debugger;
+            console.log(this.message);
+            this.errorMessage = response.error.message;
+            this.spinner.hide();
+            this.isStripeCard = false;
+            setTimeout(() => {
+              this.showError(response.error.message);
+            }, 1);
+          }
+        }
+      );
+    }
+  }
+
   plus(item: any) {
     item.quantity++;
     this.amountCalculation(item);
   }
+
   minus(item: any) {
     item.quantity = item.quantity || 0;
     if (item.quantity != 0) {
@@ -70,6 +152,7 @@ export class PaymentComponent implements OnInit {
       this.amountCalculation(item);
     }
   }
+
   amountCalculation(data: any) {
     if (this.visibleDiv && data.selected) {
       this.amount = Number(data.amt) * data.quantity;
@@ -136,42 +219,49 @@ export class PaymentComponent implements OnInit {
   }
 
   onSubmit() {
-    this.spinner.show();
     let params: any = {};
-    this.tableData.forEach(x => {
-      if (x.selected) {
-        params.permit_type = x.name;
-        params.quantity = x.quantity;
-        params.selectedAmount = x.amt;
-      }
-    });
-
-    (params.lot_number = this.lotNumber),
-      (params.subtotal = this.amount),
-      (params.taxamount = this.taxAmount),
-      (params.totalamount = this.totalAmount),
-      (params.expires_date = this.expiryDate),
-      (params.license = this.model.license),
-      (params.courtesy_number = this.model.courtesyCard),
-      (params.pin = this.model.pin),
-      (params.iscourtesycard = this.iscourtesycard);
-
-    this.PaymentService.submitForm(params).subscribe(
-      (data: any) => {
-        if (!data.status) {
-          this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
-          this.spinner.hide();
-        } else {
-          this.spinner.hide();
+    if (this.isStripeCard) {
+      this.spinner.show();
+      this.tableData.forEach(x => {
+        if (x.selected) {
+          params.permit_type = x.name;
+          params.quantity = x.quantity;
+          params.selectedAmount = x.amt;
         }
-      },
-      (error: any) => {
-        console.error(error);
-        this.message = error.error.message;
-        this.spinner.hide();
-        $('#exampleModal').modal('show');
-      }
-    );
+      });
+      (params.lot_number = this.lotNumber),
+        (params.subtotal = this.amount),
+        (params.taxamount = this.taxAmount),
+        (params.totalamount = this.totalAmount),
+        (params.expires_date = this.expiryDate),
+        (params.license = this.model.license),
+        (params.courtesy_number = this.model.courtesyCard),
+        (params.pin = this.model.pin),
+        (params.iscourtesycard = this.iscourtesycard);
+      params.token = this.token;
+
+      this.PaymentService.submitForm(params).subscribe(
+        (data: any) => {
+          if (!data.status) {
+            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
+            this.spinner.hide();
+          } else {
+            this.spinner.hide();
+          }
+        },
+        (error: any) => {
+          console.error(error);
+          this.message = error.error.message;
+          this.spinner.hide();
+          this.showError(this.message);
+        }
+      );
+    }
+  }
+
+  showError(message) {
+    this.message = message;
+    $('#exampleModal').modal('show');
   }
 
   handleKeydown(e: any) {
@@ -192,37 +282,21 @@ export class PaymentComponent implements OnInit {
       e.stopPropagation();
     }
   }
+
   cardTypeChange() {
     this.iscourtesycard = !this.iscourtesycard;
-  }
-  loadStripe() {
-    if (!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement('script');
-      s.id = 'stripe-script';
-      s.type = 'text/javascript';
-      s.src = 'https://checkout.stripe.com/checkout.js';
-      window.document.body.appendChild(s);
+    if (this.iscourtesycard) {
+      this.isStripeCard = true;
+      this.customStripeForm.get('cardNumber').setValidators(null);
+      this.customStripeForm.get('expMonth').setValidators(null);
+      this.customStripeForm.get('expYear').setValidators(null);
+      this.customStripeForm.get('cvv').setValidators(null);
+    } else {
+      this.isStripeCard = false;
+      this.customStripeForm.get('cardNumber').setValidators([Validators.required]);
+      this.customStripeForm.get('expMonth').setValidators([Validators.required]);
+      this.customStripeForm.get('expYear').setValidators([Validators.required]);
+      this.customStripeForm.get('cvv').setValidators([Validators.required]);
     }
-  }
-
-  createPayment() {
-    this.PaymentService.createPayment('test').subscribe(resp => {
-      let sessionId = resp.sessionId;
-      const stripe = Stripe(
-        'pk_test_51K8pFqSJaFwnlJbfbY3CZt5vWtrKzCnQ8qYTA1BXRFXNaIcZth3gguPFnz0BzUZIJoKePFjNY6516p3jIc7s9gQl00nvAZgP0q'
-      );
-      stripe
-        .redirectToCheckout({
-          // Make the id field from the Checkout Session creation API response
-          // available to this file, so you can provide it as parameter here
-          // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-          sessionId: sessionId
-        })
-        .then(function (result) {
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, display the localized error message to your customer
-          // using `result.error.message`.
-        });
-    });
   }
 }
