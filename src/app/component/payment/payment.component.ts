@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
   inputnumber = 0;
   visibleDiv: boolean = false;
   lotNumber: number = 0;
@@ -36,11 +36,11 @@ export class PaymentComponent implements OnInit {
     public router: ActivatedRoute,
     public route: Router,
     public PaymentService: PaymentService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.loadStripe();
     this.spinner.show();
     this.router.params.subscribe((data: any) => {
       this.lotNumber = parseInt(data.lotNumber);
@@ -79,16 +79,6 @@ export class PaymentComponent implements OnInit {
     return this.customStripeForm.controls;
   }
 
-  loadStripe() {
-    if (!window.document.getElementById('stripe-custom-form-script')) {
-      var s = window.document.createElement('script');
-      s.id = 'stripe-custom-form-script';
-      s.type = 'text/javascript';
-      s.src = 'https://js.stripe.com/v2/';
-      window.document.body.appendChild(s);
-    }
-  }
-
   pay(form) {
     if (!this.iscourtesycard) {
       this.spinner.show();
@@ -110,33 +100,34 @@ export class PaymentComponent implements OnInit {
         alert('Oops! Stripe did not initialize properly.');
         return;
       }
-      (<any>window).Stripe.card.createToken(
-        {
-          number: form.cardNumber,
-          exp_month: form.expMonth,
-          exp_year: form.expYear,
-          cvc: 123
-        },
-        (status: number, response: any) => {
-          this.submitted = false;
-          this.formProcess = false;
-          if (status === 200) {
-            this.spinner.hide();
-            this.token = response.id;
-            this.isStripeCard = true;
-            this.onSubmit();
-          } else {
-            debugger;
-            console.log(this.message);
-            this.errorMessage = response.error.message;
-            this.spinner.hide();
-            this.isStripeCard = false;
-            setTimeout(() => {
-              this.showError(response.error.message);
-            }, 1);
+      const sub = this.zone.run(() => {
+        (<any>window).Stripe.card.createToken(
+          {
+            number: form.cardNumber,
+            exp_month: form.expMonth,
+            exp_year: form.expYear,
+            cvc: form.cvv
+          },
+          (status: number, response: any) => {
+            this.submitted = false;
+            this.formProcess = false;
+            if (status === 200) {
+              this.spinner.hide();
+              this.token = response.id;
+              this.isStripeCard = true;
+              this.paymentMethod();
+            } else {
+              console.log(this.message);
+              this.errorMessage = response.error.message;
+              this.spinner.hide();
+              this.isStripeCard = false;
+              setTimeout(() => {
+                this.showError(response.error.message);
+              }, 1);
+            }
           }
-        }
-      );
+        );
+      });
     }
   }
 
@@ -220,6 +211,51 @@ export class PaymentComponent implements OnInit {
 
   onSubmit() {
     let params: any = {};
+    if (this.isStripeCard && this.iscourtesycard) {
+      this.spinner.show();
+      this.tableData.forEach(x => {
+        if (x.selected) {
+          params.permit_type = x.name;
+          params.quantity = x.quantity;
+          params.selectedAmount = x.amt;
+        }
+      });
+      (params.lot_number = this.lotNumber),
+        (params.subtotal = this.amount),
+        (params.taxamount = this.taxAmount),
+        (params.totalamount = this.totalAmount),
+        (params.expires_date = this.expiryDate),
+        (params.license = this.model.license),
+        (params.courtesy_number = this.model.courtesyCard),
+        (params.pin = this.model.pin),
+        (params.iscourtesycard = this.iscourtesycard);
+      params.token = this.token;
+
+      this.PaymentService.submitForm(params).subscribe(
+        (data: any) => {
+          this.spinner.hide();
+          if (!data.status) {
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 200);
+            this.spinner.hide();
+            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
+          } else {
+            this.spinner.hide();
+          }
+        },
+        (error: any) => {
+          console.error(error);
+          this.message = error.error.message;
+          this.spinner.hide();
+          this.showError(this.message);
+        }
+      );
+    }
+  }
+
+  paymentMethod() {
+    let params: any = {};
     if (this.isStripeCard) {
       this.spinner.show();
       this.tableData.forEach(x => {
@@ -242,9 +278,11 @@ export class PaymentComponent implements OnInit {
 
       this.PaymentService.submitForm(params).subscribe(
         (data: any) => {
+          this.spinner.hide();
+          this.spinner.hide();
           if (!data.status) {
-            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
             this.spinner.hide();
+            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
           } else {
             this.spinner.hide();
           }
@@ -258,10 +296,17 @@ export class PaymentComponent implements OnInit {
       );
     }
   }
+  ngOnDestroy(): void {
+    this.zone.run(() => {
+      setTimeout(() => this.spinner.hide(), 100);
+    });
+  }
 
   showError(message) {
     this.message = message;
-    $('#exampleModal').modal('show');
+    this.zone.run(() => {
+      setTimeout(() => $('#exampleModal').modal('show'), 100);
+    });
   }
 
   handleKeydown(e: any) {

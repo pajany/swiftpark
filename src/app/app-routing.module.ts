@@ -4,6 +4,7 @@ import { ApplicationFormComponent } from './component/application-form/applicati
 import { CollegeUniversityComponent } from './component/college-university/college-university.component';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
 import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
+import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.component';
 import { EventsPartyComponent } from './component/events-party/events-party.component';
 import { FaqComponent } from './component/faq/faq.component';
 import { FileADisputeComponent } from './component/file-a-dispute/file-a-dispute.component';
@@ -21,7 +22,6 @@ import { SuccessPageComponent } from './component/success-page/success-page.comp
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-
 const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
@@ -44,7 +44,8 @@ const routes: Routes = [
   { path: 'courtesy-card', component: CourtesyCardComponent },
   { path: 'file-a-dispute', component: FileADisputeComponent },
   { path: 'payment/:lotNumber', component: PaymentComponent },
-  { path: 'success', component: SuccessPageComponent }
+  { path: 'success', component: SuccessPageComponent },
+  { path: 'pages/:header', component: DynamicPageComponent }
 ];
 
 @NgModule({

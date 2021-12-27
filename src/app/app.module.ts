@@ -37,6 +37,7 @@ import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { SuccessPageComponent } from './component/success-page/success-page.component';
+import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +65,8 @@ import { SuccessPageComponent } from './component/success-page/success-page.comp
     FileADisputeComponent,
     PaymentComponent,
     RevenueCalculatorComponent,
-    SuccessPageComponent
+    SuccessPageComponent,
+    DynamicPageComponent
   ],
   imports: [
     BrowserModule,

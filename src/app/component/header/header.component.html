@@ -1,35 +1,43 @@
 <nav class="navbar header-part navbar-expand-md">
-    <a class="navbar-brand"  [routerLink]="['/home']"><img src="../../../assets/image/inner-logo.png" class="img-fluid"/></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="navbarCollapse">
-      <ul class="navbar-nav align-items-center justify-content-between">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/residential-apt']" routerLinkActive='active'>Residential APT & Condo</a>
+  <a class="navbar-brand" [routerLink]="['/home']"><img src="../../../assets/image/inner-logo.png"
+      class="img-fluid" /></a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse" id="navbarCollapse">
+    <ul class="navbar-nav align-items-center justify-content-between">
+      <ng-container *ngFor="let data of hearderList; let i = index">
+        <li class=" nav-item">
+          <a class="nav-link" [routerLink]="['/residential-apt']" (click)="ClickedRow(i);navigate(data.path)"
+            [class.active]="i == HighlightRow">{{data.header}}</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/hotel-motel']" routerLinkActive='active'>Hotel, Motel & Restaurant</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/college-university']" routerLinkActive='active'>College & University</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/events-party']" routerLinkActive='active'>Event & Party</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/pay-lot']" routerLinkActive='active'>Pay Lot</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/truck']" routerLinkActive='active'>Truck</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive='active'>Nemesis</a>
-        </li>
-        <li class="nav-item">
-          <a class="foot-contact nav-link"><span></span>1-877-943-8727</a>
-        </li>
-      </ul>
-     
-    </div>
-  </nav>
+      </ng-container>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/residential-apt']" routerLinkActive='active'>Residential APT & Condo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/hotel-motel']" routerLinkActive='active'>Hotel, Motel & Restaurant</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/college-university']" routerLinkActive='active'>College & University</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/events-party']" routerLinkActive='active'>Event & Party</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/pay-lot']" routerLinkActive='active'>Pay Lot</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/truck']" routerLinkActive='active'>Truck</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive='active'>Nemesis</a>
+      </li>
+      <li class="nav-item">
+        <a class="foot-contact nav-link"><span></span>1-877-943-8727</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
