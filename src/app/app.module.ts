@@ -9,6 +9,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxStripeModule } from 'ngx-stripe';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { ApplicationFormComponent } from './component/application-form/applicati
 import { CollegeUniversityComponent } from './component/college-university/college-university.component';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
 import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
+import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.component';
 import { EventsPartyComponent } from './component/events-party/events-party.component';
 import { FaqComponent } from './component/faq/faq.component';
 import { FileADisputeComponent } from './component/file-a-dispute/file-a-dispute.component';
@@ -33,11 +35,10 @@ import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-polic
 import { ResidentialAptComponent } from './component/residential-apt/residential-apt.component';
 import { RevenueCalculatorComponent } from './component/revenue-calculator/revenue-calculator.component';
 import { SignsComponent } from './component/signs/signs.component';
+import { SuccessPageComponent } from './component/success-page/success-page.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { SuccessPageComponent } from './component/success-page/success-page.component';
-import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +81,10 @@ import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.comp
     NgxIntlTelInputModule,
     MatDialogModule,
     OverlayModule,
-    MatIconModule
+    MatIconModule,
+    NgxStripeModule.forRoot(
+      'pk_test_51K9nZHHBnGyCwdA0P3mVjhcQuRp9wJCv0XKGjxZPYxFelJJlxGuOJ23HAggDdgiLnwIjn6btN8ZfTnkFxL7nCKkL00ErdMPkzV'
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

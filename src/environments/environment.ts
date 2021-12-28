@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.121/swiftpark/public/api'
+  apiUrl: 'http://swiftpark.sdiphp.com/api'
 };
 /*
  * For easier debugging in development mode, you can import the following file

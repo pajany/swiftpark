@@ -12,4 +12,8 @@ export class homeService {
     return this.http.get<any>(`${environment.apiUrl}` + '/lotvalidate/' + lotNumber);
     //return name;
   }
+
+  getDynamicPage() {
+    return this.http.get<any>(`${environment.apiUrl}` + '/managepage');
+  }
 }

@@ -1,7 +1,9 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { StripeCardComponent, StripeService } from 'ngx-stripe';
 import { homeService } from '../home-header/home-header.service';
 import { PaymentService } from './payment.service';
 declare var $: any;
@@ -10,7 +12,8 @@ declare var $: any;
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit, OnDestroy {
+export class PaymentComponent implements OnInit {
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
   inputnumber = 0;
   visibleDiv: boolean = false;
   lotNumber: number = 0;
@@ -26,10 +29,32 @@ export class PaymentComponent implements OnInit, OnDestroy {
   iscourtesycard: boolean = false;
   submitted: boolean;
   formProcess: boolean;
-  customStripeForm: FormGroup;
   token: string;
   isStripeCard: boolean = true;
   errorMessage: any = '';
+  cardOptions: StripeCardElementOptions = {
+    style: {
+      complete: {},
+      base: {
+        iconColor: '#666EE8',
+        color: '#31325F',
+        fontWeight: '300',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: '20px',
+        lineHeight: '40px',
+        '::placeholder': {
+          color: '#CFD7E0'
+        }
+      }
+    }
+  };
+
+  elementsOptions: StripeElementsOptions = {
+    locale: 'en'
+  };
+
+  stripeTest: FormGroup;
+
   constructor(
     public homeService: homeService,
     private spinner: NgxSpinnerService,
@@ -37,7 +62,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     public route: Router,
     public PaymentService: PaymentService,
     private formBuilder: FormBuilder,
-    private zone: NgZone
+    private zone: NgZone,
+    private fb: FormBuilder,
+    private stripeService: StripeService
   ) {}
 
   ngOnInit(): void {
@@ -66,69 +93,27 @@ export class PaymentComponent implements OnInit, OnDestroy {
         }
       );
     });
-    this.customStripeForm = this.formBuilder.group({
-      cardNumber: ['', Validators.required],
-      expMonth: ['', Validators.required],
-      expYear: ['', Validators.required],
-      cvv: ['', Validators.required]
-    });
-
     this.cardTypeChange();
   }
-  get g() {
-    return this.customStripeForm.controls;
-  }
 
-  pay(form) {
-    if (!this.iscourtesycard) {
-      this.spinner.show();
-      if (!window['Stripe']) {
-        alert('Oops! Stripe did not initialize properly.');
-        return;
-      }
-      this.submitted = true;
-      console.log(this.customStripeForm);
-      if (this.customStripeForm.invalid) {
+  createToken(): void {
+    this.spinner.show();
+    //  const name = this.stripeTest.get('name').value;
+    this.stripeService.createToken(this.card.element).subscribe(result => {
+      if (result.token) {
+        // Use the token
         this.spinner.hide();
-        return;
-      }
-      this.formProcess = true;
-      console.log('form');
-      console.log(form);
-      if (!window['Stripe']) {
+        this.token = result.token.id;
+        this.paymentMethod();
+        console.log(result.token.id);
+      } else if (result.error) {
+        // Error creating the token
+        this.message = result.error.message;
         this.spinner.hide();
-        alert('Oops! Stripe did not initialize properly.');
-        return;
+        this.showError(this.message);
+        console.log(result.error.message);
       }
-      const sub = this.zone.run(() => {
-        (<any>window).Stripe.card.createToken(
-          {
-            number: form.cardNumber,
-            exp_month: form.expMonth,
-            exp_year: form.expYear,
-            cvc: form.cvv
-          },
-          (status: number, response: any) => {
-            this.submitted = false;
-            this.formProcess = false;
-            if (status === 200) {
-              this.spinner.hide();
-              this.token = response.id;
-              this.isStripeCard = true;
-              this.paymentMethod();
-            } else {
-              console.log(this.message);
-              this.errorMessage = response.error.message;
-              this.spinner.hide();
-              this.isStripeCard = false;
-              setTimeout(() => {
-                this.showError(response.error.message);
-              }, 1);
-            }
-          }
-        );
-      });
-    }
+    });
   }
 
   plus(item: any) {
@@ -210,96 +195,54 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let params: any = {};
     if (this.isStripeCard && this.iscourtesycard) {
-      this.spinner.show();
-      this.tableData.forEach(x => {
-        if (x.selected) {
-          params.permit_type = x.name;
-          params.quantity = x.quantity;
-          params.selectedAmount = x.amt;
-        }
-      });
-      (params.lot_number = this.lotNumber),
-        (params.subtotal = this.amount),
-        (params.taxamount = this.taxAmount),
-        (params.totalamount = this.totalAmount),
-        (params.expires_date = this.expiryDate),
-        (params.license = this.model.license),
-        (params.courtesy_number = this.model.courtesyCard),
-        (params.pin = this.model.pin),
-        (params.iscourtesycard = this.iscourtesycard);
-      params.token = this.token;
-
-      this.PaymentService.submitForm(params).subscribe(
-        (data: any) => {
-          this.spinner.hide();
-          if (!data.status) {
-            setTimeout(() => {
-              this.spinner.hide();
-            }, 200);
-            this.spinner.hide();
-            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
-          } else {
-            this.spinner.hide();
-          }
-        },
-        (error: any) => {
-          console.error(error);
-          this.message = error.error.message;
-          this.spinner.hide();
-          this.showError(this.message);
-        }
-      );
+      this.paymentMethod();
+    } else {
+      this.createToken();
     }
   }
 
   paymentMethod() {
     let params: any = {};
-    if (this.isStripeCard) {
-      this.spinner.show();
-      this.tableData.forEach(x => {
-        if (x.selected) {
-          params.permit_type = x.name;
-          params.quantity = x.quantity;
-          params.selectedAmount = x.amt;
-        }
-      });
-      (params.lot_number = this.lotNumber),
-        (params.subtotal = this.amount),
-        (params.taxamount = this.taxAmount),
-        (params.totalamount = this.totalAmount),
-        (params.expires_date = this.expiryDate),
-        (params.license = this.model.license),
-        (params.courtesy_number = this.model.courtesyCard),
-        (params.pin = this.model.pin),
-        (params.iscourtesycard = this.iscourtesycard);
-      params.token = this.token;
-
-      this.PaymentService.submitForm(params).subscribe(
-        (data: any) => {
-          this.spinner.hide();
-          this.spinner.hide();
-          if (!data.status) {
-            this.spinner.hide();
-            this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
-          } else {
-            this.spinner.hide();
-          }
-        },
-        (error: any) => {
-          console.error(error);
-          this.message = error.error.message;
-          this.spinner.hide();
-          this.showError(this.message);
-        }
-      );
-    }
-  }
-  ngOnDestroy(): void {
-    this.zone.run(() => {
-      setTimeout(() => this.spinner.hide(), 100);
+    this.spinner.show();
+    this.tableData.forEach(x => {
+      if (x.selected) {
+        params.permit_type = x.name;
+        params.quantity = x.quantity;
+        params.selectedAmount = x.amt;
+      }
     });
+    (params.lot_number = this.lotNumber),
+      (params.subtotal = this.amount),
+      (params.taxamount = this.taxAmount),
+      (params.totalamount = this.totalAmount),
+      (params.expires_date = this.expiryDate),
+      (params.license = this.model.license),
+      (params.courtesy_number = this.model.courtesyCard),
+      (params.pin = this.model.pin),
+      (params.iscourtesycard = this.iscourtesycard);
+    params.token = this.token;
+
+    this.PaymentService.submitForm(params).subscribe(
+      (data: any) => {
+        this.spinner.hide();
+        if (!data.status) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 200);
+          this.spinner.hide();
+          this.route.navigate(['/success'], { queryParams: { permit: data.permit_no } });
+        } else {
+          this.spinner.hide();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.message = error.error.message;
+        this.spinner.hide();
+        this.showError(this.message);
+      }
+    );
   }
 
   showError(message) {
@@ -330,18 +273,5 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   cardTypeChange() {
     this.iscourtesycard = !this.iscourtesycard;
-    if (this.iscourtesycard) {
-      this.isStripeCard = true;
-      this.customStripeForm.get('cardNumber').setValidators(null);
-      this.customStripeForm.get('expMonth').setValidators(null);
-      this.customStripeForm.get('expYear').setValidators(null);
-      this.customStripeForm.get('cvv').setValidators(null);
-    } else {
-      this.isStripeCard = false;
-      this.customStripeForm.get('cardNumber').setValidators([Validators.required]);
-      this.customStripeForm.get('expMonth').setValidators([Validators.required]);
-      this.customStripeForm.get('expYear').setValidators([Validators.required]);
-      this.customStripeForm.get('cvv').setValidators([Validators.required]);
-    }
   }
 }

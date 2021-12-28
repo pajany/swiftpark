@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { homeService } from './home-header.service';
+
 declare var $: any;
 @Component({
   selector: 'app-home-header',
@@ -10,13 +11,35 @@ declare var $: any;
 })
 export class HomeHeaderComponent implements OnInit {
   lotNumber: number;
-  constructor(public homeService: homeService, private spinner: NgxSpinnerService, public router: Router) {}
+  HighlightRow: Number;
+  ClickedRow: any;
+  constructor(public homeService: homeService, private spinner: NgxSpinnerService, public router: Router,
+    public route: ActivatedRoute) {
+    this.ClickedRow = function (index) {
+      this.HighlightRow = index;
+    };
+  }
   message: any;
   show: boolean = false;
-  ngOnInit() {}
+  submitted: boolean = false;
+  hearderList: any[] = [];
+  ngOnInit() {
+    this.spinner.show();
+    this.hearderList = [];
+    this.homeService.getDynamicPage().subscribe((page: any) => {
+      this.spinner.hide();
+      page.forEach(x => {
+        if (x.header_menu) {
+          this.hearderList.push(x);
+        }
+      });
+    });
+  }
 
   lotNumberValidation() {
+    this.submitted = true;
     if (this.lotNumber) {
+      this.submitted = false;
       this.spinner.show();
       this.homeService.lotNumberValidation(this.lotNumber).subscribe(
         (data: any) => {
@@ -36,6 +59,10 @@ export class HomeHeaderComponent implements OnInit {
         }
       );
     }
+  }
+
+  navigate(path) {
+    this.router.navigate(['/pages', path]);
   }
 
   handleKeydown(e: any) {

@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row m-hgt align-items-center justify-content-between">
             <div class="col-md-6 col-sm-6 col-12">
-                <h3>Residential APT & Condo</h3>
+                <h3>{{header}}</h3>
             </div>
             <div class="col-md-6 col-sm-6 col-12">
                 <ul>
                     <li><a [routerLink]="['/home']">Home </a></li>
-                    <li><a> Residential APT & Condo </a></li>
+                    <li><a> {{header}} </a></li>
                 </ul>
             </div>
         </div>
@@ -17,18 +17,8 @@
 <section class="inner-whitebg">
     <div class="container">
         <div class="row">
-            <div class="col">
-                <p>Your parking lot can fill up with unknown vehicles. Are they tenants? Are they visitors? Are they
-                    unauthorized parkers? You need to manage your parking lot but you don't want to spend a lot of money
-                    or time.</p>
+            <div class="col" [innerHtml]="content">
 
-                <p> Your best choice for apartment or condo parking management is <span>Swift<span
-                            class="lg-clr">Park</span></span> instant paperless parking. It's quick, it's simple, it's
-                    convenient.</p>
-
-                <p> Simply post a <span>Swift<span class="lg-clr">Park</span></span> sign in your lot. Tenants pay
-                    online or by phone 24/7 to receive their instant paperless permit. SwiftPark courtesy cards are
-                    available.</p>
             </div>
         </div>
     </div>

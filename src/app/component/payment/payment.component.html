@@ -15,12 +15,15 @@
 </section>
 <section class="w-bg padtbtm">
     <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-4">
+        <div class="row">
+            <!-- <div class="col-4">
                 <h3 class="lt-txt">Lot No 10100 is at 123 SWIFTPARK AVENUE</h3>
             </div>
             <div class="col-4 text-right">
-                <a class="g-btn"> View Transactions </a> <a class="g-btn"> Change Pin </a>
+                <a  class="g-btn"> View Transactions </a> <a class="g-btn"> Change Pin </a>
+            </div> -->
+            <div class="col-12 text-center">
+                <h3 class="lt-txt">Lot No 10100 is at 123 SWIFTPARK AVENUE</h3>
             </div>
         </div>
         <div class="table-responsive">
@@ -132,13 +135,13 @@
                                 <div class="col">
                                     <input type="radio" id="p2" name="radio-group" name="cardSelect"
                                         (change)="onRadioChange(2)">
-                                    <label for="p2">Credit Card</label>
+                                    <label for="p2">Credit Card / Debit Card</label>
                                 </div>
-                                <div class="col">
+                                <!-- <div class="col">
                                     <input type="radio" id="p3" name="radio-group" name="cardSelect"
                                         (change)="onRadioChange(3)">
                                     <label for="p3">Debit Card</label>
-                                </div>
+                                </div> -->
                             </div>
                             <br>
                             <br>
@@ -162,101 +165,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <form *ngIf="!iscourtesycard" [formGroup]="customStripeForm">
-                                <div class="panel-body ">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12">
-                                            <div class="form-group">
-                                                <label>CARD NUMBER</label>
-                                                <div class="input-group">
-                                                    <input type="text" formControlName="cardNumber" class="form-control"
-                                                        placeholder="Valid Card Number" name="cardNumber" maxlength="18"
-                                                        [ngClass]="{ 'is-invalid': submitted && customStripeForm.controls.cardNumber.errors }" />
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-credit-card"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-7 col-md-7">
-                                            <div class="form-group">
-                                                <label><span class="hidden-xs">EXPIRATION</span> Date</label>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <select formControlName="expMonth" class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && customStripeForm.controls.expMonth.errors }">
-                                                                <option value="">Select Month</option>
-                                                                <option value="1">01</option>
-                                                                <option value="2">02</option>
-                                                                <option value="3">03</option>
-                                                                <option value="4">04</option>
-                                                                <option value="5">05</option>
-                                                                <option value="6">06</option>
-                                                                <option value="7">07</option>
-                                                                <option value="8">08</option>
-                                                                <option value="9">09</option>
-                                                                <option value="10">10</option>
-                                                                <option value="11">11</option>
-                                                                <option value="12">12</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 pull-right">
-                                                        <div class="form-group">
-                                                            <select formControlName="expYear" class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && customStripeForm.controls.expYear.errors }">
-                                                                <option value="">Select Year</option>
-                                                                <option value="22">2022</option>
-                                                                <option value="23">2023</option>
-                                                                <option value="24">2024</option>
-                                                                <option value="25">2025</option>
-                                                                <option value="26">2026</option>
-                                                                <option value="27">2027</option>
-                                                                <option value="28">2028</option>
-                                                                <option value="29">2029</option>
-                                                                <option value="30">2030</option>
-                                                                <option value="30">2031</option>
-                                                                <option value="30">2032</option>
-                                                                <option value="30">2033</option>
-                                                                <option value="30">2034</option>
-                                                                <option value="30">2035</option>
-                                                                <option value="30">2036</option>
-                                                                <option value="30">2037</option>
-                                                                <option value="30">2038</option>
-                                                                <option value="30">2039</option>
-                                                                <option value="30">2040</option>
-                                                                <option value="30">2041</option>
-                                                                <option value="30">2042</option>
-                                                                <option value="30">2043</option>
-                                                                <option value="30">2044</option>
-                                                                <option value="30">2045</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-5 col-md-5 pull-right">
-                                            <div class="form-group">
-                                                <label>CV CODE</label>
-                                                <input type="text" formControlName="cvv" class="form-control"
-                                                    placeholder="CVC" maxlength="4"
-                                                    [ngClass]="{ 'is-invalid': submitted && customStripeForm.controls.cvv.errors }" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            <div *ngIf="!iscourtesycard" class="form-group">
+                                <label>Card Number</label>
+                                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+                                </ngx-stripe-card>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-6 col-12 text-center">
-                        <button [disabled]="totalAmount === 0" (click)="pay(customStripeForm.value)"
-                            class="btn btn-primary">Submit</button>
+                        <button [disabled]="totalAmount === 0" class="btn btn-primary">Submit</button>
                         <button id="openModalButton" [hidden]="true" data-toggle="modal"
                             data-target="#exampleModal">Open
                             Modal</button>
@@ -285,20 +202,6 @@
     </div>
 </section>
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-md-8 mr-auto ml-auto">
-            <div class="panel panel-default">
-
-                <p class="mt-2">Try it out using the test card number 4242 4242 4242 4242, a random three-digit CVC
-                    number and any expiration date in the future.</p>
-            </div>
-        </div>
-    </div>
-</div>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>
