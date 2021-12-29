@@ -49,7 +49,6 @@ export class RevenueCalculatorComponent implements OnInit {
   totalAmount: number = 0;
   ngOnInit(): void {}
   onCellValueChanged(data: any) {
-    debugger;
     data.totalAmount = (data.amount || 0) * (data.permitNumber || 0);
     this.totalAmount = this.revenueList.reduce(function (prev, cur) {
       return prev + cur.totalAmount;

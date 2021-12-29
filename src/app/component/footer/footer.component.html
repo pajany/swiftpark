@@ -2,7 +2,7 @@
     <nav class="navfixed navbar navbar-default navbar-expand-lg navbar-dark">
         <div class="navbar-collapse ">
             <ul class="navbar-nav mr-auto d-flex justify-content-between footmenu-icon">
-                <ng-container *ngFor="let data of hearderList; let i = index">
+                <ng-container *ngFor="let data of footerList; let i = index">
                     <li class=" nav-item">
                         <a style="cursor: pointer;" class="nav-link" (click)="ClickedRow(i);navigate(data.page_slug)"
                             [class.active]="i == HighlightRow">{{data.page_title}}</a>

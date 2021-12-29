@@ -11,7 +11,7 @@ import { homeService } from '../home-header/home-header.service';
 export class FooterComponent implements OnInit {
   HighlightRow: Number;
   ClickedRow: any;
-  hearderList: any[];
+  footerList: any[];
   path: string;
   header: string;
   constructor(
@@ -26,11 +26,11 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.hearderList = [];
+    this.footerList = [];
     this.homeService.getDynamicPage().subscribe((page: any) => {
       page.forEach(x => {
-        if (x.header_menu) {
-          this.hearderList.push(x);
+        if (x.footer_menu) {
+          this.footerList.push(x);
         }
       });
       this.router.params.subscribe((data: any) => {
@@ -43,8 +43,7 @@ export class FooterComponent implements OnInit {
   }
 
   routePath(path) {
-    const index = this.hearderList.findIndex(y => y.path === this.path);
-    debugger;
+    const index = this.footerList.findIndex(y => y.path === this.path);
     if (index > -1) {
       this.ClickedRow(index);
     }

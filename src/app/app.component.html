@@ -1,6 +1,7 @@
 <app-home-header *ngIf="hasRouteActivate('home')"> </app-home-header>
-<app-header *ngIf="!hasRoute('welcome','home')"></app-header>
+<app-header *ngIf="!hasRoute('welcome','home', 'pages')">
+</app-header>
 <div class="content">
     <router-outlet></router-outlet>
 </div>
-<app-footer></app-footer>
+<app-footer *ngIf="!hasRoute('welcome','home', 'pages')"></app-footer>

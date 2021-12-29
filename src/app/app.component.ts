@@ -7,17 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
+  ngOnInit() {}
+
+  hasRoute(route: string, route2: string, page: string) {
+    return this.router.url.includes(route) || this.router.url.includes(route2) || this.router.url.includes(page);
   }
-
-  ngOnInit() { }
-
-  hasRoute(route: string, route2: string) {
-    return this.router.url.includes(route) || this.router.url.includes(route2);
+  hasRouteActivate(route: string) {
+    return this.router.url.includes(route);
   }
-  hasRouteActivate(route: string,){
-    return this.router.url.includes(route)
-  }
-
 }

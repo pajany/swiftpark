@@ -9,10 +9,10 @@
     <ul class="navbar-nav align-items-center justify-content-between">
       <ng-container *ngFor="let data of hearderList; let i = index">
         <li class=" nav-item">
-          <a style="cursor: pointer;" class="nav-link"  (click)="ClickedRow(i);navigate(data.page_slug)"
+          <a style="cursor: pointer;" class="nav-link" (click)="ClickedRow(i);navigate(data.page_slug)"
             [class.active]="i == HighlightRow">{{data.page_title}}</a>
         </li>
-      </ng-container>     
+      </ng-container>
       <li class="nav-item">
         <a class="foot-contact nav-link"><span></span>1-877-943-8727</a>
       </li>
