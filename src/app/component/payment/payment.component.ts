@@ -136,7 +136,7 @@ export class PaymentComponent implements OnInit {
         this.totalAmount = this.amount + Number(this.taxAmount);
         this.expiryDate = new Date();
         if (data.expires) {
-          if (data.name === 'OverNight') {
+          if (data.name.includes('Night')) {
             this.expiryDate.setDate(this.expiryDate.getDate() + Number(data.duration) * Number(data.quantity));
           } else {
             let numbeOfDate = Number(data.duration) * Number(data.quantity);
@@ -147,14 +147,13 @@ export class PaymentComponent implements OnInit {
           this.expiryDate.setMinutes(0);
           this.expiryDate.setSeconds(0);
         } else {
-          if (data.type === 'days') {
+          if (data.type.includes('Days')) {
             this.expiryDate.setDate(this.expiryDate.getDate() + Number(data.duration) * Number(data.quantity));
           } else {
             let hours = Number(data.duration) * Number(data.quantity);
             this.expiryDate.setHours(this.expiryDate.getHours() + hours);
           }
         }
-        console.log(this.expiryDate);
       } else {
         this.totalAmount = 0;
       }

@@ -37,7 +37,9 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
   content: string = null;
   header: string = null;
   hearderList: any[];
+  subData: any[] = [];
   ngOnInit(): void {
+    this.spinner.show();
     this.homeService.getDynamicPage().subscribe((page: any) => {
       page.forEach(x => {
         if (x.header_menu && x.footer_menu) {
@@ -74,9 +76,11 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
     if (index > -1) {
       this.content = this.hearderList[index].page_content;
       this.header = this.hearderList[index].page_title;
+      this.subData = this.headerList[index].image_data;
     } else {
       this.route.navigate(['/home']);
     }
+    this.spinner.hide();
   }
 
   navigate(path) {

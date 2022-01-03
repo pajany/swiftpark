@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { GlobalService } from 'src/app/services/global.service';
 import { homeService } from '../home-header/home-header.service';
 
@@ -18,7 +19,8 @@ export class FooterComponent implements OnInit {
     public globalservice: GlobalService,
     public router: ActivatedRoute,
     public route: Router,
-    public homeService: homeService
+    public homeService: homeService,
+    public spinner: NgxSpinnerService
   ) {
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
@@ -26,27 +28,16 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.footerList = [];
     this.homeService.getDynamicPage().subscribe((page: any) => {
+      this.spinner.hide();
       page.forEach(x => {
         if (x.footer_menu) {
           this.footerList.push(x);
         }
       });
-      this.router.params.subscribe((data: any) => {
-        if (data) {
-          this.path = data.header;
-          this.routePath(data.header);
-        }
-      });
     });
-  }
-
-  routePath(path) {
-    const index = this.footerList.findIndex(y => y.path === this.path);
-    if (index > -1) {
-      this.ClickedRow(index);
-    }
   }
 
   navigate(path) {

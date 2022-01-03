@@ -23,7 +23,6 @@ import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'residential-apt', component: ResidentialAptComponent },
@@ -45,7 +44,9 @@ const routes: Routes = [
   { path: 'file-a-dispute', component: FileADisputeComponent },
   { path: 'payment/:lotNumber', component: PaymentComponent },
   { path: 'success', component: SuccessPageComponent },
-  { path: 'pages/:header', component: DynamicPageComponent }
+  { path: 'pages/:header', component: DynamicPageComponent },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+  { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 ];
 
 @NgModule({

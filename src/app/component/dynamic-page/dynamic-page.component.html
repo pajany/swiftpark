@@ -46,50 +46,17 @@
     </div>
 </section>
 
+
 <section class="inner-greybg">
     <div class="container">
         <div class="row align-items-start mb-20">
-            <div class="col-md-6 col-sm-6 col-12">
+            <div *ngFor="let data of subData; let i = index" class="col-md-6 col-sm-6 col-12">
                 <div class="ic-part">
-                    <span><img src="../../../assets/image/ic1.png" /></span>
-                    <h4>Earn Extra Income</h4>
+                    <span><img [src]="data.image" /></span>
+                    <h4>{{data.image_title}}</h4>
                 </div>
-                <p>You receive most of the proceeds (less service fees) and you don't have to install expensive meters
-                    or collect and roll coins. Just post a sign! It's free to join and you only pay for what you use.
-                </p>
+                <p>{{data.image_description}}</p>
             </div>
-
-            <div class="col-md-6 col-sm-6 col-12">
-                <div class="ic-part">
-                    <span><img src="../../../assets/image/ic2.png" /></span>
-                    <h4>You Have Total Control</h4>
-                </div>
-                <p>You decide how long guests can park for, you can access parking logs, usage reports, and collections
-                    all online, 24/7.</p>
-            </div>
-
-        </div>
-        <div class="row align-items-start">
-            <div class="col-md-6 col-sm-6 col-12">
-                <div class="ic-part">
-                    <span><img src="../../../assets/image/ic3.png" /></span>
-                    <h4>Everyone Enjoys Convenience</h4>
-                </div>
-                <p>Your tenants and their visitors will love how simple it is to use: Tenants pay online or by phone.
-                    Visitors can extend their stay with a call or click. You will love how "hands off" your parking will
-                    become. </p>
-            </div>
-
-            <div class="col-md-6 col-sm-6 col-12">
-                <div class="ic-part">
-                    <span><img src="../../../assets/image/ic4.png" /></span>
-                    <h4>Easy Enforcement</h4>
-                </div>
-                <p>Our technology records all transactions and provides instant (live) updating. You or your Parking
-                    Enforcement provider simply logs into the <span>Swift<span class="lg-clr">Park</span></span> system
-                    with a secure ID to confirm which vehicles are authorized.</p>
-            </div>
-
         </div>
     </div>
 </section>
@@ -133,3 +100,8 @@
         </div>
     </div>
 </footer>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

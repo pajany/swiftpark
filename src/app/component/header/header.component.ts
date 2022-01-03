@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { homeService } from '../home-header/home-header.service';
 
 @Component({
@@ -13,15 +14,22 @@ export class HeaderComponent implements OnInit {
   hearderList: any[];
   path: string;
   header: string;
-  constructor(public router: ActivatedRoute, public route: Router, public homeService: homeService) {
+  constructor(
+    public router: ActivatedRoute,
+    public route: Router,
+    public homeService: homeService,
+    public spinner: NgxSpinnerService
+  ) {
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
     };
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.hearderList = [];
     this.homeService.getDynamicPage().subscribe((page: any) => {
+      this.spinner.hide();
       page.forEach(x => {
         if (x.header_menu) {
           this.hearderList.push(x);
