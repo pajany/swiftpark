@@ -31,14 +31,8 @@ export class HeaderComponent implements OnInit {
     this.homeService.getDynamicPage().subscribe((page: any) => {
       this.spinner.hide();
       page.forEach(x => {
-        if (x.header_menu) {
+        if (x.footer_menu) {
           this.hearderList.push(x);
-        }
-      });
-      this.router.params.subscribe((data: any) => {
-        if (data) {
-          this.path = data.header;
-          this.routePath(data.header);
         }
       });
     });

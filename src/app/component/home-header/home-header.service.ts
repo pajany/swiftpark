@@ -16,7 +16,6 @@ export class homeService {
   }
 
   selectedSlug(slug) {
-    debugger;
     this.selectedheader.next(slug);
   }
 

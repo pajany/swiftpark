@@ -22,6 +22,7 @@ import { SuccessPageComponent } from './component/success-page/success-page.comp
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
+import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'file-a-dispute', component: FileADisputeComponent },
   { path: 'payment/:lotNumber', component: PaymentComponent },
   { path: 'success', component: SuccessPageComponent },
+  { path: 'success-dispute', component: SuccessdisputeComponent },
   { path: 'pages/:header', component: DynamicPageComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'welcome', pathMatch: 'full' }

@@ -15,7 +15,6 @@ export class CommonUiComponent implements OnInit {
     this.spinner.show();
   }
   hide() {
-    debugger;
     this.spinner.hide();
   }
 }

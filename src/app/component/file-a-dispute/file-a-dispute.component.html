@@ -18,59 +18,60 @@
         <h3 class="app-txt">Please fill out the form below to file a dispute</h3>
 
         <div class="frm-app">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Plate Number</label>
-                        <input type="text" class="form-control">
+            <form [formGroup]="disputeForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Plate Number</label>
+                            <input type="text" formControlName="plateNumber" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.plateNumber.errors }" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Ticket Number</label>
+                            <input type="text" formControlName="ticketNumber" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.ticketNumber.errors }" class="form-control">
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Ticket Number</label>
-                        <input type="text" class="form-control">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Issued Date & Time</label>
+                            <input type="datetime-local" formControlName="issueDate" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.issueDate.errors }" class="form-control"
+                                id="Issued">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Address Issued</label>
+                            <input type="text" formControlName="addressIsue" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.addressIsue.errors }" class="form-control">
+                        </div>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Issued Date & Time</label>
-                        <input type="datetime-local" class="form-control" id="Issued">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Permit Number</label>
+                            <input type="text" formControlName="permitNo" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.permitNo.errors }" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Date & Time Permit Obtained</label>
+                            <input type="datetime-local" formControlName="dateObtained" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.dateobtained.errors }" class="form-control"
+                                id="Permit">
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Address Issued</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Permit Number</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Date & Time Permit Obtained</label>
-                        <input type="datetime-local" class="form-control" id="Permit">
-                    </div>
-                </div>
-
-            </div>
-
-            <a class="btn btn-primary">Submit</a>
+                <button class="btn btn-primary">Submit</button>
+            </form>
         </div>
-
     </div>
 </section>

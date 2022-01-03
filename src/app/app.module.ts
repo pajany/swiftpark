@@ -40,6 +40,7 @@ import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { CommonUiComponent } from './component/common-ui/common-ui.component';
+import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,8 @@ import { CommonUiComponent } from './component/common-ui/common-ui.component';
     RevenueCalculatorComponent,
     SuccessPageComponent,
     DynamicPageComponent,
-    CommonUiComponent
+    CommonUiComponent,
+    SuccessdisputeComponent
   ],
   imports: [
     BrowserModule,

@@ -86,9 +86,9 @@ export class PaymentComponent implements OnInit {
           this.spinner.hide();
           // this.route.navigate(['/home']);
         },
-        error => {
-          this.route.navigate(['/home']);
+        error => {          
           this.spinner.hide();
+          this.route.navigate(['/home']);
           console.error(error);
         }
       );

@@ -1,0 +1,70 @@
+<section class="inner-bg payment-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Dispute Filed Successfully!</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a>Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg padtbtm">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-12 text-center">
+                <h3 class="lt-txt">Your file has been dispute Successfully. Our support team will contact you shortly!
+                </h3>
+            </div>
+
+        </div>
+        <div class="table-responsive">
+
+        </div>
+
+        <div class="payment-frm">
+
+        </div>
+    </div>
+
+
+</section>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h3 class="lt-txt text-left">Please fill the details below</h3>
+                <div class="payment-frm">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label>Credit Card Number</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
