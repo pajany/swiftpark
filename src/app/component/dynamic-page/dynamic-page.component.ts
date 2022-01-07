@@ -76,7 +76,8 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
     const i = this.footerList.findIndex(y => y.page_slug === lastDirecotry && y.footer_menu);
     this.clickedFooter(index);
   }
-  routePath(path) {
+  routePath(path) {    
+    window.scroll(0,0);
     const index = this.hearderList.findIndex(y => y.page_slug === this.path);
     if (index > -1) {
       this.content = this.hearderList[index].page_content;

@@ -13,6 +13,7 @@ import { GetStartedComponent } from './component/get-started/get-started.compone
 import { HomeComponent } from './component/home/home.component';
 import { HotelMotelComponent } from './component/hotel-motel/hotel-motel.component';
 import { LearnMoreComponent } from './component/learn-more/learn-more.component';
+import { NemesisComponent } from './component/nemesis/nemesis.component';
 import { PayLotComponent } from './component/pay-lot/pay-lot.component';
 import { PaymentComponent } from './component/payment/payment.component';
 import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component';
@@ -23,7 +24,6 @@ import { SuccessdisputeComponent } from './component/successdispute/successdispu
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { NemesisComponent } from './component/nemesis/nemesis.component';
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },

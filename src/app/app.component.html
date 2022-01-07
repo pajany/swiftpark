@@ -2,7 +2,7 @@
 <app-header *ngIf="!hasRoute('welcome','home', 'pages')">
 </app-header>
 <div class="content">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 <app-footer *ngIf="!hasRoute('welcome','home', 'pages') || hasRouteActivate('home') ||  hasRouteActivate('welcome')">
 </app-footer>

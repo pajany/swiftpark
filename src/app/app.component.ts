@@ -17,4 +17,8 @@ export class AppComponent {
   hasRouteActivate(route: string) {
     return this.router.url.includes(route);
   }
+  onActivate(event) {
+    window.scroll(0,0);
+   
+}
 }
