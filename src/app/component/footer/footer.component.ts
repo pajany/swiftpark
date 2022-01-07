@@ -15,6 +15,7 @@ export class FooterComponent implements OnInit {
   footerList: any[];
   path: string;
   header: string;
+  year: any;
   constructor(
     public globalservice: GlobalService,
     public router: ActivatedRoute,
@@ -28,6 +29,16 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var path = location.hash;
+    var directories = path.split('/');
+    var lastDirecotry = directories[directories.length - 2];
+    if (lastDirecotry != 'pages') {
+      this.footer();
+    }
+  }
+
+  footer() {
+    this.year = new Date().getFullYear();
     this.spinner.show();
     this.footerList = [];
     this.homeService.getDynamicPage().subscribe((page: any) => {

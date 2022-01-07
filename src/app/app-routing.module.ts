@@ -19,10 +19,10 @@ import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-polic
 import { ResidentialAptComponent } from './component/residential-apt/residential-apt.component';
 import { SignsComponent } from './component/signs/signs.component';
 import { SuccessPageComponent } from './component/success-page/success-page.component';
+import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
@@ -52,7 +52,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

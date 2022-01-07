@@ -26,6 +26,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var path = location.hash;
+    var directories = path.split('/');
+    var lastDirecotry = directories[directories.length - 2];
+    if (lastDirecotry != 'pages') {
+      this.initHeader();
+    }
+  }
+
+  initHeader() {
     this.spinner.show();
     this.hearderList = [];
     this.homeService.getDynamicPage().subscribe((page: any) => {

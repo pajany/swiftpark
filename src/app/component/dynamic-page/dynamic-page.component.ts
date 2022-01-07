@@ -38,8 +38,10 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
   header: string = null;
   hearderList: any[];
   subData: any[] = [];
+  year: any;
   ngOnInit(): void {
     this.spinner.show();
+    this.year = new Date().getFullYear();
     this.homeService.getDynamicPage().subscribe((page: any) => {
       page.forEach(x => {
         if (x.header_menu && x.footer_menu) {
@@ -52,13 +54,16 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
         }
       });
       this.hearderList = page;
+
+      this.spinner.show();
       this.router.params.subscribe((data: any) => {
         if (data) {
           this.path = data.header;
           this.routePath(data.header);
+          this.spinner.hide();
         }
       });
-      var path = location.pathname;
+      var path = location.hash;
       var directories = path.split('/');
       var lastDirecotry = directories[directories.length - 1];
       this.slug(lastDirecotry);
@@ -80,7 +85,6 @@ export class DynamicPageComponent extends CommonUiComponent implements OnInit {
     } else {
       this.route.navigate(['/home']);
     }
-    this.spinner.hide();
   }
 
   navigate(path) {
