@@ -13,6 +13,8 @@
                         [class.active]="i == HighlightRow">{{data.page_title}}</a>
                 </li>
             </ng-container>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/nemesis']" routerLinkActive='active'>Nemesis</a>
+            </li>
             <li class="nav-item">
                 <a class="foot-contact nav-link"><span></span>1-877-943-8727</a>
             </li>
@@ -60,7 +62,7 @@
         </div>
     </div>
 </section>
-
+<app-revenue-calculator></app-revenue-calculator>
 <div class="container-fluid padtbtm07">
     <nav class="navfixed navbar navbar-default navbar-expand-lg navbar-dark">
         <div class="navbar-collapse ">
@@ -72,6 +74,8 @@
                             [class.active]="i == HighlightFooterRow">{{data.page_title}}</a>
                     </li>
                 </ng-container>
+                <li class="nav-item"><a class="nav-link" [routerLink]="['/nemesis']"
+                        routerLinkActive='active'>Nemesis</a> </li>
                 <li class="nav-item"><a class="nav-link" [routerLink]="['/file-a-dispute']"
                         routerLinkActive='active'>File a Dispute</a> </li>
                 <li class="nav-item"><a class="nav-link" [routerLink]="['/faq']" routerLinkActive='active'>FAQs</a></li>
@@ -81,6 +85,7 @@
         </div>
     </nav>
 </div>
+
 <footer class="footer-bg">
     <div class="container-fluid px-5">
         <div class="row align-items-center">

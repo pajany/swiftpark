@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApplicationFormComponent } from './component/application-form/application-form.component';
 import { CollegeUniversityComponent } from './component/college-university/college-university.component';
+import { CommonUiComponent } from './component/common-ui/common-ui.component';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
 import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
 import { DynamicPageComponent } from './component/dynamic-page/dynamic-page.component';
@@ -29,6 +30,7 @@ import { HomeHeaderComponent } from './component/home-header/home-header.compone
 import { HomeComponent } from './component/home/home.component';
 import { HotelMotelComponent } from './component/hotel-motel/hotel-motel.component';
 import { LearnMoreComponent } from './component/learn-more/learn-more.component';
+import { NemesisComponent } from './component/nemesis/nemesis.component';
 import { PayLotComponent } from './component/pay-lot/pay-lot.component';
 import { PaymentComponent } from './component/payment/payment.component';
 import { PrivacyPolicyComponent } from './component/privacy-policy/privacy-policy.component';
@@ -36,11 +38,10 @@ import { ResidentialAptComponent } from './component/residential-apt/residential
 import { RevenueCalculatorComponent } from './component/revenue-calculator/revenue-calculator.component';
 import { SignsComponent } from './component/signs/signs.component';
 import { SuccessPageComponent } from './component/success-page/success-page.component';
+import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { CommonUiComponent } from './component/common-ui/common-ui.component';
-import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +72,8 @@ import { SuccessdisputeComponent } from './component/successdispute/successdispu
     SuccessPageComponent,
     DynamicPageComponent,
     CommonUiComponent,
-    SuccessdisputeComponent
+    SuccessdisputeComponent,
+    NemesisComponent
   ],
   imports: [
     BrowserModule,

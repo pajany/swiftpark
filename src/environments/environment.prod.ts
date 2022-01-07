@@ -1,6 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl:'http://swiftpark.sdiphp.com/api'
-
-
+  apiUrl: 'https://swiftpark.sdiphp.com/api'
 };
