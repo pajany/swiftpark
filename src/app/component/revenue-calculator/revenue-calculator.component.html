@@ -1,84 +1,97 @@
 <section class="inner-whitebg">
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <p class="p-txt"><span>Swift<span class="lg-clr">Park</span></span> instant paperless parking. It's
-                    quick, it's
-                    simple, it's convenient.</p>
-                <a class="lrn-mre" [routerLink]="['/get-started']"><span></span>Get started for free</a>
-                <a class="lrn-mre" data-toggle="modal" data-target="#exampleModalCenter"><span></span>Revenue
-                    Calculator</a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <p class="p-txt"><span>Swift<span class="lg-clr">Park</span></span> instant paperless parking. It's
+          quick, it's
+          simple, it's convenient.</p>
+        <a class="lrn-mre" [routerLink]="['/get-started']"><span></span>Get started for free</a>
+        <a class="lrn-mre" data-toggle="modal" data-target="#exampleModalCenter"><span></span>Revenue
+          Calculator</a>
+      </div>
     </div>
+  </div>
 </section>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-xl modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Revenue Calculator</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <ng-container *ngFor="let data of revenueList; let i = index">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="mt-2">{{data.title}}</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text input-group-text-bg"
-                                                    id="inputGroup-sizing-default">$</span>
-                                            </div>
-                                            <input type="number" min="0" oninput="validity.valid||(value='');"
-                                                [(ngModel)]="data.amount" (ngModelChange)="onCellValueChanged(data)"
-                                                class="form-control" aria-label="Default"
-                                                aria-describedby="inputGroup-sizing-default" />
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-2">{{data.permits}}</label>
-                                    </div>
-                                    <div class="col-1 p-0">
-                                        <input type="number" min="0" oninput="validity.valid||(value='');"
-                                            class="form-control" aria-label="Default" [(ngModel)]="data.permitNumber"
-                                            (ngModelChange)="onCellValueChanged(data)"
-                                            aria-describedby="inputGroup-sizing-default" />
-                                    </div>
-                                    <div class="col-1">
-                                        <button type="button" [disabled]="true"
-                                            class="btn btn-outline-secondary">=</button>
-                                    </div>
-                                    <div class="col-2 p-0 text-center">
-                                        <label class="mt-2">{{data.totalAmount | currency}}</label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ng-container>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-10 text-right">
-                                    <div>
-                                        <label class="mt-2">*Swiftpark Charges and tax Excluded</label>
-                                    </div>
-                                </div>
-                                <div class="col-2 p-0 text-center">
-                                    <label class="mt-2">{{totalAmount | currency}}</label>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-xl modal-dialog-centered" role="document">
 
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 ms-auto">
+              <h5 class="modal-title" id="exampleModalLongTitle">Revenue Calculator</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <!-- <span aria-hidden="true">&times;</span> -->
+                <span class="close-icon"> <i class="fa fa-times-circle"></i> </span>
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <ng-container *ngFor="let data of revenueList; let i = index">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-7">
+                        <label class="mt-2">{{data.title}}</label>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="md-green input-group-text input-group-text-bg"
+                              id="inputGroup-sizing-default">$</span>
+                          </div>
+                          <input type="number" min="0" oninput="validity.valid||(value='');" [(ngModel)]="data.amount"
+                            (ngModelChange)="onCellValueChanged(data)" class="form-control" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                   <div class="row">
+                      <div class="col-md-4">
+                        <label class="mt-2">{{data.permits}}</label>
+                      </div>
+                      <div class="col-md-3 p-0">
+                        <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                          aria-label="Default" [(ngModel)]="data.permitNumber"
+                          (ngModelChange)="onCellValueChanged(data)" aria-describedby="inputGroup-sizing-default" />
+                      </div>
+                      <div class="col-md-1 mt-2 text-center">
+                        <button type="button" [disabled]="true" class="btn btn-outline-secondary">=</button>
+                      </div>
+                      <div class="col-md-4 p-0 text-center mt-2">
+                        <label class="mt-2">{{data.totalAmount | currency}}</label>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+              </li>
+            </ng-container>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-10 text-right">
+                  <div>
+                    <label class="mt-2">*Swiftpark Charges and tax Excluded</label>
+                  </div>
+                </div>
+                <div class="col-2 p-0 text-center">
+                  <label class="mt-2">{{totalAmount | currency}}</label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
