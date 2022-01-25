@@ -1,0 +1,96 @@
+<section class="inner-bg pin-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Change Pin</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a>Change Pin</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg pad-btm30">
+    <div class="container">
+        <div class="frm-app">
+            <form [formGroup]="changepinForm" (ngSubmit)="onSubmit()">
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Courtesy Card Number</label>
+                            <input type="number" formControlName="cardNo" class="form-control" min="0" max="6"
+                                [ngClass]="{ 'is-invalid': submitted && f.cardNo.errors }" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Current Pin</label>
+                            <input type="number" formControlName="currentPin" class="form-control" min="0" max="6"
+                                [ngClass]="{ 'is-invalid': submitted && f.currentPin.errors }" />
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Enter New Pin</label>
+                            <input type="number" formControlName="newPin" class="form-control" min="0" max="6"
+                                [ngClass]="{ 'is-invalid': submitted && f.newPin.errors }" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Confirm New Pin</label>
+                            <input type="number" formControlName="confirmpin" class="form-control" min="0" max="6"
+                                [ngClass]="{ 'is-invalid': submitted && f.confirmpin.errors }" />
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <button data-toggle="modal" class="btn btn-primary">Submit</button>
+                <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#exampleModal">Open
+                    Modal</button>
+
+            </form>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
+                            src="../../../assets/image/close.png" class="img-fluid" />
+                    </button>
+                    <div class="modal-body">
+                        <div class="thank-msg text-center">
+
+                            <img *ngIf="status" src="../../../assets/image/pin-error.png" class="img-fluid" />
+                            <img *ngIf="!status" src="../../../assets/image/thnk-icon.png" class="img-fluid" />
+                            <!-- <p class="mt20">{{message}}</p> -->
+                            <h3 class="mt20">{{message}}</h3>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>

@@ -42,6 +42,9 @@ import { SuccessdisputeComponent } from './component/successdispute/successdispu
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
+import { ViewTransactionComponent }from './component/view-transaction/view-transaction.component';
+import { ChangePinComponent} from './component/change-pin/change-pin.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +52,8 @@ import { WelcomeComponent } from './component/welcome/welcome.component';
     FooterComponent,
     HeaderComponent,
     WelcomeComponent,
+    ViewTransactionComponent,
+    ChangePinComponent,
     HomeHeaderComponent,
     ResidentialAptComponent,
     HotelMotelComponent,

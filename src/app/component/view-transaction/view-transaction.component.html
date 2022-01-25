@@ -1,0 +1,65 @@
+<section class="inner-bg pin-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>View Transactions</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a [routerLink]="['/payment']">Payment</a></li>
+                    <li><a>View Transactions</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg mght padtbtm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="lt-txt text-left">Transaction History</h3>
+            </div>
+            <div class="col-sm-6 text-right">
+                <!-- <a class="g-btn bal-txt">Courtesy Card Balance: C$500 </a> -->
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th scope="col">Permit No</th>
+                        <th scope="col">Exp Date</th>
+                        <th scope="col">Permit Type</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Transaction Date</th>
+                        <th scope="col">Tax Amount</th>
+                        <th scope="col">Total Amount</th>
+
+                    </tr>
+                </thead>
+                <tbody > 
+                        
+                    <tr  *ngFor='let transaction of transactionhistory'>
+                 
+                        <td> {{ transaction.permit_no}}</td>
+                        <td>{{ transaction.expires_date | date:'medium'}}</td> 
+                        <td>{{ transaction.permit_type}}</td>
+                        <td>{{ transaction.quantity}}</td>
+                        <td>{{ transaction.transaction_date | date: 'MMM d, y ,h:s a'}}</td>
+                        <td> ${{ transaction.taxamount}}</td>
+                        <td>${{ transaction.totalamount}}</td>
+                    </tr>
+
+                  
+
+                </tbody>
+
+               
+            </table>
+                        <div *ngIf="transactionhistory?.length == 0">
+                            <h3 class="lt-txt">No results found! </h3>
+                    </div>
+        </div>
+    </div>
+</section>
