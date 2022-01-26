@@ -1120,8 +1120,39 @@ ul.n-hd.n-ul li span {
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
 }
-
+@media (min-width:1025px) {
+  
+ul.lft-part li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+  padding:10px;
+}
+ul.lft-part {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  max-width: 190px;
+  margin: 40px auto 0;
+  text-align: left;
+}
+}
 @media (max-width: 767px) {
+  
+ul.lft-part li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+  padding:10px;
+}
+ul.lft-part {
+  font-size: 9px;
+  color: #fff;
+  font-weight: 500;
+  max-width: 190px;
+  margin: 40px auto 0;
+  text-align: left;
+}
   .br-bx-sign p {
     font-size: 16px !important;
   }
