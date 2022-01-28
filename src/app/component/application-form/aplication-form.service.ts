@@ -13,7 +13,7 @@ export class AplicationFormService {
   }
 
   getTimeZone(): Observable<any> {
-    return this.http.get<any>('http://worldtimeapi.org/api/timezone/America');
+    return this.http.get<any>('https://worldtimeapi.org/api/timezone/America');
   }
 
   submitForm(payLoad: any): Observable<any> {

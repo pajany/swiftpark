@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
-import { ActivatedRoute, Router,NavigationExtras } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { StripeCardComponent, StripeService } from 'ngx-stripe';
@@ -42,6 +42,7 @@ export class PaymentComponent implements OnInit {
   token: string;
   isStripeCard: boolean = true;
   errorMessage: any = '';
+  alphaNumeric = /^[a-z0-9]+$/i;
   cardOptions: StripeCardElementOptions = {
     style: {
       complete: {},
@@ -78,15 +79,13 @@ export class PaymentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    
     this.spinner.show();
     this.router.params.subscribe((data: any) => {
       this.lotNumber = parseInt(data.lotNumber);
       this.homeService.lotNumberValidation(this.lotNumber).subscribe(
         (params: any) => {
           this.tableData = params.services;
-          this.address=params.address;
+          this.address = params.address;
           this.tableData.forEach(x => {
             x.selected = false;
             if (x.duration === 30) {
@@ -99,7 +98,7 @@ export class PaymentComponent implements OnInit {
           this.spinner.hide();
           // this.route.navigate(['/home']);
         },
-        error => {          
+        error => {
           this.spinner.hide();
           this.route.navigate(['/home']);
           console.error(error);
@@ -109,10 +108,8 @@ export class PaymentComponent implements OnInit {
     this.cardTypeChange();
 
     this.viewtransForm = this.formBuilder.group({
-      transactionemail: ['', Validators.required],
-     
+      transactionemail: ['', Validators.required]
     });
-
   }
 
   createToken(): void {
@@ -212,8 +209,7 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  transactionSubmit(){
-
+  transactionSubmit() {
     this.route.navigate(['/view-transaction'], { queryParams: { email: this.model.transactionemail } });
     $('#viewtransactionModal').modal('hide');
   }
@@ -277,8 +273,7 @@ export class PaymentComponent implements OnInit {
       setTimeout(() => $('#exampleModal').modal('show'), 100);
     });
   }
-  
-  
+
   handleKeydown(e: any) {
     const typedValue = e.keyCode;
     if (typedValue < 48 && typedValue > 57) {
@@ -302,7 +297,7 @@ export class PaymentComponent implements OnInit {
     this.iscourtesycard = !this.iscourtesycard;
   }
 
-  changepin(lotNumber){
+  changepin(lotNumber) {
     this.route.navigate(['/change-pin', this.lotNumber]);
   }
 }

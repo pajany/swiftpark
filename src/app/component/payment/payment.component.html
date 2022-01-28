@@ -140,8 +140,8 @@
                         <div class="form-group">
                             <label>Vehicle License</label>
                             <input class="form-control" type="text" name="license" [(ngModel)]="model.license"
-                                #license="ngModel" [ngClass]="{ 'is-invalid': f.submitted && license.invalid }"
-                                required />
+                                #license="ngModel" [pattern]="alphaNumeric"
+                                [ngClass]="{ 'is-invalid': f.submitted && license.invalid }" required />
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-12">
