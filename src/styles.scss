@@ -229,10 +229,10 @@ ul.wlcm-rgt {
   background: linear-gradient(#fff, #fff) padding-box,
     /*this is your grey background*/ linear-gradient(#50a226, #9dea73) border-box;
   color: #313149;
-  padding: 25px;
+  // padding: 25px;
   border: 5px solid transparent;
   border-radius: 20px;
-  display: block;
+  display: inline-block;
   width: 100%;
 }
 .hme-grnbox span img {
@@ -251,6 +251,13 @@ ul.wlcm-rgt {
 }
 .pad40 {
   padding: 40px 40px;
+}
+
+.pad10 {
+  padding: 10px;
+}
+.pad20 {
+  padding:20px;
 }
 
 .hme-grnbox span {
@@ -440,6 +447,8 @@ ul.wlcm-rgt {
 .home-bannerbg {
   background: url(assets/image/home-banner.png) no-repeat;
   min-height: 500px;
+  background-size: cover;
+  background-position: top center;
 }
 
 .home-bannerbg a,
@@ -1132,7 +1141,7 @@ ul.lft-part {
   font-size: 18px;
   color: #fff;
   font-weight: 500;
-  max-width: 190px;
+  // max-width: 190px;
   margin: 40px auto 0;
   text-align: left;
 }
@@ -1278,6 +1287,13 @@ ul.lft-part {
   .pad40 {
     padding: 10px 10px;
   }
+  .pad10 {
+    padding:10px;
+  }
+  .pad20 {
+    padding:20px;
+  }
+  
   .inner-txt {
     font-size: 15px;
   }
