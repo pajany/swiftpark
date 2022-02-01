@@ -61,7 +61,7 @@
                                     [(ngModel)]="item.quantity" [disabled]="!item.selected"
                                     (ngModelChange)="amountCalculation(item)" (keydown)="handleKeydown($event)">
                             </div>
-                            <div class=" form-check-inline">
+                            <div class="form-check-inline">
                                 <span *ngIf="item.selected" class="plus" (click)="plus(item)"></span>
                                 <span *ngIf="!item.selected" class="plus" style="cursor: default;"></span>
                             </div>
@@ -148,7 +148,7 @@
                         <div class="form-group">
                             <label>Payment Type</label>
                             <div class="row">
-                                <div class="col">
+                                <div class="col mt-3">
                                     <input type="radio" id="p1" name="radio-group" name="cardSelect"
                                         (change)="onRadioChange(1)" checked>
                                     <label for="p1">Courtesy Card</label>
@@ -177,7 +177,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-12">
+                                <div class="col-md-6 col-sm-6 col-12 mt-3">
                                     <div class="form-group">
                                         <label>PIN</label>
                                         <input class="form-control" type="text" name="pin" [(ngModel)]="model.pin"
