@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApplicationFormComponent } from './component/application-form/application-form.component';
+import { CareersComponent } from './component/careers/careers.component';
+import { ChangePinComponent } from './component/change-pin/change-pin.component';
 import { CollegeUniversityComponent } from './component/college-university/college-university.component';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
 import { CourtesyCardComponent } from './component/courtesy-card/courtesy-card.component';
@@ -23,10 +25,8 @@ import { SuccessPageComponent } from './component/success-page/success-page.comp
 import { SuccessdisputeComponent } from './component/successdispute/successdispute.component';
 import { TermsComponent } from './component/terms/terms.component';
 import { TruckComponent } from './component/truck/truck.component';
+import { ViewTransactionComponent } from './component/view-transaction/view-transaction.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
-import { ViewTransactionComponent} from './component/view-transaction/view-transaction.component';
-import { ChangePinComponent} from './component/change-pin/change-pin.component';
-
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
@@ -54,6 +54,7 @@ const routes: Routes = [
   { path: 'success-dispute', component: SuccessdisputeComponent },
   { path: 'pages/:header', component: DynamicPageComponent },
   { path: 'nemesis', component: NemesisComponent },
+  { path: 'careers', component: CareersComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 ];

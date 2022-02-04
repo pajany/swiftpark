@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AplicationFormService } from './aplication-form.service';
+import { AplicationFormService } from '../application-form/aplication-form.service';
+
 declare var $: any;
 @Component({
-  selector: 'app-application-form',
-  templateUrl: './application-form.component.html',
-  styleUrls: ['./application-form.component.scss']
+  selector: 'app-careers',
+  templateUrl: './careers.component.html',
+  styleUrls: ['./careers.component.scss']
 })
-export class ApplicationFormComponent implements OnInit {
+export class CareersComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   mobnumPattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
@@ -21,7 +22,6 @@ export class ApplicationFormComponent implements OnInit {
   showModalBox: boolean = false;
   message: any = null;
   show: boolean = false;
-  status: boolean;
   constructor(
     private formBuilder: FormBuilder,
     public appService: AplicationFormService,
@@ -40,18 +40,12 @@ export class ApplicationFormComponent implements OnInit {
       this.spinner.hide();
     });
     this.registerForm = this.formBuilder.group({
-      clientName: ['', Validators.required],
-      companyName: ['', Validators.required],
-      address1: ['', Validators.required],
-      address2: null,
-      phoneNumber: ['', [Validators.pattern(this.mobnumPattern)]],
-      mobileNumber: ['', [Validators.required, Validators.pattern(this.mobnumPattern)]],
-      faxNumber: ['', [Validators.required, Validators.pattern(this.faxPattern)]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      phoneNumber: ['',  [Validators.pattern(this.mobnumPattern)]],
       email: ['', [Validators.required, Validators.email]],
-      cityName: ['', Validators.required],
-      province: ['', Validators.required],
-      postCode: ['', [Validators.required, Validators.pattern(this.isValidZip)]],
-      timeZone: ['', Validators.required]
+      file: new FormControl('', [Validators.required]),
+      fileSource: new FormControl('', [Validators.required])
     });
   }
   get f() {
@@ -62,11 +56,16 @@ export class ApplicationFormComponent implements OnInit {
     this.submitted = true;
     this.spinner.show();
     if (!this.registerForm.invalid) {
-      this.appService.submitForm(this.registerForm.value).subscribe(
-        (data: any) => {
-          this.status = data.status;
-          this.message = data.message;
+      const formData = new FormData();
+      formData.append('firstname', this.registerForm.get('firstName').value);
+      formData.append('lastname', this.registerForm.get('lastName').value);
+      formData.append('emailid', this.registerForm.get('email').value);
+      formData.append('phonenumber', this.registerForm.get('phoneNumber').value);
+      formData.append('file', this.registerForm.get('fileSource').value);
 
+      this.appService.submitCareersForm(formData).subscribe(
+        (data: any) => {
+          this.message = data.message;
           this.spinner.hide();
           this.registerForm.reset();
           $('#exampleModal').modal('show');
@@ -80,6 +79,15 @@ export class ApplicationFormComponent implements OnInit {
       );
     } else {
       this.spinner.hide();
+    }
+  }
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.registerForm.patchValue({
+        fileSource: file        
+      });     
     }
   }
 }

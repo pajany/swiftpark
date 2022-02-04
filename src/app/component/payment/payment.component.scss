@@ -121,182 +121,177 @@ Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
-@media only screen 
-and (max-width: 600px)  {
+@media only screen and (max-width: 600px) {
+  .table-responsive {
+    display: block;
+    position: relative;
+    width: 100%;
 
-	.table-responsive{
-		display: block;
-		position: relative;
-		width: 100%;
+    &:after {
+      clear: both;
+      content: '';
+      display: block;
+      font-size: 0;
+      height: 0;
+      visibility: hidden;
+    }
 
-		&:after {
-			clear: both;
-			content: '';
-			display: block;
-			font-size: 0;
-			height: 0;
-			visibility: hidden;
-		}
+    tbody {
+      display: block;
+      overflow-x: auto;
+      position: relative;
+      white-space: nowrap;
+      width: auto;
 
-		tbody {
-			display: block;
-			overflow-x: auto;
-			position: relative;
-			white-space: nowrap;
-			width: auto;
+      tr {
+        display: inline-block;
+        vertical-align: top;
 
+        td {
+          display: block;
+          text-align: center;
 
-			tr {
-				display: inline-block;
-				vertical-align: top;
+          &:first-child {
+            text-align: center;
+          }
+        }
+      }
+    }
 
-				td {
-					display: block;
-					text-align: center;
+    thead {
+      display: block;
+      float: left;
+      margin-right: 10px;
 
-					&:first-child {
-						text-align: center;
-					}
-				}
-			}
-		}
+      &:after {
+        clear: both;
+        content: '';
+        display: block;
+        font-size: 0;
+        height: 0;
+        visibility: hidden;
+      }
 
-		thead {
-			display: block;
-			float: left;
-			margin-right: 10px;
+      th:first-of-type {
+        height: 1.4em;
+      }
 
-			&:after {
-				clear: both;
-				content: "";
-				display: block;
-				font-size: 0;
-				height: 0;
-				visibility: hidden;
-			}
+      th {
+        display: block;
+        text-align: right;
 
-			th:first-of-type {
-				height: 1.4em;
-			}
-
-			th {
-				display: block;
-				text-align: right;
-
-				&:first-child {
-					text-align: right;
-				}
-			}
-		}
-	}
+        &:first-child {
+          text-align: right;
+        }
+      }
+    }
+  }
 
   .table-custom thead th {
     border: 0;
     font-size: 0.5rem;
     font-weight: 500;
     padding: 16px 10px;
+  }
+  .table-custom td {
+    padding: 11px 13px;
+    font-size: 0.5rem;
+    font-weight: 400;
+    vertical-align: middle;
+    position: relative;
+    line-height: 2;
+  }
+  [type='radio']:checked,
+  [type='radio']:not(:checked) {
+    position: relative;
+    /* left: -9999px; */
+    width: 9px;
+    height: 9px;
+    opacity: 0;
+    z-index: 9999;
+  }
+  [type='radio']:checked + label,
+  [type='radio']:not(:checked) + label {
+    position: relative;
+    /* padding-left: 13px; */
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+    left: 0;
+    top: -4px;
+    left: -4px;
+  }
+  .form-control2 {
+    width: 36px;
+    height: 33px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  .plus {
+    width: 12px;
+    height: 10px;
+    background-size: 65%;
+  }
+  .minus {
+    width: 12px;
+    height: 10px;
+    background-size: 65%;
+  }
 }
-.table-custom td {
-  padding: 11px 13px;
-  font-size: 0.5rem;
-  font-weight: 400;
-  vertical-align: middle;
-  position: relative;
-  line-height: 2;
-}
-[type=radio]:checked, [type=radio]:not(:checked) {
-  position: relative;
-  /* left: -9999px; */
-  width: 9px;
-  height: 9px;
-  opacity: 0;
-  z-index: 9999;
-}
-[type=radio]:checked + label, [type=radio]:not(:checked) + label {
-  position: relative;
-  /* padding-left: 13px; */
-  cursor: pointer;
-  line-height: 20px;
-  display: inline-block;
-  color: #666;
-  left: 0;
-  top: -4px;
-  left: -4px;
-}
-.form-control2 {
-  width: 36px;
-  height: 33px;
-  text-align: center;
-  font-size: 0.5rem;
-  font-weight: 300;
-}
-.plus {
-  
-  width: 12px;
-  height: 10px;  
-  background-size: 65%;
-}
-.minus {
-   width: 12px;
-  height: 10px;  
-  background-size: 65%;
-}
-
-}
-@media only screen 
-and (min-width: 600px)
-{
-  
+@media only screen and (min-width: 600px) {
   .table-custom thead th {
     border: 0;
     font-size: 1rem;
     font-weight: 500;
     padding: 16px 10px;
-}
-.table-custom td {
-  padding: 11px 13px;
-  font-size: 1rem;
-  font-weight: 400;
-  vertical-align: middle;
-  position: relative;
-  line-height: 2;
-}
-[type=radio]:checked, [type=radio]:not(:checked) {
-  position: relative;
-  /* left: -9999px; */
-  width: 9px;
-  height: 9px;
-  opacity: 0;
-  z-index: 9999;
-}
-[type=radio]:checked + label, [type=radio]:not(:checked) + label {
-  position: relative;
-  /* padding-left: 13px; */
-  cursor: pointer;
-  line-height: 20px;
-  display: inline-block;
-  color: #666;
-  left: 0;
-  top: -4px;
-  left: -4px;
-}
+  }
+  .table-custom td {
+    padding: 11px 13px;
+    font-size: 1rem;
+    font-weight: 400;
+    vertical-align: middle;
+    position: relative;
+    line-height: 2;
+  }
+  [type='radio']:checked,
+  [type='radio']:not(:checked) {
+    position: relative;
+    /* left: -9999px; */
+    width: 9px;
+    height: 9px;
+    opacity: 0;
+    z-index: 9999;
+  }
+  [type='radio']:checked + label,
+  [type='radio']:not(:checked) + label {
+    position: relative;
+    /* padding-left: 13px; */
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+    left: 0;
+    top: -4px;
+    left: -4px;
+  }
 
-.form-control2 {
-  width: 36px;
-  height: 33px;
-  text-align: center;
-  font-size: 0.5rem;
-  font-weight: 300;
-}
-.plus {
-  
-  width: 12px;
-  height: 10px;  
-  background-size: 65%;
-}
-.minus {
-   width: 12px;
-  height: 10px;  
-  background-size: 65%;
-}
+  .form-control2 {
+    width: 36px;
+    height: 33px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  .plus {
+    width: 12px;
+    height: 10px;
+    background-size: 65%;
+  }
+  .minus {
+    width: 12px;
+    height: 10px;
+    background-size: 65%;
+  }
 }

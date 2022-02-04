@@ -1,0 +1,115 @@
+<section class="inner-bg application-bg">
+    <div class="container">
+        <div class="row m-hgt align-items-center justify-content-between">
+            <div class="col-md-6 col-sm-6 col-12">
+                <h3>Careers</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12">
+                <ul>
+                    <li><a [routerLink]="['/home']">Home </a></li>
+                    <li><a>Careers</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-bg pad-btm30">
+    <div class="container">
+        <h3 class="app-txt">Please fill out the form below</h3>
+
+        <div class="frm-app">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" formControlName="firstName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" formControlName="lastName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" formControlName="phoneNumber" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+                            <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                                <div *ngIf="f.phoneNumber.errors.pattern">
+                                    Phone Number is not valid.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Email Addresss</label>
+                            <input type="text" formControlName="email" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="file">Resume</label>
+                            <input formControlName="file" id="file" type="file"
+                                accept=".pdf,.doc.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                maxFileSize="1024" class="form-control" (change)="onFileChange($event)"
+                                [ngClass]="{ 'is-invalid': submitted && f.file.errors }">
+
+                            <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+                            <div *ngIf="f.file.errors.required">File is required.</div>
+                        </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <button data-toggle="modal" class="btn btn-primary">Submit</button>
+                <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#exampleModal">Open
+                    Modal</button>
+
+            </form>
+        </div>
+       
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
+                        src="../../../assets/image/close.png" class="img-fluid" />
+                </button>
+                <div class="modal-body">
+                    <div class="thank-msg text-center">
+
+                        <!-- <img  src="../../../assets/image/pin-error.png" class="img-fluid" /> -->
+                        <img  src="../../../assets/image/thnk-icon.png" class="img-fluid" />
+                        <!-- <p class="mt20">{{message}}</p> -->
+                        <h3 class="mt20">{{message}}</h3>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Submiting... </p>
+</ngx-spinner>

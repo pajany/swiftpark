@@ -44,7 +44,7 @@ import { TruckComponent } from './component/truck/truck.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { ViewTransactionComponent }from './component/view-transaction/view-transaction.component';
 import { ChangePinComponent} from './component/change-pin/change-pin.component';
-
+import { CareersComponent } from './component/careers/careers.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +78,8 @@ import { ChangePinComponent} from './component/change-pin/change-pin.component';
     DynamicPageComponent,
     CommonUiComponent,
     SuccessdisputeComponent,
-    NemesisComponent
+    NemesisComponent,
+    CareersComponent
   ],
   imports: [
     BrowserModule,

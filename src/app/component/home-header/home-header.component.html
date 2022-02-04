@@ -41,23 +41,27 @@
     </div>
   </div>
 
-  <div class="modal" [class.show]="show" id="exampleModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-confirm">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <i class="fa fa-times-circle fa-3x material-icons" style="font-size: 100px;"></i>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
+                    src="../../../assets/image/close.png" class="img-fluid" />
+            </button>
+            <div class="modal-body">
+                <div class="thank-msg text-center">
+
+                    <img  src="../../../assets/image/pin-error.png" class="img-fluid" />
+                    <!-- <img  src="../../../assets/image/thnk-icon.png" class="img-fluid" /> -->
+                    <!-- <p class="mt20">{{message}}</p> -->
+                    <h3 class="mt20">{{message}}</h3>
+                </div>
+
+
+
+            </div>
         </div>
-        <div class="modal-body text-center">
-          <h4>{{message}}</h4>
-          <button class="btn btn-success" data-dismiss="modal"><span>Close</span>
-            <i class="fa fa-arrow-right fa-3x pl-1">
-            </i></button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 </section>
 
 

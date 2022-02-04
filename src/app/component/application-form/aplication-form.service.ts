@@ -19,4 +19,8 @@ export class AplicationFormService {
   submitForm(payLoad: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}` + '/contactform', payLoad);
   }
+
+  submitCareersForm(payLoad: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}` + '/careersform', payLoad);
+  }
 }
